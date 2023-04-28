@@ -1,5 +1,5 @@
 from .base import BaseRoute
-from TM.utils.html_reader import html_reader
+from utils.html_reader import html_reader
 
 
 class Index(BaseRoute):

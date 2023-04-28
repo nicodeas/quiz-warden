@@ -1,6 +1,6 @@
 from http.server import HTTPServer
-from TM.utils.request_handler import RequestHandler
-from .config import *
+from utils.request_handler import RequestHandler
+from config import HOST, PORT
 
 
 def main():

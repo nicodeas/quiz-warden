@@ -12,7 +12,7 @@ CITS3002 project as specified in the [task sheet](https://teaching.csse.uwa.edu.
 ## Project Structure
 
 ## Set up
-- To start the `TM` server, run
+- To start the `TM` server, change into the `TM` directory and run
 ```py
-python -m TM.main
+python -m main
 ```

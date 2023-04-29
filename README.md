@@ -12,7 +12,7 @@ CITS3002 project as specified in the [task sheet](https://teaching.csse.uwa.edu.
 
 ## TM
 
-## Setup
+### Setup
 
 - To start the `TM` server, change into the `TM` directory and run
 
@@ -20,7 +20,7 @@ CITS3002 project as specified in the [task sheet](https://teaching.csse.uwa.edu.
 python -m main
 ```
 
-## Development
+### Development
 
 ### Adding page routes
 

@@ -1,7 +1,7 @@
 import json
 import os
 from http.server import BaseHTTPRequestHandler
-
+from urllib.parse import urlparse, parse_qs
 from routes import *
 
 
@@ -9,7 +9,9 @@ class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         routes = BaseRoute.routes
 
-        path = self.path[1:]
+        url =  urlparse(self.path)
+        qs = parse_qs(url.query)
+        path = url.path[1:]
         status = 404
         content_type = "text/html"
         response = "404 Page not found"
@@ -25,8 +27,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 response = file.read()
 
         elif path in routes.keys():
-            status = routes[path](self, path)[0]
-            response = routes[path](self, path)[1]
+            status, response = routes[path](self, path, qs)
 
         if path.startswith("api/"):
             content_type = "application/json"

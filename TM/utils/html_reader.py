@@ -2,10 +2,11 @@ import os
 
 
 def html_reader(route):
-    html_files = os.listdir("views")
-    html_routes = [file.rstrip(".html") for file in html_files]
+    if route == "":
+        route = "index"
+    html_path = f"views/{route}.html"
 
-    if route in html_routes:
-        with open(f"views/{route}.html", "r") as html:
-            return html.read()
-    return None
+    if os.path.exists(html_path):
+        with open(html_path, "r") as html:
+            return 200, html.read()
+    return 404, "Page not found"

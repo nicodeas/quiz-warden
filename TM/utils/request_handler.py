@@ -9,31 +9,32 @@ class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         routes = BaseRoute.routes
 
-        # set path to index if path is "/"
-        path = self.path[1:] if self.path[1:] != "" else "index"
-        status = 200
+        path = self.path[1:]
+        status = 404
         content_type = "text/html"
-        response = None
+        response = "404 Page not found"
 
-        if path.startswith("static/"):
-            if os.path.exists(path):
-                with open(path, "rb") as file:
-                    response = file.read()
+        if path.startswith("static/") and os.path.exists(path):
+            if path.endswith(".css"):
+                content_type = "text/css"
+            elif path.endswith(".js"):
+                content_type = "text/javascript"
 
-        elif path.startswith("api/") and path in routes.keys():
-            content_type = "application/json"
-            status = routes[path](path)[0]
-            response = json.dumps(routes[path](path)[1]).encode()
+            with open(path, "r") as file:
+                status = 200
+                response = file.read()
 
         elif path in routes.keys():
-            response = routes[path](path).encode()
+            status = routes[path](self, path)[0]
+            response = routes[path](self, path)[1]
 
-        if response is None:
-            status = 404
-            response = b"404"
+        if path.startswith("api/"):
+            content_type = "application/json"
+            if status == 404:
+                response = {"message": "Not found"}
+            response = json.dumps(response)
 
         self.send_response(status)
         self.send_header("Content-type", content_type)
         self.end_headers()
-
-        self.wfile.write(response)
+        self.wfile.write(response.encode())

@@ -4,5 +4,5 @@ from .base import BaseRoute
 
 
 class Index(BaseRoute):
-    def executor(path, *args, **kwargs):
+    def executor(req, path, *args, **kwargs):
         return html_reader(path)

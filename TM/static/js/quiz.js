@@ -1,26 +1,26 @@
 let question = "";
 choices = [];
-let currentRound = 1;
+let currentQuestionIndex = 1;
 
-const getQuestion = async () => {
+const getQuestion = async (previousQuestionIndex) => {
   document.getElementById("question-result").innerHTML = "";
-  fetch("/api/question?number=" + currentRound, {
+  fetch("/api/question?number=" + currentQuestionIndex, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        currentQuestionIndex = previousQuestionIndex;
+        throw new Error("An error occurred fetching the question!");
+      }
+      return response.json();
+    })
     .then((data) => {
-      console.log(data);
-      console.log(data.question);
       question = data.question;
       choices = data.choices;
       updateQuiz();
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("An error occurred fetching the question!");
     });
 };
 
@@ -31,15 +31,17 @@ const updateQuiz = () => {
   document.getElementById("quiz-question").innerHTML = question;
 
   // create multichoice fields
-  choices.forEach((choice) => {
+  choices.forEach((choice, idx) => {
     const radio = document.createElement("input");
     radio.type = "radio";
     radio.name = "option";
     radio.value = choice;
+    radio.id = `choice-${idx}`;
     const label = document.createElement("label");
     label.innerHTML = choice;
-    const choiceContainer = document.createElement("div");
+    label.setAttribute("for", `choice-${idx}`);
 
+    const choiceContainer = document.createElement("div");
     choiceContainer.appendChild(radio);
     choiceContainer.appendChild(label);
     choicesContainer.appendChild(choiceContainer);
@@ -61,12 +63,10 @@ const checkQuestion = async (questionIndex) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.correct);
       const result = data.correct ? "Correct!" : "Incorrect!";
       questionResultText.innerHTML = result;
     })
     .catch((error) => {
-      console.log(error);
       alert("An error occurred checking the answer!");
     });
 };
@@ -75,14 +75,16 @@ const updateResultText = (result) => {};
 
 document.getElementById("next-button").addEventListener("click", function (e) {
   e.preventDefault();
-  currentRound++;
-  getQuestion();
+  let previousQuestionIndex = currentQuestionIndex;
+  currentQuestionIndex++;
+  getQuestion(previousQuestionIndex);
 });
 
 document.getElementById("back-button").addEventListener("click", function (e) {
   e.preventDefault();
-  currentRound--;
-  getQuestion();
+  let previousQuestionIndex = currentQuestionIndex;
+  currentQuestionIndex--;
+  getQuestion(previousQuestionIndex);
 });
 
 document.getElementById("check-button").addEventListener("click", function (e) {

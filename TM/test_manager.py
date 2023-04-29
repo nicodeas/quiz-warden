@@ -16,8 +16,9 @@ class TestManager():
             self.max_questions = len(self.questions)
 
     def check_question_number(self, current_number):
-        self.question_number = current_number
-        self.change_question()
+        if 0 < current_number < test_manager.max_questions:
+            self.question_number = current_number
+            self.change_question()
     
     def get_question_info(self):
         return {"question": self.question, "choices": self.choices}
@@ -27,9 +28,10 @@ class TestManager():
     
     # dummy function until QB exists
     def change_question(self):
-        self.question = self.questions[self.question_number - 1]['question']
-        self.choices = self.questions[self.question_number - 1]['choices']
-        self.answer = int(self.questions[self.question_number - 1]['answer'])
+        question_index = self.question_number - 1
+        self.question = self.questions[question_index]['question']
+        self.choices = self.questions[question_index]['choices']
+        self.answer = int(self.questions[question_index]['answer'])
 
 
 test_manager = TestManager()

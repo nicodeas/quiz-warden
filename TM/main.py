@@ -8,7 +8,5 @@ def main():
     print(f"Started server on {HOST}:{PORT}")
     server.serve_forever()
 
-
-
 if __name__ == "__main__":
     main()

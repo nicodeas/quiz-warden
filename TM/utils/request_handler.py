@@ -1,7 +1,8 @@
 import json
 import os
 from http.server import BaseHTTPRequestHandler
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
+
 from routes import *
 
 
@@ -9,7 +10,7 @@ class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         routes = BaseRoute.routes
 
-        url =  urlparse(self.path)
+        url = urlparse(self.path)
         qs = parse_qs(url.query)
         path = url.path[1:]
         status = 404

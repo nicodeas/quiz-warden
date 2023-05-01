@@ -1,6 +1,8 @@
 #include "utils.h"
 
 void sendFile(char *fname, int client_socket) {
+  // think of this function this way, it is not exactly sending a "file" but
+  // rather it is reading a file in chunks and sending that to the other end
   printf("Sending file ...\n");
   FILE *file;
   char buffer[BUFSIZ];

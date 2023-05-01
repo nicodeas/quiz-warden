@@ -27,7 +27,7 @@ void sendFile(char *fname, int client_socket) {
 }
 
 void compileC(char *fileName, char *outputFile) {
-  int pid, status;
+  int pid;
   pid = fork();
   if (pid == -1) {
     perror("fork");

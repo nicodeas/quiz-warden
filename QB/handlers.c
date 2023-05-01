@@ -3,8 +3,8 @@
 void handleRequest(int client_socket) {
   printf("handling request ...\n");
   // use send and recv and read into these buffers
-  char requestBuffer[BUFSIZ];
-  char responseBuffer[BUFSIZ];
+  /* char requestBuffer[BUFSIZ]; */
+  /* char responseBuffer[BUFSIZ]; */
   // TODO: think way to request/ for different resources
   // question sending
 

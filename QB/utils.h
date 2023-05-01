@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include "globals.h"
 
 extern void compileC(char *fileName, char *outputFile);
 extern char *runC(char *execName);

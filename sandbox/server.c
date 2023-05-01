@@ -81,9 +81,16 @@ int main(void) {
     inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr),
               s, sizeof s);
     printf("server got connection from %s\n", s);
+
+    char message[256];
+    memset(message, 0, sizeof(message));
+    recv(new_fd, &message, sizeof(message), 0);
+    printf("RECEIVED MESSAGE: %s\n", message);
+
+    char resp[] = "Hello from the C Question Bank!\0";
     if (!fork()) {
       close(sockfd);
-      if (send(new_fd, "Hello, world!", 13, 0) == -1) {
+      if (send(new_fd, resp, sizeof(resp), 0) == -1) {
         perror("send");
       }
       close(new_fd);

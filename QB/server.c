@@ -30,7 +30,7 @@ int createServer() {
 
 void runServer(int server_socket) {
   int client_socket;
-  while (1) {
+  while (true) {
     client_socket = accept(server_socket, NULL, NULL);
     if (client_socket == -1) {
       perror("accept");

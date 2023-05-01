@@ -12,6 +12,10 @@ CITS3002 project as specified in the [task sheet](https://teaching.csse.uwa.edu.
 
 ## TM
 
+## QB
+
+See make file for options
+
 ### Setup
 
 - To start the `TM` server, change into the `TM` directory and run

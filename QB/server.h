@@ -30,19 +30,20 @@ typedef struct {
   QuestionLanguage language;
   int id;
   char *text;
-  Choices choices;
+  Choices *choices;
   char *answer;
-  TestCase testCase; // TODO: coding question, multiple test cases?
+  TestCase *testCase; // TODO: coding question, multiple test cases?
 } Question;
 
 #define QUESTION_BANK_SIZE 512
 
-extern Question QUESTION_BANK[QUESTION_BANK_SIZE];
+extern Question *QUESTION_BANK[QUESTION_BANK_SIZE];
 extern int NUM_QUESTIONS; // write to this when building question bank to keep
                           // track of max index we can go; not sure if this will
                           // be required
 
 // server functions in server.c
+extern char *QUESTION_FILE;
 extern void setup(); // possibly to do with whether it is a C or Python QB?
 extern void buildQuestionBank(); // TODO: setup function on server startup to
                                  // retrieve questions

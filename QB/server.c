@@ -1,6 +1,7 @@
 #include "server.h"
 
-Question QUESTION_BANK[QUESTION_BANK_SIZE];
+Question *QUESTION_BANK[QUESTION_BANK_SIZE];
+char *QUESTION_FILE = "questions.txt";
 
 int createServer() {
   int server_socket;
@@ -43,5 +44,58 @@ void runServer(int server_socket) {
     }
     // handler failed
     close(client_socket);
+  }
+}
+
+void buildQuestionBank() {
+  FILE *file;
+  char buffer[BUFSIZ];
+  file = fopen(QUESTION_FILE, "r");
+
+  if (file == NULL) {
+    perror("fopen");
+    exit(EXIT_FAILURE);
+  }
+
+  Question *currentQuestion = NULL;
+  while (fgets(buffer, sizeof(buffer), file) != NULL) {
+    switch (buffer[0]) {
+    // Question text
+    case ('Q'):;
+      currentQuestion = (Question *)malloc(sizeof(Question));
+      currentQuestion->choices = NULL;
+      currentQuestion->answer = NULL;
+      currentQuestion->testCase = NULL;
+      // set id, text, question type, question language, how do we want to deal
+      // with image questions? put the filepath?
+      break;
+      // multi choice
+    case ('A'):;
+      break;
+    case ('B'):;
+      break;
+    case ('C'):;
+      break;
+    case ('D'):;
+      break;
+      // answer
+    case ('$'):;
+      break;
+    // image
+    case ('I'):;
+      break;
+    // coding question stuff
+    // test input
+    case ('T'):;
+      break;
+    // test expected output
+    case ('O'):;
+      break;
+    // TODO: maybe a symbol to mark the end of question and push to QB? E or
+    // DEFAULT?
+    case ('E'):;
+      // push question to question bank
+      break;
+    };
   }
 }

@@ -1,3 +1,4 @@
+#define _POSIX_C_SOURCE 200809L // enables strdup()
 #include <netinet/in.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -27,18 +28,12 @@ typedef struct {
 } Choices;
 
 typedef struct {
-  char *input;
-  char *expectedOutput;
-} TestCase;
-
-typedef struct {
   QuestionType type;
   QuestionLanguage language;
-  int id;
   char *text;
   Choices *choices;
   char *answer;
-  TestCase *testCase; // TODO: coding question, multiple test cases?
+  char *imageFile;
 } Question;
 
 #define QUESTION_BANK_SIZE 512

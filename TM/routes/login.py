@@ -1,6 +1,7 @@
 from utils.html_reader import html_reader
 from urllib.parse import parse_qs
 
+from user import User, users
 from .base import BaseRoute
 from .auth import *
 
@@ -15,18 +16,30 @@ class Login(BaseRoute):
             post_data = req.rfile.read(content_length)
             data = parse_qs(post_data.decode('utf-8'))
             # Extract username and password from request
-            # TODO: account for empty username/password field
-            username = data['username'][0]
-            password = data['password'][0]
+            username = data.get('username', [''])[0]
+            password = data.get('password', [''])[0]
 
             if login_user(username, password):
-                # Add session_id to header and redirect to index
-                session_id = new_session(username)
-                req.send_response(302)
-                req.send_header('Location', '/')
-                # No set expiration; cookie will last for duration of browser
-                req.send_header('Set-Cookie', 'session_token={}'.format(session_id))
-                req.end_headers()
+                # Generate session_id
+                session_id = generate_session_id(username)
+                # Generate new session if credentials not already in use
+                if session_id not in users:
+                    user = User()
+                    user.username = username
+                    user.session_id = session_id
+                    users[session_id] = user
+                    
+                    # Add session_id to header and redirect to index
+                    req.send_response(302)
+                    req.send_header('Location', '/')
+                    req.send_header('Set-Cookie', 'session_token={}'.format(session_id))
+                    req.end_headers()
+                else:
+                    # Login details already in use!
+                    print("already logged in!")
+                    req.send_response(302)
+                    req.send_header('Location', '/login')
+                    req.end_headers()
             else:
                 # Login failed!
                 req.send_response(302)

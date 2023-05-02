@@ -3,7 +3,7 @@ import os
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from routes import *
-from auth import is_valid_session
+from utils.auth import is_valid_session
 
 
 class RequestHandler(BaseHTTPRequestHandler):

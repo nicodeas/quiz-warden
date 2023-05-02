@@ -3,7 +3,7 @@ from urllib.parse import parse_qs
 
 from user import *
 from .base import BaseRoute
-from ..utils.auth import *
+from utils.auth import *
 
 
 class Login(BaseRoute):
@@ -36,7 +36,6 @@ class Login(BaseRoute):
                     req.end_headers()
                 else:
                     # Login details already in use!
-                    print("already logged in!")
                     req.send_response(302)
                     req.send_header('Location', '/login')
                     req.end_headers()

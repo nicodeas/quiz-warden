@@ -1,5 +1,7 @@
 #include "server.h"
 
+Question QUESTION_BANK[QUESTION_BANK_SIZE];
+
 int createServer() {
   int server_socket;
   server_socket = socket(AF_INET, SOCK_STREAM, 0);

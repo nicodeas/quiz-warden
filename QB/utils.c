@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "server.h"
 
 void sendFile(char *fname, int client_socket) {
   // think of this function this way, it is not exactly sending a "file" but

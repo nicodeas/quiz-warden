@@ -1,4 +1,4 @@
-#include "main.h"
+#include "server.h"
 
 int main() {
   int server_socket = createServer();

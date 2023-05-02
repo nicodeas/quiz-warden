@@ -44,8 +44,8 @@ extern int NUM_QUESTIONS; // write to this when building question bank to keep
 
 // server functions in server.c
 extern void setup(); // possibly to do with whether it is a C or Python QB?
-extern void
-seedQuestions(); // TODO: setup function on server startup to retrieve questions
+extern void buildQuestionBank(); // TODO: setup function on server startup to
+                                 // retrieve questions
 extern int createServer();
 extern void runServer(int server_socket);
 

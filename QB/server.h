@@ -57,7 +57,7 @@ extern void runServer(int server_socket);
 
 // util functions in util.c
 extern void compileC(char *fileName, char *outputFile);
-extern int runCode(char *exec, QuestionLanguage language); // TODO:
+extern int runCode(char *exec, QuestionLanguage language);
 extern void sendFile(char *fname, int client_socket);
 
 // handler functions in handlers.c
@@ -67,7 +67,7 @@ extern void markQuestion(char *answer); // TODO: answer contains req from client
                                         // parse to get question id
 extern void markChoice(int client_socket, int questionId);
 extern void markCode(int client_socket, int questionId, int fd); // TODO:
-extern bool
+extern void
 markImage(int client_socket,
           int questionId); // TODO: send processed image back to TM. Then send
                            // whether answer is correct/wrong?

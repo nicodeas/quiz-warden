@@ -99,4 +99,5 @@ void buildQuestionBank() {
       break;
     };
   }
+  fclose(file);
 }

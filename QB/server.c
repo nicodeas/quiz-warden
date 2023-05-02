@@ -1,6 +1,7 @@
 #include "server.h"
 
 Question *QUESTION_BANK[QUESTION_BANK_SIZE];
+int NUM_QUESTIONS = 0;
 
 int createServer() {
   int server_socket;
@@ -57,45 +58,93 @@ void buildQuestionBank() {
   }
 
   Question *currentQuestion = NULL;
+  char *text;
+
   while (fgets(buffer, sizeof(buffer), file) != NULL) {
+    if (buffer[0] == 'E') {
+      // if end of a question, push it to the question bank
+      QUESTION_BANK[NUM_QUESTIONS++] = currentQuestion;
+      continue;
+    }
+
+    // remove new line
+    buffer[strlen(buffer) - 1] = '\0';
+    // allocate space for line start at third character as we have a white space
+    // between types
+    text = strdup(&buffer[2]);
+
     switch (buffer[0]) {
     // Question text
     case ('Q'):
       currentQuestion = (Question *)malloc(sizeof(Question));
       currentQuestion->choices = NULL;
       currentQuestion->answer = NULL;
-      currentQuestion->testCase = NULL;
-      // set id, text, question type, question language, how do we want to deal
-      // with image questions? put the filepath?
+      currentQuestion->imageFile = NULL;
+      currentQuestion->answerFile = NULL;
+      currentQuestion->text = text;
       break;
-      // multi choice
-    case ('A'):;
+
+    // Question type
+    case ('T'):
+      if (strcmp(text, "CHOICE") == 0) {
+        currentQuestion->type = CHOICE;
+        currentQuestion->choices = (Choices *)malloc(sizeof(Choices));
+      } else if (strcmp(text, "IMAGE") == 0) {
+        currentQuestion->type = IMAGE;
+      } else if (strcmp(text, "CODE") == 0) {
+        currentQuestion->type = CODE;
+      } else {
+        fprintf(stderr, "Unrecognised character in Question file: %s\n",
+                buffer);
+        exit(EXIT_FAILURE);
+      }
       break;
-    case ('B'):;
+
+    // multi choice
+    case ('A'):
+      currentQuestion->choices->a = text;
       break;
-    case ('C'):;
+    case ('B'):
+      currentQuestion->choices->b = text;
       break;
-    case ('D'):;
+    case ('C'):
+      currentQuestion->choices->c = text;
       break;
-      // answer
-    case ('$'):;
+    case ('D'):
+      currentQuestion->choices->d = text;
       break;
+
+    // answer
+    case ('$'):
+      currentQuestion->answer = text;
+      break;
+
     // image
-    case ('I'):;
+    case ('I'):
+      currentQuestion->imageFile = text;
       break;
-    // coding question stuff
-    // test input
-    case ('T'):;
+
+    // language
+    case ('L'):
+      if (strcmp(text, "PYTHON") == 0) {
+        currentQuestion->language = PYTHON;
+      } else if (strcmp(text, "CLANG") == 0) {
+        currentQuestion->language = CLANG;
+      } else {
+        fprintf(stderr, "Unrecognised character in Question file: %s\n",
+                buffer);
+        exit(EXIT_FAILURE);
+      }
       break;
-    // test expected output
-    case ('O'):;
+
+    // file containing correct image question answer
+    case ('F'):
+      currentQuestion->answerFile = text;
       break;
-    // TODO: maybe a symbol to mark the end of question and push to QB? E or
-    // DEFAULT?
-    case ('E'):
-      // push question to question bank
-      QUESTION_BANK[currentQuestion->id] = currentQuestion;
-      break;
+
+    default:
+      fprintf(stderr, "Unrecognised character in Question file: %s\n", buffer);
+      exit(EXIT_FAILURE);
     };
   }
   fclose(file);

@@ -34,6 +34,7 @@ typedef struct {
   Choices *choices;
   char *answer;
   char *imageFile;
+  char *answerFile; // used to store correct answer for image question
 } Question;
 
 #define QUESTION_BANK_SIZE 512

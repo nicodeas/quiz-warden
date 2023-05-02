@@ -26,12 +26,12 @@ int createServer() {
     perror("listen");
     exit(EXIT_FAILURE);
   }
-  printf("Server is listening for connections on port: %d\n", PORT);
   return server_socket;
 }
 
 void runServer(int server_socket) {
   int client_socket;
+  printf("Server is listening for connections on port: %d\n", PORT);
   while (true) {
     client_socket = accept(server_socket, NULL, NULL);
     if (client_socket == -1) {

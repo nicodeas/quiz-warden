@@ -61,7 +61,7 @@ void buildQuestionBank() {
   char *text;
 
   while (fgets(buffer, sizeof(buffer), file) != NULL) {
-    if (buffer[0] == 'E') {
+    if (buffer[0] == '-') {
       // if end of a question, push it to the question bank
       QUESTION_BANK[NUM_QUESTIONS++] = currentQuestion;
       continue;

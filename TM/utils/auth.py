@@ -1,5 +1,6 @@
 import hashlib
-from user import User, users
+from user import users
+
 
 # Verifies user credentials exist among pre-registered users
 def login_user(username, password):

@@ -1,9 +1,9 @@
 from utils.html_reader import html_reader
 from urllib.parse import parse_qs
 
-from user import User, users
+from user import *
 from .base import BaseRoute
-from .auth import *
+from ..utils.auth import *
 
 
 class Login(BaseRoute):
@@ -28,7 +28,7 @@ class Login(BaseRoute):
                     user.username = username
                     user.session_id = session_id
                     users[session_id] = user
-                    
+
                     # Add session_id to header and redirect to index
                     req.send_response(302)
                     req.send_header('Location', '/')

@@ -61,7 +61,7 @@ void buildQuestionBank() {
   while (fgets(buffer, sizeof(buffer), file) != NULL) {
     switch (buffer[0]) {
     // Question text
-    case ('Q'):;
+    case ('Q'):
       currentQuestion = (Question *)malloc(sizeof(Question));
       currentQuestion->choices = NULL;
       currentQuestion->answer = NULL;
@@ -93,8 +93,9 @@ void buildQuestionBank() {
       break;
     // TODO: maybe a symbol to mark the end of question and push to QB? E or
     // DEFAULT?
-    case ('E'):;
+    case ('E'):
       // push question to question bank
+      QUESTION_BANK[currentQuestion->id] = currentQuestion;
       break;
     };
   }

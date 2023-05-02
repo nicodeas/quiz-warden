@@ -62,8 +62,12 @@ extern void sendFile(char *fname, int client_socket);
 
 // handler functions in handlers.c
 extern void handleRequest(int client_socket);
+extern void getQuestion(int client_socket, int questionId);
 extern void markQuestion(char *answer); // TODO: answer contains req from client
                                         // parse to get question id
 extern void markChoice(int client_socket, int questionId);
 extern void markCode(int client_socket, int questionId, int fd); // TODO:
-extern bool markImage(int client_socket, int questionId);        // TODO:
+extern bool
+markImage(int client_socket,
+          int questionId); // TODO: send processed image back to TM. Then send
+                           // whether answer is correct/wrong?

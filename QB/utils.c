@@ -34,10 +34,54 @@ void compileC(char *fileName, char *outputFile) {
     exit(EXIT_FAILURE);
   } else if (pid == 0) {
     // compile code
-    execl("/bin/cc", "cc", "-o", outputFile, fileName, NULL);
+    execl(PATH_C, "cc", "-o", outputFile, fileName, NULL);
     printf("Error during compilation\n");
     exit(EXIT_FAILURE);
   }
   // wait for compilation to complete
   wait(NULL);
+}
+
+int runCode(char *exec, QuestionLanguage language) {
+  // NOTE: not sure if we should use exec name or abs path
+  int fd[2];
+  if (pipe(fd) == -1) {
+    perror("pipe");
+    exit(EXIT_FAILURE);
+  }
+
+  int pid;
+  pid = fork();
+  if (pid == -1) {
+    perror("fork");
+    exit(EXIT_FAILURE);
+  } else if (pid == 0) {
+    dup2(fd[1], STDOUT_FILENO);
+    close(fd[0]);
+    close(fd[1]);
+    char execName[64];
+
+    // create exec string for C code, not in use for python
+    char *execStart = "./";
+    strcpy(execName, execStart);
+    strcat(execName, exec);
+
+    switch (language) {
+    case (PYTHON):
+      execl(PATH_PYTHON, "python3", exec, NULL);
+      printf("failed to run code");
+      exit(EXIT_FAILURE);
+      break;
+    case (CLANG):
+      execl(execName, execName, NULL);
+      printf("failed to run code");
+      exit(EXIT_FAILURE);
+      break;
+    default:
+      printf("Language not found!\n");
+      exit(EXIT_FAILURE);
+    }
+  }
+  close(fd[1]);
+  return fd[0];
 }

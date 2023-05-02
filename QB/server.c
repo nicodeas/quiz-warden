@@ -1,7 +1,6 @@
 #include "server.h"
 
 Question *QUESTION_BANK[QUESTION_BANK_SIZE];
-char *QUESTION_FILE = "questions.txt";
 
 int createServer() {
   int server_socket;

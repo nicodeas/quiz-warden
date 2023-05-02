@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -10,8 +11,13 @@
 #define PORT 8080
 #define BACKLOG 16
 
+#define PATH_PYTHON "/bin/python3"
+#define PATH_C "/bin/cc"
+
+#define QUESTION_FILE "questions.txt"
+
 typedef enum { CHOICE, IMAGE, CODE } QuestionType;
-typedef enum { PYTHON, C } QuestionLanguage;
+typedef enum { PYTHON, CLANG } QuestionLanguage;
 
 typedef struct {
   char *a;
@@ -43,7 +49,6 @@ extern int NUM_QUESTIONS; // write to this when building question bank to keep
                           // be required
 
 // server functions in server.c
-extern char *QUESTION_FILE;
 extern void setup(); // possibly to do with whether it is a C or Python QB?
 extern void buildQuestionBank(); // TODO: setup function on server startup to
                                  // retrieve questions
@@ -52,9 +57,13 @@ extern void runServer(int server_socket);
 
 // util functions in util.c
 extern void compileC(char *fileName, char *outputFile);
-extern char *runC(char *execName);      // TODO:
-extern char *runPython(char *execName); // TODO:
+extern int runCode(char *exec, QuestionLanguage language); // TODO:
 extern void sendFile(char *fname, int client_socket);
 
 // handler functions in handlers.c
 extern void handleRequest(int client_socket);
+extern void markQuestion(char *answer); // TODO: answer contains req from client
+                                        // parse to get question id
+extern void markChoice(int client_socket, int questionId);
+extern void markCode(int client_socket, int questionId, int fd); // TODO:
+extern bool markImage(int client_socket, int questionId);        // TODO:

@@ -8,6 +8,7 @@ class Logout(BaseRoute):
         # Remove session_id cookie from header
         req.send_response(302)
         req.send_header('Location', '/login')
-        req.send_header('Set-Cookie', 'session_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT')
+        req.send_header('Set-Cookie',
+                        'session_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT')
         req.end_headers()
         return html_reader(path)

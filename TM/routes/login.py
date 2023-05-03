@@ -5,6 +5,7 @@ from user import *
 from .base import BaseRoute
 from utils.auth import *
 
+
 class Login(BaseRoute):
     def executor(req, path, qs, *args, **kwargs):
         if req.command == 'GET':
@@ -29,7 +30,7 @@ class Login(BaseRoute):
                 # Add session_id to header and redirect to index
                 req.send_response(302)
                 req.send_header('Location', '/')
-                req.send_header('Set-Cookie', 'session_token={}'.format(session_id))
+                req.send_header('Set-Cookie', f'session_token={session_id}')
                 req.end_headers()
             else:
                 # Login failed!

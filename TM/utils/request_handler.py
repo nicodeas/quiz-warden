@@ -23,7 +23,6 @@ class RequestHandler(BaseHTTPRequestHandler):
                 cookies = self.headers['Cookie']
                 session_token = cookies.split('=')[1]
 
-                # Possibly unnecessary security check for this project?
                 if is_valid_session(session_token):
                     # User is authenticated, continue with routing
                     pass

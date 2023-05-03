@@ -41,6 +41,7 @@ void runServer(int server_socket) {
     }
     if (!fork()) {
       close(server_socket);
+      handleRequest(client_socket);
     }
     // handler failed
     close(client_socket);

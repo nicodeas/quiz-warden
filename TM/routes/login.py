@@ -26,6 +26,7 @@ class Login(BaseRoute):
                     user = User()
                     user.username = username
                     user.session_id = session_id
+                    user.question_order = user.seed_question_order()
                     users[session_id] = user
                 # Add session_id to header and redirect to index
                 req.send_response(302)

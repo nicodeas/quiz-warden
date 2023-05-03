@@ -16,7 +16,7 @@ class User:
     def get_session_id(self):
         return self.session_id
     
-    def get_session_order(self):
+    def get_question_order(self):
         return self.question_order
     
     def seed_question_order(self):

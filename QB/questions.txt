@@ -1,0 +1,23 @@
+Q Print the first 10 fibonacci numbers delimited by spaces.
+T CODE
+L PYTHON
+$ 0 1 1 2 3 5 8 13 21 34
+-----------------------------------------------------------------
+Q Print the 50th fibonacci number.
+T CODE
+L CLANG
+$ 12586269025
+-----------------------------------------------------------------
+Q What color is the sky?
+T CHOICE
+A Purple
+B Yellow
+C Blue
+D Green
+$ Blue
+-----------------------------------------------------------------
+Q Write a function that turns an image black and white, a sample image is provided to you below
+T IMAGE
+I ./some-image-of-chris
+F ./some-black-and-white-image-of-chris
+-----------------------------------------------------------------

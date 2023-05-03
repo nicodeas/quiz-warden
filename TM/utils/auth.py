@@ -2,7 +2,7 @@ import hashlib
 from user import users
 
 
-# Verifies user credentials exist among pre-registered users
+# Verifies user credentials exist against pre-registered users
 def login_user(username, password):
     # TODO: update this to traverse and verify against pre-registered users
     if (username == 'admin' and password == 'admin') or (username == 'jack' and password == 'jack'):

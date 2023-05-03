@@ -5,7 +5,6 @@ from user import *
 from .base import BaseRoute
 from utils.auth import *
 
-
 class Login(BaseRoute):
     def executor(req, path, qs, *args, **kwargs):
         if req.command == 'GET':
@@ -20,25 +19,18 @@ class Login(BaseRoute):
             password = data.get('password', [''])[0]
 
             if login_user(username, password):
-                # Generate session_id
                 session_id = generate_session_id(username)
-                # Generate new session if credentials not already in use
+                # Generate new session
                 if session_id not in users:
                     user = User()
                     user.username = username
                     user.session_id = session_id
                     users[session_id] = user
-
-                    # Add session_id to header and redirect to index
-                    req.send_response(302)
-                    req.send_header('Location', '/')
-                    req.send_header('Set-Cookie', 'session_token={}'.format(session_id))
-                    req.end_headers()
-                else:
-                    # Login details already in use!
-                    req.send_response(302)
-                    req.send_header('Location', '/login')
-                    req.end_headers()
+                # Add session_id to header and redirect to index
+                req.send_response(302)
+                req.send_header('Location', '/')
+                req.send_header('Set-Cookie', 'session_token={}'.format(session_id))
+                req.end_headers()
             else:
                 # Login failed!
                 req.send_response(302)

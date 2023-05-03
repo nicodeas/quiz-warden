@@ -2,15 +2,9 @@ from utils.html_reader import html_reader
 from .base import BaseRoute
 from user import users
 
+
 class Logout(BaseRoute):
     def executor(req, path, qs, *args, **kwargs):
-        # Remove user from users dict
-        if 'Cookie' in req.headers:
-            cookie = req.headers['Cookie']
-            session_id = cookie.split('=')[1]
-
-            users.pop(session_id, None)
-
         # Remove session_id cookie from header
         req.send_response(302)
         req.send_header('Location', '/login')

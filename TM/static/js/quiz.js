@@ -53,7 +53,9 @@ getQuestion();
 // Makes a POST request with the index of the chosen answer
 const checkQuestion = async (questionIndex) => {
   const questionResultText = document.getElementById("question-result");
-  const data = { answer: questionIndex };
+  const questionAttemptsText = document.getElementById("question-attempts");
+
+  const data = { answer: questionIndex, number: currentQuestionIndex };
   fetch("/api/question", {
     method: "POST",
     headers: {
@@ -63,10 +65,15 @@ const checkQuestion = async (questionIndex) => {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       const result = data.correct ? "Correct!" : "Incorrect!";
       questionResultText.innerHTML = result;
+      questionAttemptsText.innerHTML =
+        "You have " + data.attempts + " Attempts!";
+      console.log("ERTERT");
     })
     .catch((error) => {
+      console.log(error);
       alert("An error occurred checking the answer!");
     });
 };
@@ -75,6 +82,9 @@ const updateResultText = (result) => {};
 
 document.getElementById("next-button").addEventListener("click", function (e) {
   e.preventDefault();
+  const questionAttemptsText = document.getElementById("question-attempts");
+  questionAttemptsText.innerHTML = "";
+
   let previousQuestionIndex = currentQuestionIndex;
   currentQuestionIndex++;
   getQuestion(previousQuestionIndex);
@@ -82,6 +92,9 @@ document.getElementById("next-button").addEventListener("click", function (e) {
 
 document.getElementById("back-button").addEventListener("click", function (e) {
   e.preventDefault();
+  const questionAttemptsText = document.getElementById("question-attempts");
+  questionAttemptsText.innerHTML = "";
+
   let previousQuestionIndex = currentQuestionIndex;
   currentQuestionIndex--;
   getQuestion(previousQuestionIndex);

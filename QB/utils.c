@@ -35,7 +35,7 @@ void compileC(char *fileName, char *outputFile) {
   } else if (pid == 0) {
     // compile code
     execl(PATH_C, "cc", "-o", outputFile, fileName, NULL);
-    printf("Error during compilation\n");
+    fprintf(stderr, "Error during compilation\n");
     exit(EXIT_FAILURE);
   }
   // wait for compilation to complete
@@ -69,16 +69,16 @@ int runCode(char *exec, QuestionLanguage language) {
     switch (language) {
     case (PYTHON):
       execl(PATH_PYTHON, "python3", exec, NULL);
-      printf("failed to run code");
+      fprintf(stderr, "failed to run code");
       exit(EXIT_FAILURE);
       break;
     case (CLANG):
       execl(execName, execName, NULL);
-      printf("failed to run code");
+      fprintf(stderr, "failed to run code");
       exit(EXIT_FAILURE);
       break;
     default:
-      printf("Language not found!\n");
+      fprintf(stderr, "Language not found!\n");
       exit(EXIT_FAILURE);
     }
   }

@@ -20,6 +20,15 @@
 typedef enum { CHOICE, IMAGE, CODE } QuestionType;
 typedef enum { PYTHON, CLANG } QuestionLanguage;
 
+typedef enum {
+  GENERATE_QUESTIONS,
+  GET_IMAGE_QUESTION,
+  GET_CODING_QUESTION,
+  MARK_IMAGE_QUESTION,
+  MARK_CODING_QUESTION,
+  HEALTH_CHECK
+} RequestAction;
+
 typedef struct {
   char *a;
   char *b;

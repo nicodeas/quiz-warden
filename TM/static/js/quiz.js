@@ -47,13 +47,11 @@ const updateQuiz = () => {
     choicesContainer.appendChild(choiceContainer);
   });
 };
-
-getQuestion();
-
 // Makes a POST request with the index of the chosen answer
 const checkQuestion = async (questionIndex) => {
   const questionResultText = document.getElementById("question-result");
   const questionAttemptsText = document.getElementById("question-attempts");
+  const questionMarkText = document.getElementById("question-attempts");
 
   const data = { answer: questionIndex, number: currentQuestionIndex };
   fetch("/api/question", {
@@ -68,9 +66,16 @@ const checkQuestion = async (questionIndex) => {
       console.log(data);
       const result = data.correct ? "Correct!" : "Incorrect!";
       questionResultText.innerHTML = result;
-      questionAttemptsText.innerHTML =
-        "You have " + data.attempts + " Attempts!";
-      console.log("ERTERT");
+
+      // The question has been answered correctly
+      if (data.mark) {
+        checkButton.disabled = true;
+        questionAttemptsText.innerHTML = "";
+        questionMarkText.innerHTML = "Your mark is: " + data.mark;
+      } else {
+        questionAttemptsText.innerHTML =
+          "You have " + data.attempts + " Attempts!";
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -78,29 +83,12 @@ const checkQuestion = async (questionIndex) => {
     });
 };
 
-const updateResultText = (result) => {};
+getQuestion();
 
-document.getElementById("next-button").addEventListener("click", function (e) {
-  e.preventDefault();
-  const questionAttemptsText = document.getElementById("question-attempts");
-  questionAttemptsText.innerHTML = "";
+/*     EVENT LISTENERS     */
+const checkButton = document.getElementById("check-button");
 
-  let previousQuestionIndex = currentQuestionIndex;
-  currentQuestionIndex++;
-  getQuestion(previousQuestionIndex);
-});
-
-document.getElementById("back-button").addEventListener("click", function (e) {
-  e.preventDefault();
-  const questionAttemptsText = document.getElementById("question-attempts");
-  questionAttemptsText.innerHTML = "";
-
-  let previousQuestionIndex = currentQuestionIndex;
-  currentQuestionIndex--;
-  getQuestion(previousQuestionIndex);
-});
-
-document.getElementById("check-button").addEventListener("click", function (e) {
+checkButton.addEventListener("click", function (e) {
   e.preventDefault();
   const options = document.getElementsByName("option");
   let checkedQuestionIndex = -1;
@@ -115,4 +103,26 @@ document.getElementById("check-button").addEventListener("click", function (e) {
     return;
   }
   checkQuestion(checkedQuestionIndex);
+});
+
+document.getElementById("next-button").addEventListener("click", function (e) {
+  e.preventDefault();
+  const questionAttemptsText = document.getElementById("question-attempts");
+  questionAttemptsText.innerHTML = "";
+  checkButton.disabled = false;
+
+  let previousQuestionIndex = currentQuestionIndex;
+  currentQuestionIndex++;
+  getQuestion(previousQuestionIndex);
+});
+
+document.getElementById("back-button").addEventListener("click", function (e) {
+  e.preventDefault();
+  const questionAttemptsText = document.getElementById("question-attempts");
+  questionAttemptsText.innerHTML = "";
+  checkButton.disabled = false;
+
+  let previousQuestionIndex = currentQuestionIndex;
+  currentQuestionIndex--;
+  getQuestion(previousQuestionIndex);
 });

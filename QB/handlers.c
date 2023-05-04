@@ -55,6 +55,9 @@ void handleRequest(int client_socket) {
   case (GET_QUESTION_BY_ID):;
     break;
   case (HEALTH_CHECK):;
+    // debug stuff, remove later
+    char *resp = "HEALTH_CHECK OK!";
+    send(request->client_socket, resp, strlen(resp), 0);
     break;
   case (UNSPEC):;
     break;

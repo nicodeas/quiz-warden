@@ -4,3 +4,7 @@ services:
     build: ./QB
     ports:
       - "8080:8080"
+  c_question_bank:
+    build: ./QB
+    ports:
+      - "8081:8080"

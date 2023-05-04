@@ -2,9 +2,22 @@ version: "3"
 services:
   python_question_bank:
     build: ./QB
+    restart: unless-stopped
     ports:
       - "8080:8080"
+    volumes:
+      - ./QB:/QB
   c_question_bank:
     build: ./QB
+    restart: unless-stopped
     ports:
       - "8081:8080"
+    volumes:
+      - ./QB:/QB
+  test_manager:
+    build: ./TM
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./TM:/TM

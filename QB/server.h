@@ -17,16 +17,17 @@
 
 #define QUESTION_FILE "questions.txt"
 
+#define REQUEST_DELIM "|"
+
 typedef enum { CHOICE, IMAGE, CODE } QuestionType;
 typedef enum { PYTHON, CLANG } QuestionLanguage;
 
 typedef enum {
   GENERATE_QUESTIONS,
-  GET_IMAGE_QUESTION,
-  GET_CODING_QUESTION,
-  MARK_IMAGE_QUESTION,
-  MARK_CODING_QUESTION,
-  HEALTH_CHECK
+  MARK_QUESTION_BY_ID,
+  GET_QUESTION_BY_ID,
+  HEALTH_CHECK,
+  UNSPEC
 } RequestAction;
 
 typedef struct {
@@ -46,6 +47,13 @@ typedef struct {
   char *answerFile; // used to store correct answer for image question
 } Question;
 
+typedef struct {
+  int client_socket;
+  RequestAction action;
+  char *attempt;
+  Question *question;
+} Request;
+
 #define QUESTION_BANK_SIZE 512
 
 extern Question *QUESTION_BANK[QUESTION_BANK_SIZE];
@@ -63,8 +71,12 @@ extern void runServer(int server_socket);
 extern void compileC(char *fileName, char *outputFile);
 extern int runCode(char *exec, QuestionLanguage language);
 extern void sendFile(char *fname, int client_socket);
+extern Request *newRequest(int client_socket);
+extern void freeRequest(Request *request);
+extern Question *generateRandomQuestions(); // TODO:
 
 // handler functions in handlers.c
+extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
 extern void getQuestion(int client_socket, int questionId);
 extern void markQuestion(char *answer); // TODO: answer contains req from client

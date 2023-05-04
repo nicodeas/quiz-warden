@@ -38,6 +38,8 @@ typedef struct {
 } Choices;
 
 typedef struct {
+  int id; // id is required to get the original map the questions back to index
+          // when order is jumbled on the TM
   QuestionType type;
   QuestionLanguage language;
   char *text;

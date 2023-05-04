@@ -64,6 +64,7 @@ void buildQuestionBank() {
   while (fgets(buffer, sizeof(buffer), file) != NULL) {
     if (buffer[0] == '-') {
       // if end of a question, push it to the question bank
+      currentQuestion->id = NUM_QUESTIONS;
       QUESTION_BANK[NUM_QUESTIONS++] = currentQuestion;
       continue;
     }
@@ -83,6 +84,7 @@ void buildQuestionBank() {
       currentQuestion->imageFile = NULL;
       currentQuestion->answerFile = NULL;
       currentQuestion->text = text;
+      currentQuestion->id = -1;
       break;
 
     // Question type

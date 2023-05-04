@@ -99,3 +99,9 @@ void freeRequest(Request *request) {
   free(request->attempt);
   free(request);
 }
+
+int *generateRandomQuestionIds(int numQuestions) {
+  int *questions = malloc(numQuestions * sizeof(int));
+  // TODO: RNG code here to fill array with question ids
+  return questions;
+}

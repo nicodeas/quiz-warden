@@ -75,7 +75,7 @@ extern int runCode(char *exec, QuestionLanguage language);
 extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
-extern Question *generateRandomQuestions(); // TODO:
+extern int *generateRandomQuestionIds(int numQuestions); // TODO:
 
 // handler functions in handlers.c
 extern void parseRequest(Request *request);

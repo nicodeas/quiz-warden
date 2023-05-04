@@ -85,3 +85,17 @@ int runCode(char *exec, QuestionLanguage language) {
   close(fd[1]);
   return fd[0];
 }
+
+Request *newRequest(int client_socket) {
+  Request *request = (Request *)malloc(sizeof(Request));
+  request->attempt = NULL;
+  request->client_socket = client_socket;
+  request->action = UNSPEC;
+  request->question = NULL;
+  return request;
+}
+
+void freeRequest(Request *request) {
+  free(request->attempt);
+  free(request);
+}

@@ -6,6 +6,4 @@ WORKDIR /TM
 
 COPY ./ ./
 
-RUN pip install -r requirements.txt
-
 CMD /wait && python -u -m main

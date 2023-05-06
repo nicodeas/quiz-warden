@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM python:latest
 
 RUN apk add build-base
 

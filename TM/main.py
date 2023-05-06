@@ -1,17 +1,9 @@
 import threading
-import time
 from http.server import HTTPServer
 
 from config import HOST, PORT
-from utils.QB import QbHandler
+from utils.QB import QbHandler, qb_health_check
 from utils.request_handler import RequestHandler
-
-
-def qb_healthcheck(qb_handler):
-    while True:
-        time.sleep(2)
-        for qb in qb_handler.qbs:
-            qb_handler.health_check(qb)
 
 
 def main():
@@ -23,7 +15,7 @@ def main():
     server = HTTPServer((HOST, PORT), RequestHandler)
     print(f"Started server on {HOST}:{PORT}")
 
-    threading.Thread(target=qb_healthcheck, args=[qb_handler]).start()
+    threading.Thread(target=qb_health_check, args=[qb_handler]).start()
 
     server.serve_forever()
 

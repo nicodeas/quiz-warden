@@ -2,7 +2,7 @@ from config import QB_HOSTS
 
 
 class QbHandler:
-    from . import connect, health_check
+    from . import connect, health_check, generate_test
 
     # Singleton
     def __new__(cls):

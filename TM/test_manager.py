@@ -8,6 +8,8 @@ class TestManager:
         self.choices = []
         self.question_number = 1
         self.questions = []
+        self.type = None
+        self.question_info = {}
 
         # dummy variables until QB exists
         self.dummy_questions = []
@@ -24,7 +26,9 @@ class TestManager:
             self.change_question()
 
     def get_question_info(self):
-        return {"question": self.question, "choices": self.choices}
+        if(self.choices):
+            return {"question": self.question, "choices": self.choices, "type": self.type}
+        return {"question": self.question,  "type": self.type}
     
     # Dummy function 
     # self.questions needs to be constructed when we get the list of question IDs from the QB
@@ -34,35 +38,29 @@ class TestManager:
             self.questions.append({"qid": i+1, "attempt": 3, "mark": 0})
 
 
-
     def check_answer(self, answer_index, qid):
         for q in self.questions:
             if q['qid'] == qid:
                 if answer_index == self.answer:
-                    if q['attempt'] == 3:
-                        q['mark'] = q['attempt']
-                        q['attempt'] -= 1
-                    elif q['attempt'] == 2:
-                        q['mark'] = q['attempt']
-                        q['attempt'] -= 1
-                    elif q['attempt'] == 1:
-                        q['mark'] = q['attempt']
-                        q['attempt'] -= 1
-                    else:
-                        return {'correct': False, 'attempts': q['attempt'] }
+                    q['attempt'] -= 1
+                    q['mark'] = q['attempt'] + 1
+                    return {'correct': True, 'attempts': q['attempt'], 'mark': q['mark']}
                 else:
                     if q['attempt'] > 0:
                         q['attempt'] -= 1
-                    return {'correct': False, 'attempts': q['attempt'] }
-                break
-        return {'correct': True, 'attempts': q['attempt'], 'mark': q['mark'] }
+                    return {'correct': False, 'attempts': q['attempt']}
+        return {'correct': False, 'attempts': 0}
 
     # dummy function until QB exists
     def change_question(self):
-        question_index = self.question_number - 1
-        self.question = self.dummy_questions[question_index]["question"]
-        self.choices = self.dummy_questions[question_index]["choices"]
-        self.answer = int(self.dummy_questions[question_index]["answer"])
+        new_question = self.dummy_questions[self.question_number - 1]
+        self.question = new_question["question"]
+        if 'choices' in new_question:
+            self.choices = new_question["choices"]
+        else:
+            self.choices = []
+        self.type = new_question['type']
+        self.answer = new_question["answer"]
 
 
 test_manager = TestManager()

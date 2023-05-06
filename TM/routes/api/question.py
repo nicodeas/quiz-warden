@@ -5,7 +5,6 @@ from ..base import BaseRoute
 
 class Question(BaseRoute, route="api"):
     def executor(req, path, qs, *args, **kwargs):
-        print("QS", qs)
         if "answer" not in qs:
             # Get a new question without checking it
             try:

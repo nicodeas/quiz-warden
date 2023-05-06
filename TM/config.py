@@ -10,4 +10,4 @@ else:
     QB_HOSTS = [("localhost", 8080), ("localhost", 8081)]
 
 # In seconds
-HEALTHCHECK_INTERVAL=5
+HEALTHCHECK_INTERVAL = 5

@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 
   printf("Language has been set to %s\n", LANGUAGE);
 
-  // buildQuestionBank();
+  buildQuestionBank();
   int server_socket = createServer();
   runServer(server_socket);
 }

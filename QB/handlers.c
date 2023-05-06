@@ -66,6 +66,6 @@ void handleRequest(int client_socket) {
   // clean up resources, possibly add a function to remove tmp file created by
   // compilation
   freeRequest(request);
-  // close(client_socket);
+  close(client_socket);
   exit(EXIT_SUCCESS);
 }

@@ -1,6 +1,4 @@
-FROM alpine:latest
-
-RUN apk add build-base
+FROM python:latest
 
 WORKDIR /QB
 

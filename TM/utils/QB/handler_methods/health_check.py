@@ -1,5 +1,4 @@
 import io
-import socket
 
 
 def health_check(self, addr):

@@ -10,11 +10,11 @@ def health_check(self, addr):
 
     s.send(req.encode())
 
+    res = io.BytesIO()
     while True:
         data = s.recv(io.DEFAULT_BUFFER_SIZE)
         if not data:
             break
-        print(data.decode())
-    s.close()
+        res.write(data)
 
-    return True
+    return res.getvalue().decode()

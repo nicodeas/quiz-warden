@@ -9,7 +9,6 @@ from utils.request_handler import RequestHandler
 def main():
     print("Connecting to QBs...")
     qb_handler = QbHandler()
-    qb_handler.initialise()
     print("Finished connecting to QBs")
 
     server = HTTPServer((HOST, PORT), RequestHandler)

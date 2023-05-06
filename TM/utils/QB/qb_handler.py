@@ -6,7 +6,7 @@ class QbHandler:
 
     # Singleton
     def __new__(cls):
-        if not hasattr(cls, 'instance'):
+        if not hasattr(cls, "instance"):
             cls.instance = super(QbHandler, cls).__new__(cls)
             return cls.instance
 

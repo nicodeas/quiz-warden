@@ -11,11 +11,11 @@ class Login(BaseRoute):
         if req.command == 'GET':
             return html_reader(path)
         elif req.command == 'POST':
-            # Read request
+            # Extract username and password from request
             content_length = int(req.headers['Content-Length'])
             post_data = req.rfile.read(content_length)
             data = parse_qs(post_data.decode('utf-8'))
-            # Extract username and password from request
+            
             username = data.get('username', [''])[0]
             password = data.get('password', [''])[0]
 

@@ -1,7 +1,5 @@
 FROM python:latest
 
-RUN apk add build-base
-
 WORKDIR /QB
 
 COPY ./ ./

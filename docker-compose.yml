@@ -23,3 +23,6 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
+    environment:
+      - ENV=docker
+      - WAIT_HOSTS=python_question_bank:8080, c_question_bank:8081

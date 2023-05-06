@@ -1,4 +1,5 @@
 #define _POSIX_C_SOURCE 200809L // enables strdup()
+#include <getopt.h>
 #include <netinet/in.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -9,7 +10,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define PORT 8080
 #define BACKLOG 16
 
 #define PATH_PYTHON "/bin/python3"
@@ -57,6 +57,9 @@ typedef struct {
 } Request;
 
 #define QUESTION_BANK_SIZE 512
+
+extern int PORT;
+extern char *LANGUAGE; // the language the server is running in
 
 extern Question *QUESTION_BANK[QUESTION_BANK_SIZE];
 extern int NUM_QUESTIONS; // write to this when building question bank to keep

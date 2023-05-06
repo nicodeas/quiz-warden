@@ -1,5 +1,5 @@
-import socket
 import io
+import socket
 
 HOST = "localhost"  # replace with server address
 PORT = 8080  # replace with server port

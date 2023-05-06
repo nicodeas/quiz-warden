@@ -4,4 +4,6 @@ WORKDIR /QB
 
 COPY ./ ./
 
-CMD [ "make","run" ]
+RUN make -B
+
+CMD ["make", "run"]

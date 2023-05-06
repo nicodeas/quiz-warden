@@ -1,7 +1,9 @@
 FROM python:latest
 
+COPY --from=ghcr.io/ufoscout/docker-compose-wait:latest /wait /wait
+
 WORKDIR /TM
 
 COPY ./ ./
 
-CMD [ "python3","main.py" ]
+CMD /wait && python -u -m main

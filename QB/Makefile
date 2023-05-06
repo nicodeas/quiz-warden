@@ -15,4 +15,4 @@ clean:
 	rm -f $(OBJFILES) $(TARGET)
 
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) -p ${PORT} ${LANGUAGE}

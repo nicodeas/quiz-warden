@@ -1,22 +1,20 @@
 from config import QB_HOSTS
 
+from .qb_health_check import do_health_check
+
 
 class QbHandler:
-    from . import connect, health_check
+    from . import connect, generate_test, health_check
 
     # Singleton
-    def __new__(cls):
-        if not hasattr(cls, "instance"):
-            cls.instance = super(QbHandler, cls).__new__(cls)
-            return cls.instance
+    def __new__(cls, *args, **kwargs):
+        instance = cls.__dict__.get("instance")
+        if instance is not None:
+            return instance
+        cls.instance = instance = object.__new__(cls)
+        instance.init(*args, **kwargs)
+        return instance
 
-    def __init__(self):
-        self.qbs = []
-
-    def initialise(self):
-        for host in QB_HOSTS:
-            if self.connect(host):
-                self.qbs.append(host)
-                print(f"  Connected to QB at {host[0]}:{host[1]}")
-            else:
-                print(f"  QB at {host[0]}:{host[1]} is down")
+    def init(self, *args, **kwargs):
+        self.qbs = {}
+        do_health_check(self)

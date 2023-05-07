@@ -56,7 +56,7 @@ void handleRequest(int client_socket) {
     break;
   case (HEALTH_CHECK):;
     // debug stuff, remove later
-    char *resp = "HEALTH_CHECK OK!";
+    char *resp = LANGUAGE;
     send(request->client_socket, resp, strlen(resp), 0);
     break;
   case (UNSPEC):;

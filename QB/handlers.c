@@ -100,52 +100,43 @@ void handleRequest(int client_socket) {
   // handle based on action
   switch (request->action) {
   case (GENERATE_QUESTIONS):;
-  {
-    // TODO: Replace NUM_QUESTIONS with how many questions of type we want in quiz
-    // maybe part of the config of each QB? (declare lang and how many questions we want)
-    // image file needs to be sent (python end reads data to file?), zip image for easier transfer?
     int *questions = generateRandomQuestionIds(NUM_QUESTIONS, request->session_token);
-    char *str = malloc(str_len_of_questions(NUM_QUESTIONS, questions) * sizeof(char));
-
-    int file_queue[NUM_QUESTIONS];
-    int file_count = 0;
-
-    // '\n' delims questions, '&' delims elements of question, '^' delims multi-choice
+    
     for (int i = 0; i < NUM_QUESTIONS; i++) {
-        char id_str[12];
-        sprintf(id_str, "%i", QUESTION_BANK[questions[i]]->id);
-        strcat(str,id_str);
-        strcat(str, "&");
-        strcat(str, QuestionLanguageToString(QUESTION_BANK[questions[i]]->language));
-        strcat(str, "&");
-        strcat(str, QuestionTypeToString(QUESTION_BANK[questions[i]]->type));
-        strcat(str, "&");
-        strcat(str, QUESTION_BANK[questions[i]]->text);
-
-        if (QUESTION_BANK[questions[i]]->type == CHOICE) {
-            strcat(str, "&");
-            strcat(str, QUESTION_BANK[questions[i]]->choices->a);
-            strcat(str, "^");
-            strcat(str, QUESTION_BANK[questions[i]]->choices->b);
-            strcat(str, "^");
-            strcat(str, QUESTION_BANK[questions[i]]->choices->c);
-            strcat(str, "^");
-            strcat(str, QUESTION_BANK[questions[i]]->choices->d);
-        }
-        if (QUESTION_BANK[questions[i]]->type == IMAGE) {
-            strcat(str, "&");
-            strcat(str, QUESTION_BANK[questions[i]]->imageFile);
-            file_queue[file_count++] = i;
-            sendFile(QUESTION_BANK[questions[i]]->imageFile,request->client_socket);
-        }
-        strcat(str,"\n");
+      char id_str[12];
+      sprintf(id_str,"%i\n", questions[i]);
+      send(request->client_socket, id_str, strlen(id_str), 0);
     }
-    send(request->client_socket, str, strlen(str), 0);
     break;
-  }
   case (MARK_QUESTION_BY_ID):;
     break;
   case (GET_QUESTION_BY_ID):;
+    // '&' delims elements of question, '^' delims multi-choice
+    char id_str[12];
+    sprintf(id_str, "%i", request->question->id);
+    send(request->client_socket, id_str, strlen(id_str), 0);
+    send(request->client_socket, "&", 1, 0);
+    send(request->client_socket, QuestionLanguageToString(request->question->language), strlen(QuestionLanguageToString(request->question->language)), 0);
+    send(request->client_socket, "&", 1, 0);
+    send(request->client_socket, QuestionTypeToString(request->question->type), strlen(QuestionTypeToString(request->question->type)), 0);
+    send(request->client_socket, "&", 1, 0);
+    send(request->client_socket, request->question->text, strlen(request->question->text), 0);
+
+    if (request->question->type == CHOICE) {
+        send(request->client_socket, "&", 1, 0);
+        send(request->client_socket, request->question->choices->a, strlen(request->question->choices->a), 0);
+        send(request->client_socket, "^", 1, 0);
+        send(request->client_socket, request->question->choices->b, strlen(request->question->choices->b), 0);
+        send(request->client_socket, "^", 1, 0);
+        send(request->client_socket, request->question->choices->c, strlen(request->question->choices->c), 0);
+        send(request->client_socket, "^", 1, 0);
+        send(request->client_socket, request->question->choices->d, strlen(request->question->choices->d), 0);
+    }
+    if (request->question->type == IMAGE) {
+        send(request->client_socket, "&", 1, 0);
+        send(request->client_socket, request->question->imageFile,  strlen(request->question->imageFile), 0);
+        sendFile(request->question->imageFile,request->client_socket);
+    }
     break;
   case (HEALTH_CHECK):;
     // debug stuff, remove later

@@ -7,10 +7,10 @@ PORT = 8080  # replace with server port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
-session_token = 7444
+Q_TO_GET = 0
 
 # request needs to contain a valid keyword else there will be an error
-req = "GET_QUESTION_BY_ID|0"
+req = f"GET_QUESTION_BY_ID|{Q_TO_GET}"
 #req = "HEALTH_CHECK|"
 s.send(req.encode())
 
@@ -24,8 +24,7 @@ while True:
 
     #qb_response = data.decode()
 print(qb_response)
-"""
-questions = []
+
 for line in qb_response.split('\n'):
     if not line:
         continue
@@ -42,14 +41,9 @@ for line in qb_response.split('\n'):
         question['choices'] = question_parts[4].split('^')
     if question['type'] == 'IMAGE':
         question['image'] = question_parts[4]
-    questions.append(question)
-print("TM end after sorting questions into dict:")
-print(questions[0])
-print(questions[1])
-print(questions[2])
-print(questions[3])
+print("TM end after sorting question into dict:")
+print(question)
 
 
 # close the socket
 s.close()
-"""

@@ -27,29 +27,6 @@ const char *QuestionLanguageToString(QuestionLanguage language) {
     }
 }
 
-// get strlen for each question's elements + delims
-size_t str_len_of_questions(int NUM_QUESTIONS, int *questions) {
-  size_t total = 0;
-  
-  for (int i = 0; i < NUM_QUESTIONS; i++) {
-    total += snprintf(NULL, 0, "%i", QUESTION_BANK[questions[i]]->id) +1;
-    total += strlen(QuestionLanguageToString(QUESTION_BANK[questions[i]]->language)) +1;
-    total += strlen(QuestionTypeToString(QUESTION_BANK[questions[i]]->type)) +1;
-    total += strlen(QUESTION_BANK[questions[i]]->text);
-    if (QUESTION_BANK[questions[i]]->type == CHOICE) {
-      total += strlen(QUESTION_BANK[questions[i]]->choices->a) +2;
-      total += strlen(QUESTION_BANK[questions[i]]->choices->b) +1;
-      total += strlen(QUESTION_BANK[questions[i]]->choices->c) +1;
-      total += strlen(QUESTION_BANK[questions[i]]->choices->d);
-    }
-    if (QUESTION_BANK[questions[i]]->type == IMAGE) {
-      total += strlen(QUESTION_BANK[questions[i]]->imageFile) +1;
-    }
-    total += 1;
-  }
-  return total;
-}
-
 void parseRequest(Request *request) {
   // will not handle requests that are larger than bufsiz for this
   // project, question/answers should not be that long

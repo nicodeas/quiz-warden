@@ -100,8 +100,26 @@ void freeRequest(Request *request) {
   free(request);
 }
 
-int *generateRandomQuestionIds(int numQuestions) {
+int *generateRandomQuestionIds(int numQuestions, int session_token) {
   int *questions = malloc(numQuestions * sizeof(int));
-  // TODO: RNG code here to fill array with question ids
+  // session_token seeds rng
+  srand(session_token);
+  int count = 0;
+  
+  while (count < numQuestions) {
+    // generate q_id from NUM_QUESTIONS in QB
+    int q_id = rand() % NUM_QUESTIONS;
+    // add q_id to questions if not already in set
+    bool found = false;
+    for (int i = 0; i < count; i++) {
+      if (questions[i] == q_id) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      questions[count++] = q_id;
+    }
+  }
   return questions;
 }

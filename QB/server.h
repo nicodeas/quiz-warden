@@ -9,7 +9,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdbool.h>
 
+#define PORT 8080
 #define BACKLOG 16
 
 #define PATH_PYTHON "/bin/python3"
@@ -54,6 +56,7 @@ typedef struct {
   RequestAction action;
   char *attempt;
   Question *question;
+  int session_token;
 } Request;
 
 #define QUESTION_BANK_SIZE 512
@@ -78,7 +81,7 @@ extern int runCode(char *exec, QuestionLanguage language);
 extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
-extern int *generateRandomQuestionIds(int numQuestions); // TODO:
+extern int *generateRandomQuestionIds(int numQuestions, int session_token); // TODO:
 
 // handler functions in handlers.c
 extern void parseRequest(Request *request);

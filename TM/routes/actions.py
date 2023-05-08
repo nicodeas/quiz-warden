@@ -1,0 +1,8 @@
+from enum import Enum
+
+
+class RequestAction(str, Enum):
+    GENERATE_QUESTIONS = "GENERATE_QUESTIONS"
+    MARK_QUESTION_BY_ID = "MARK_QUESTION_BY_ID"
+    GET_QUESTION_BY_ID = "GET_QUESTION_BY_ID"
+    HEALTH_CHECK = "HEALTH_CHECK"

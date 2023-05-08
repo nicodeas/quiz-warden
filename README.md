@@ -22,7 +22,7 @@ python -m main
 
 ### Development
 
-### Adding page routes
+#### Adding page routes
 
 - Add a new file to the `routes` directory. The file should be named after the route. For example, the route `/quiz` should be named `quiz.py`.
 - In the file, update the class name to match the route in PascalCase. For example, the route `/quiz` should be named `Quiz`.
@@ -30,8 +30,16 @@ python -m main
 - Add the relevant html file to the `views` directory. The file should be named after the route. For example, the route `/quiz` should be named `quiz.html`.
 - Add the relevant static files to the `static` directory. Added static files can be accessed at `/static/<filename>`.
 
-### Adding API routes
+#### Adding API routes
 
 - Add a new file to the `api` directory. The file should be named after the route. For example, the route `/api/quiz` should be named `quiz.py`.
 - In the file, update the class name to match the route in PascalCase. For example, the route `/api/quiz` should be named `Quiz`. Change the argument `route` to be the path of the directory.
 - Register the route by importing it into `routes/api/__init__.py`.
+
+## QB
+
+See make file for options
+
+### Setup
+
+### Development

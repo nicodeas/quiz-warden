@@ -5,6 +5,9 @@ type = "";
 
 const getQuestion = async (previousQuestionIndex) => {
   document.getElementById("question-result").innerHTML = "";
+  const language = document.getElementById("language");
+  language.innerHTML = "";
+
   fetch("/api/question?number=" + currentQuestionIndex, {
     method: "GET",
     headers: {
@@ -25,6 +28,7 @@ const getQuestion = async (previousQuestionIndex) => {
         type = data.type;
       } else if (data.type == "CODE") {
         type = data.type;
+        language.innerHTML = " using " + data.language;
       }
       updateQuiz();
     });

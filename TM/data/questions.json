@@ -36,7 +36,8 @@
     {
       "question": "Print numbers from 0 to 9",
       "answer": "for i in range(0,10): print(i)",
-      "type": "CODE"
+      "type": "CODE",
+      "language": "Python"
     },
     {
       "question": "What is the output of the following code?\n\na = [1, 2, 3, 4]\nb = a[-2:]\nprint(b)",

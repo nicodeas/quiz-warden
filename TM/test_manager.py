@@ -9,6 +9,7 @@ class TestManager:
         self.question_number = 1
         self.questions = []
         self.type = None
+        self.language = None
         self.question_info = {}
 
         # dummy variables until QB exists
@@ -28,7 +29,7 @@ class TestManager:
     def get_question_info(self):
         if(self.choices):
             return {"question": self.question, "choices": self.choices, "type": self.type}
-        return {"question": self.question,  "type": self.type}
+        return {"question": self.question,  "type": self.type, "language": self.language}
     
     # Dummy function 
     # self.questions needs to be constructed when we get the list of question IDs from the QB
@@ -57,10 +58,12 @@ class TestManager:
         self.question = new_question["question"]
         if 'choices' in new_question:
             self.choices = new_question["choices"]
-        else:
+        elif 'language' in new_question:
             self.choices = []
+            self.language = new_question['language']
         self.type = new_question['type']
         self.answer = new_question["answer"]
+        print(self.language)
 
 
 test_manager = TestManager()

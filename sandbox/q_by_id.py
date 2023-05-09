@@ -8,10 +8,11 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
 Q_TO_GET = 0
+SESSION_TOKEN = 888
 
 # request needs to contain a valid keyword else there will be an error
-req = f"GET_QUESTION_BY_ID|{Q_TO_GET}"
-#req = "HEALTH_CHECK|"
+#req = f"GET_QUESTION_BY_ID|{Q_TO_GET}"
+req = f"GENERATE_QUESTIONS|{SESSION_TOKEN}"
 s.send(req.encode())
 
 qb_response =""
@@ -24,13 +25,8 @@ while True:
 
     #qb_response = data.decode()
 print(qb_response)
-
-for line in qb_response.split('\n'):
-    if not line:
-        continue
-    question_parts = line.split('&')
-    if not question_parts[0]:
-        continue
+if "GET_QUESTION_BY_ID" in req:
+    question_parts = qb_response.split('&')
     question = {
         'id': int(question_parts[0]),
         'language': question_parts[1],
@@ -41,9 +37,12 @@ for line in qb_response.split('\n'):
         question['choices'] = question_parts[4].split('^')
     if question['type'] == 'IMAGE':
         question['image'] = question_parts[4]
-print("TM end after sorting question into dict:")
-print(question)
-
+        # TODO: add file write
+    print("TM end after sorting question into dict:")
+    print(question)
+elif "GENERATE_QUESTIONS" in req:
+    questions = [question for question in qb_response.split('\n') if question]
+    print(questions)
 
 # close the socket
 s.close()

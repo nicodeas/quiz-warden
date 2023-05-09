@@ -81,14 +81,14 @@ void handleRequest(int client_socket) {
     
     for (int i = 0; i < NUM_QUESTIONS; i++) {
       char id_str[12];
-      sprintf(id_str,"%i\n", questions[i]);
+      sprintf(id_str,"%i&", questions[i]);
       send(request->client_socket, id_str, strlen(id_str), 0);
     }
     break;
   case (MARK_QUESTION_BY_ID):;
     break;
   case (GET_QUESTION_BY_ID):;
-    // '&' delims elements of question, '^' delims multi-choice
+    // '&' delims elements of question, '^' delims multi-choice, '$' delims file
     char id_str[12];
     sprintf(id_str, "%i", request->question->id);
     send(request->client_socket, id_str, strlen(id_str), 0);
@@ -112,6 +112,7 @@ void handleRequest(int client_socket) {
     if (request->question->type == IMAGE) {
         send(request->client_socket, "&", 1, 0);
         send(request->client_socket, request->question->imageFile,  strlen(request->question->imageFile), 0);
+        send(request->client_socket, "$", 1, 0);
         sendFile(request->question->imageFile,request->client_socket);
     }
     break;

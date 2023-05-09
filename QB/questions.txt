@@ -18,6 +18,6 @@ $ Blue
 -----------------------------------------------------------------
 Q Write a function that turns an image black and white, a sample image is provided to you below
 T IMAGE
-I ./some-image-of-chris
+I ./some-image-of-chris.png
 F ./some-black-and-white-image-of-chris
 -----------------------------------------------------------------

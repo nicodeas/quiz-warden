@@ -42,7 +42,7 @@ class TestManager:
     def check_answer(self, answer_index, qid):
         for q in self.questions:
             if q['qid'] == qid:
-                if answer_index == self.answer:
+                if answer_index == self.answer and q['attempt'] > 0:
                     q['attempt'] -= 1
                     q['mark'] = q['attempt'] + 1
                     return {'correct': True, 'attempts': q['attempt'], 'mark': q['mark']}

@@ -40,6 +40,8 @@ python -m main
 
 See make file for options
 
+To run in DEBUG mode, use `DEBUG=1 ./main -p 8080 PYTHON`
+
 ### Setup
 
 ### Development

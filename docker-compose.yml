@@ -8,6 +8,7 @@ services:
     environment:
       - PORT=8080
       - LANGUAGE=Python
+      - DEBUG=1
 
   c_question_bank:
     build: ./QB
@@ -17,6 +18,7 @@ services:
     environment:
       - PORT=8081
       - LANGUAGE=C
+      - DEBUG=1
 
   test_manager:
     build: ./TM

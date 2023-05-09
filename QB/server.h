@@ -65,6 +65,7 @@ extern Question *QUESTION_BANK[QUESTION_BANK_SIZE];
 extern int NUM_QUESTIONS; // write to this when building question bank to keep
                           // track of max index we can go; not sure if this will
                           // be required
+extern bool DEBUG;
 
 // server functions in server.c
 extern void buildQuestionBank(); // TODO: setup function on server startup to
@@ -92,3 +93,6 @@ extern void
 markImage(int client_socket,
           int questionId); // TODO: send processed image back to TM. Then send
                            // whether answer is correct/wrong?
+
+// debug functions
+extern void printQuestionBank();

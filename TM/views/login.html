@@ -1,35 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login Page</title>
-  </head>
-  <body>
-    <h1>Login Page</h1>
-    <form>
-      <label>Username:</label>
-      <input type="text" name="username" id="username" /><br />
-      <label>Password:</label>
-      <input type="password" name="password" id="password" /><br />
-      <button type="button" id="submit">Login</button>
-    </form>
-    <script>
-      // TODO: move this to a separate file later
-      const username = document.getElementById("username");
-      const password = document.getElementById("password");
-      const submit = document.getElementById("submit");
-      const loginUser = async () => {
-        // TODO: post to TM to login
-        // TODO: make endpoint to handle this request
-        console.log({
-          username: username.value,
-          password: password.value,
-        });
-      };
-      // reset input values
-      username.value = "";
-      password.value = "";
-      // register login function to submit button
-      submit.addEventListener("click", loginUser);
-    </script>
-  </body>
+
+<head>
+  <title>Login Page</title>
+</head>
+
+<body>
+  <h1>Login Page</h1>
+  <form>
+    <label>Username:</label>
+    <input type="text" name="username" id="username" /><br />
+    <label>Password:</label>
+    <input type="password" name="password" id="password" /><br />
+    <button type="button" id="submit" onclick="loginUser()">Login</button>
+  </form>
+
+  <script src="static/js/auth.js"></script>
+</body>
+
 </html>

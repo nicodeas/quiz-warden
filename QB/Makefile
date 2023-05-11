@@ -1,7 +1,7 @@
 CC = cc -std=c11
 CFLAGS = -Wall -Werror
 
-OBJFILES = main.o utils.o handlers.o server.o 
+OBJFILES = main.o utils.o handlers.o server.o debug.o
 TARGET = main
 HEADERS = server.h
 

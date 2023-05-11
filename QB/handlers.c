@@ -79,12 +79,13 @@ void handleRequest(int client_socket) {
   Request *request = newRequest(client_socket);
   parseRequest(request);
 
-  // debug
-  if (request->question) {
-    printf("Request question %s\n", request->question->text);
-  }
-  if (request->attempt) {
-    printf("Request Question attempt: %s\n", request->attempt);
+  if (DEBUG) {
+    if (request->question) {
+      printf("Request question %s\n", request->question->text);
+    }
+    if (request->attempt) {
+      printf("Request Question attempt: %s\n", request->attempt);
+    }
   }
 
   // handle based on action

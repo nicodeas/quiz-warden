@@ -8,7 +8,8 @@
         "A text editor",
         "A database management system"
       ],
-      "answer": 1
+      "answer": 1,
+      "type": "CHOICE"
     },
     {
       "question": "What is PEP 8?",
@@ -18,7 +19,8 @@
         "A Python package for scientific computing",
         "A version of the Python programming language"
       ],
-      "answer": 1
+      "answer": 1,
+      "type": "CHOICE"
     },
     {
       "question": "What is the difference between a list and a tuple in Python?",
@@ -28,22 +30,20 @@
         "A list can be nested while a tuple cannot",
         "There is no difference between a list and a tuple in Python"
       ],
-      "answer": 0
+      "answer": 0,
+      "type": "CHOICE"
     },
     {
-      "question": "What is the purpose of the 'if __name__ == '__main__':' statement in Python?",
-      "choices": [
-        "To initialize a class in a module",
-        "To define a function in a module",
-        "To allow a module to be run as a standalone program",
-        "To import a module from another module"
-      ],
-      "answer": 2
+      "question": "Print numbers from 0 to 9",
+      "answer": "for i in range(0,10): print(i)",
+      "type": "CODE",
+      "language": "Python"
     },
     {
       "question": "What is the output of the following code?\n\na = [1, 2, 3, 4]\nb = a[-2:]\nprint(b)",
       "choices": ["[1, 2, 3]", "[3, 4]", "[2, 3, 4]", "[1, 2]"],
-      "answer": 1
+      "answer": 1,
+      "type": "CHOICE"
     },
     {
       "question": "What is the difference between 'append' and 'extend' methods in Python lists?",
@@ -53,7 +53,8 @@
         "'append' adds a single element to the end of a list, while 'extend' adds multiple elements to the end of a list",
         "There is no such thing as 'append' and 'extend' methods in Python lists"
       ],
-      "answer": 2
+      "answer": 2,
+      "type": "CHOICE"
     },
     {
       "question": "What is the purpose of a Python virtual environment?",
@@ -63,7 +64,8 @@
         "To run Python code on a remote server",
         "To allow multiple users to collaborate on a Python project"
       ],
-      "answer": 1
+      "answer": 1,
+      "type": "CHOICE"
     },
     {
       "question": "What is the difference between '==' and 'is' operators in Python?",
@@ -73,7 +75,8 @@
         "'==' checks if two objects are the same object, while 'is' checks if two objects have the same value",
         "There is no such thing as '==' and 'is' operators in Python"
       ],
-      "answer": 1
+      "answer": 1,
+      "type": "CHOICE"
     }
   ]
 }

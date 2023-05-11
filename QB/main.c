@@ -2,6 +2,7 @@
 
 int PORT;
 char *LANGUAGE;
+bool DEBUG = false;
 
 void usage(char *progname) {
   fprintf(stderr,
@@ -16,16 +17,21 @@ void usage(char *progname) {
 }
 
 int main(int argc, char *argv[]) {
-  int opt;
+  DEBUG = (getenv("DEBUG") != NULL);
 
+  if (DEBUG) {
+    printf("Debug: ON\n");
+  }
+
+  int opt;
   while ((opt = getopt(argc, argv, "p:")) != -1) {
     switch (opt) {
-      case 'p':
-        PORT = atoi(optarg);
-        break;
-      default:
-        usage(argv[0]);
-        break;
+    case 'p':
+      PORT = atoi(optarg);
+      break;
+    default:
+      usage(argv[0]);
+      break;
     }
   }
 
@@ -50,9 +56,12 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  printf("Language has been set to %s\n", LANGUAGE);
-
   buildQuestionBank();
+  if (DEBUG) {
+    printf("Language has been set to %s\n", LANGUAGE);
+    printQuestionBank();
+  }
+
   int server_socket = createServer();
   runServer(server_socket);
 }

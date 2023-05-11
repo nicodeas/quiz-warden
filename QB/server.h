@@ -80,12 +80,14 @@ extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
 extern int *generateRandomQuestionIds(int numQuestions,
-                                      int session_token); // TODO:
+                                      int session_token);
+extern const char *QuestionLanguageToString(QuestionLanguage language);
+extern const char *QuestionTypeToString(QuestionType type);
 
 // handler functions in handlers.c
 extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
-extern void getQuestion(int client_socket, int questionId);
+extern void getQuestion(Request *request);
 extern void markQuestion(char *answer); // TODO: answer contains req from client
                                         // parse to get question id
 extern void markChoice(int client_socket, int questionId);

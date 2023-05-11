@@ -1,32 +1,6 @@
 #include "server.h"
 
 
-// helper functions for GENERATE_QUESTIONS
-// here for debugging; move these to other file
-const char *QuestionTypeToString(QuestionType type) {
-    switch (type) {
-        case CHOICE:
-            return "CHOICE";
-        case IMAGE:
-            return "IMAGE";
-        case CODE:
-            return "CODE";
-        default:
-            return "UNKNOWN";
-    }
-}
-
-const char *QuestionLanguageToString(QuestionLanguage language) {
-    switch (language) {
-        case PYTHON:
-            return "PYTHON";
-        case CLANG:
-            return "CLANG";
-        default:
-            return "UNKNOWN";
-    }
-}
-
 void parseRequest(Request *request) {
   // will not handle requests that are larger than bufsiz for this
   // project, question/answers should not be that long
@@ -59,6 +33,45 @@ void parseRequest(Request *request) {
   }
 }
 
+void getQuestion(Request *request) {
+  const char *language = QuestionLanguageToString(request->question->language);
+  const char *type = QuestionTypeToString(request->question->type);
+  const char *text = request->question->text;
+
+  // determine size of response
+  // '&' delims elements of question, '^' delims multi-choice, '$' delims file
+  size_t size = snprintf(NULL, 0, "%i&%s&%s&%s", request->question->id, language, type, text);
+  if (request->question->type == CHOICE) {
+      size += snprintf(NULL, 0, "&%s^%s^%s^%s",
+                      request->question->choices->a,
+                      request->question->choices->b,
+                      request->question->choices->c,
+                      request->question->choices->d);
+  }
+  if (request->question->type == IMAGE) {
+      size += snprintf(NULL, 0, "&%s$", request->question->imageFile);
+  }
+  // construct response
+  char response[size + 1];
+  sprintf(response, "%i&%s&%s&%s", request->question->id, language, type, text);
+  if (request->question->type == CHOICE) {
+      sprintf(response + strlen(response), "&%s^%s^%s^%s",
+              request->question->choices->a,
+              request->question->choices->b,
+              request->question->choices->c,
+              request->question->choices->d);
+  }
+  if (request->question->type == IMAGE) {
+      sprintf(response + strlen(response), "&%s$", request->question->imageFile);
+  }
+  // send response
+  send(request->client_socket, response, strlen(response), 0);
+  // send image if required
+  if (request->question->type == IMAGE) {
+      sendFile(request->question->imageFile,request->client_socket);
+  }
+}
+
 void handleRequest(int client_socket) {
   // TODO: deal with multiple coding/image questions needing to be marked, need
   // some way of locking the exe file
@@ -88,33 +101,7 @@ void handleRequest(int client_socket) {
   case (MARK_QUESTION_BY_ID):;
     break;
   case (GET_QUESTION_BY_ID):;
-    // '&' delims elements of question, '^' delims multi-choice, '$' delims file
-    char id_str[12];
-    sprintf(id_str, "%i", request->question->id);
-    send(request->client_socket, id_str, strlen(id_str), 0);
-    send(request->client_socket, "&", 1, 0);
-    send(request->client_socket, QuestionLanguageToString(request->question->language), strlen(QuestionLanguageToString(request->question->language)), 0);
-    send(request->client_socket, "&", 1, 0);
-    send(request->client_socket, QuestionTypeToString(request->question->type), strlen(QuestionTypeToString(request->question->type)), 0);
-    send(request->client_socket, "&", 1, 0);
-    send(request->client_socket, request->question->text, strlen(request->question->text), 0);
-
-    if (request->question->type == CHOICE) {
-        send(request->client_socket, "&", 1, 0);
-        send(request->client_socket, request->question->choices->a, strlen(request->question->choices->a), 0);
-        send(request->client_socket, "^", 1, 0);
-        send(request->client_socket, request->question->choices->b, strlen(request->question->choices->b), 0);
-        send(request->client_socket, "^", 1, 0);
-        send(request->client_socket, request->question->choices->c, strlen(request->question->choices->c), 0);
-        send(request->client_socket, "^", 1, 0);
-        send(request->client_socket, request->question->choices->d, strlen(request->question->choices->d), 0);
-    }
-    if (request->question->type == IMAGE) {
-        send(request->client_socket, "&", 1, 0);
-        send(request->client_socket, request->question->imageFile,  strlen(request->question->imageFile), 0);
-        send(request->client_socket, "$", 1, 0);
-        sendFile(request->question->imageFile,request->client_socket);
-    }
+    getQuestion(request);
     break;
   case (HEALTH_CHECK):;
     // debug stuff, remove later

@@ -122,3 +122,28 @@ int *generateRandomQuestionIds(int numQuestions, int session_token) {
 
   return questions;
 }
+
+// helper functions for getQuestions
+const char *QuestionTypeToString(QuestionType type) {
+    switch (type) {
+        case CHOICE:
+            return "CHOICE";
+        case IMAGE:
+            return "IMAGE";
+        case CODE:
+            return "CODE";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+const char *QuestionLanguageToString(QuestionLanguage language) {
+    switch (language) {
+        case PYTHON:
+            return "PYTHON";
+        case CLANG:
+            return "CLANG";
+        default:
+            return "UNKNOWN";
+    }
+}

@@ -10,9 +10,9 @@ from ..base import BaseRoute
 class Login(BaseRoute, route="api"):
     def executor(req, path, qs, *args, **kwargs):
         status = 401
-        res = {"message": "Unauthorized"}
-        headers = None
-        
+        message = "Unauthorized"
+        headers = {}
+
         # Extract username and password from request
         post_data = kwargs.get("post_data")
         username = post_data.get("username", "")
@@ -28,9 +28,9 @@ class Login(BaseRoute, route="api"):
                 users[session_id] = user
             # Add session_id to header and redirect to index
 
-            cookie =  f"session_token={session_id}; Path=/; Max-Age=99999999;"
+            cookie = f"session_token={session_id}; Path=/; Max-Age=99999999;"
             headers = {"Set-Cookie": cookie}
             status = 200
-            res = {"message": "Success"}
-        
-        return status, res, headers
+            message = "Success"
+
+        return status, {"message": message}, headers

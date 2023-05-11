@@ -25,3 +25,11 @@ def is_valid_session(session_token):
     if session_token in users:
         print("accessing page as " + users[session_token].username)
     return session_token in users
+
+
+# Logs out user by removing session_token from users dict
+def logout_user(session_token):
+    if session_token in users:
+        users.pop(session_token)
+        return True
+    return False

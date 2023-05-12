@@ -55,7 +55,6 @@ typedef struct {
   RequestAction action;
   char *attempt;
   Question *question;
-  int session_token;
 } Request;
 
 #define QUESTION_BANK_SIZE 512

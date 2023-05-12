@@ -14,7 +14,7 @@ void parseRequest(Request *request) {
   // can't exactly run a switch case on strings :(
   if (strcmp(token, "GENERATE_QUESTIONS") == 0) {
     request->action = GENERATE_QUESTIONS;
-    request->session_token = atoi(strtok(NULL, REQUEST_DELIM));
+    request->num_to_generate = atoi(strtok(NULL, REQUEST_DELIM));
   } else if (strcmp(token, "MARK_QUESTION_BY_ID") == 0) {
     token = strtok(NULL, REQUEST_DELIM);
     int questionId = atoi(token);

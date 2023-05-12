@@ -1,5 +1,3 @@
-import random
-
 # Global dictionary to store users
 users = {}
 

@@ -72,7 +72,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(response.encode())
 
-    def do_POST(self):
+    def do_POST(self):        
         routes = BaseRoute.routes
 
         url = urlparse(self.path)

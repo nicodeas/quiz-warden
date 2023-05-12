@@ -1,10 +1,8 @@
-from config import QB_HOSTS
-
 from .qb_health_check import do_health_check
 
 
 class QbHandler:
-    from . import connect, generate_test, health_check
+    from . import send_request, generate_quiz, health_check
 
     # Singleton
     def __new__(cls, *args, **kwargs):

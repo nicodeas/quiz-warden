@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <time.h>
 
 #define BACKLOG 16
 
@@ -80,8 +81,7 @@ extern int runCode(char *exec, QuestionLanguage language);
 extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
-extern int *generateRandomQuestionIds(int numQuestions,
-                                      int session_token);
+extern int *generateRandomQuestionIds(int numQuestions);
 extern const char *QuestionLanguageToString(QuestionLanguage language);
 extern const char *QuestionTypeToString(QuestionType type);
 

@@ -100,14 +100,14 @@ void freeRequest(Request *request) {
   free(request);
 }
 
-int *generateRandomQuestionIds(int numQuestions, int session_token) {
+int *generateRandomQuestionIds(int numQuestions) {
   int *questions = malloc(numQuestions * sizeof(int));
   // hash set for added questions
   bool added[NUM_QUESTIONS];
   // set all to false
   memset(added, 0, NUM_QUESTIONS);
-  // session_token seeds rng
-  srand(session_token);
+  // time seeded rng
+  srand(time(NULL));
   int count = 0;
 
   while (count < numQuestions) {

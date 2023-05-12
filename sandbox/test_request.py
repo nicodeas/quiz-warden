@@ -2,9 +2,9 @@ import socket
 from request_processors import *
 
 
-# debug: req variables for q_id and session_token
+# debug: req variables for q_id and num_to_generate
 Q_TO_GET = 3
-SESSION_TOKEN = 888
+NUM_TO_GENERATE = 4
 
 HOST = "localhost"  # replace with server address
 PORT = 8080  # replace with server port
@@ -15,7 +15,7 @@ s.connect((HOST, PORT))
 
 # request needs to contain a valid keyword else there will be an error
 req = f"GET_QUESTION_BY_ID|{Q_TO_GET}"
-#req = f"GENERATE_QUESTIONS|{SESSION_TOKEN}"
+#req = f"GENERATE_QUESTIONS|{NUM_TO_GENERATE}"
 s.send(req.encode())
 
 qb_response, image_data = receive_data(s)

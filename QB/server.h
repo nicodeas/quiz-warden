@@ -55,6 +55,7 @@ typedef struct {
   RequestAction action;
   char *attempt;
   Question *question;
+  int num_to_generate;
 } Request;
 
 #define QUESTION_BANK_SIZE 512

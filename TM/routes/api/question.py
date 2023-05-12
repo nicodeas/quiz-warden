@@ -1,4 +1,4 @@
-from test_manager import test_manager
+from classes.test_manager import TestManager
 
 from ..base import BaseRoute
 
@@ -11,8 +11,10 @@ class Question(BaseRoute, route="api"):
             try:
                 current_question = int(qs["number"][0])
                 if 0 < current_question < test_manager.max_questions:
-                    test_manager.check_question_number(current_question)
-                    question_info = test_manager.get_question_info()
+                    
+
+
+
                     return 200, question_info, headers
                 return 400, {"message": "Question out of range"}, headers
             except:

@@ -1,5 +1,5 @@
 import os
-from user import *
+from classes.user import *
 from utils.auth import *
 
 from ..base import BaseRoute

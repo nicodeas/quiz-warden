@@ -1,24 +1,15 @@
 import json
 
 
+TMs = {}
+
+
 class TestManager:
-    def __init__(self):
-        self.max_questions = 0
-        self.question = ""
-        self.choices = []
-        self.question_number = 1
-        self.questions = []
-        self.type = None
-        self.language = None
-        self.question_info = {}
+    def __init__(self, questions, curr_question):
+        self.questions = questions
+        self.current_question = curr_question
+        self.max_questions = len(questions)
 
-        # dummy variables until QB exists
-        self.dummy_questions = []
-        self.answer = -1
-
-        with open("data/questions.json", "r") as f:
-            self.dummy_questions = json.load(f)["questions"]
-            self.max_questions = len(self.dummy_questions)
         self.construct_attempts()
 
     def check_question_number(self, current_number):
@@ -71,6 +62,3 @@ class TestManager:
         self.type = new_question["type"]
         self.answer = new_question["answer"]
         print(self.language)
-
-
-test_manager = TestManager()

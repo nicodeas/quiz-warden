@@ -1,4 +1,4 @@
-from user import *
+from classes.user import *
 from utils.auth import *
 from utils.html_reader import html_reader
 

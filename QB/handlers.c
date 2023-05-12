@@ -91,7 +91,7 @@ void handleRequest(int client_socket) {
   // handle based on action
   switch (request->action) {
   case (GENERATE_QUESTIONS):;
-    int *questions = generateRandomQuestionIds(NUM_QUESTIONS, request->session_token);
+    int *questions = generateRandomQuestionIds(NUM_QUESTIONS);
     
     for (int i = 0; i < NUM_QUESTIONS; i++) {
       char id_str[12];

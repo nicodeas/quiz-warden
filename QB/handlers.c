@@ -91,9 +91,9 @@ void handleRequest(int client_socket) {
   // handle based on action
   switch (request->action) {
   case (GENERATE_QUESTIONS):;
-    int *questions = generateRandomQuestionIds(NUM_QUESTIONS);
+    int *questions = generateRandomQuestionIds(request->num_to_generate);
     
-    for (int i = 0; i < NUM_QUESTIONS; i++) {
+    for (int i = 0; i < request->num_to_generate; i++) {
       char id_str[12];
       sprintf(id_str,"%i&", questions[i]);
       send(request->client_socket, id_str, strlen(id_str), 0);

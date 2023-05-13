@@ -102,6 +102,48 @@ void freeRequest(Request *request) {
 
 int *generateRandomQuestionIds(int numQuestions) {
   int *questions = malloc(numQuestions * sizeof(int));
-  // TODO: RNG code here to fill array with question ids
+  // hash set for added questions
+  bool added[NUM_QUESTIONS];
+  // set all to false
+  memset(added, 0, NUM_QUESTIONS);
+  // time seeded rng
+  srand(time(NULL));
+  int count = 0;
+
+  while (count < numQuestions) {
+    // generate q_id from NUM_QUESTIONS in QB
+    int q_id = rand() % NUM_QUESTIONS;
+    // add q_id to questions if not already in set
+    if (!added[q_id]) {
+      questions[count++] = q_id;
+      added[q_id] = true;
+    }
+  }
+
   return questions;
+}
+
+// helper functions for getQuestions
+const char *QuestionTypeToString(QuestionType type) {
+    switch (type) {
+        case CHOICE:
+            return "CHOICE";
+        case IMAGE:
+            return "IMAGE";
+        case CODE:
+            return "CODE";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+const char *QuestionLanguageToString(QuestionLanguage language) {
+    switch (language) {
+        case PYTHON:
+            return "PYTHON";
+        case CLANG:
+            return "CLANG";
+        default:
+            return "UNKNOWN";
+    }
 }

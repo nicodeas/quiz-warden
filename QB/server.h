@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <time.h>
 
 #define BACKLOG 16
 
@@ -54,6 +55,7 @@ typedef struct {
   RequestAction action;
   char *attempt;
   Question *question;
+  int num_to_generate;
 } Request;
 
 #define QUESTION_BANK_SIZE 512
@@ -79,12 +81,14 @@ extern int runCode(char *exec, QuestionLanguage language);
 extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
-extern int *generateRandomQuestionIds(int numQuestions); // TODO:
+extern int *generateRandomQuestionIds(int numQuestions);
+extern const char *QuestionLanguageToString(QuestionLanguage language);
+extern const char *QuestionTypeToString(QuestionType type);
 
 // handler functions in handlers.c
 extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
-extern void getQuestion(int client_socket, int questionId);
+extern void getQuestion(Request *request);
 extern void markQuestion(char *answer); // TODO: answer contains req from client
                                         // parse to get question id
 extern void markChoice(int client_socket, int questionId);

@@ -36,12 +36,13 @@ class GenerateQuiz(BaseRoute, route="api"):
             session = json.load(f)
 
         question_data = {
-            q: {"attempts": 0, "type": None, "correct": None} for q in questions
+            q: {"attempts": 0, "correct": None} for q in questions
         }
 
         session[session_id] = {}
         session[session_id]["questions"] = question_data
         session[session_id]["current_question"] = 0
+        session[session_id]["completed"] = False
 
         with open("data/session.json", "w") as f:
             json.dump(session, f, indent=2)

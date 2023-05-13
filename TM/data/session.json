@@ -1,14 +1,11 @@
 {
   "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918": {
-    "1": {
-      "attempts": 0,
-      "type": null,
-      "correct": null
+    "questions": {
+      "3": {
+        "attempts": 0,
+        "correct": null
+      }
     },
-    "0": {
-      "attempts": 0,
-      "type": null,
-      "correct": null
-    }
+    "current_question": 0
   }
 }

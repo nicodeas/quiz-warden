@@ -4,17 +4,6 @@ from http.server import HTTPServer
 from config import HOST, PORT
 from utils.QB import QbHandler, qb_health_check
 from utils.request_handler import RequestHandler
-import json
-
-from classes import User, TestManager, users, TMs
-
-def load_json():
-    with open("session.json", "r") as f:
-        sessions = json.load(f)
-    
-    for session_id, data in sessions.items():
-        TMs[session_id] = TestManager(data["questions"], data["current_question"])
-    
 
 def main():
     print("Connecting to QBs...")

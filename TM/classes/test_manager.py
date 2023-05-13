@@ -1,9 +1,3 @@
-import json
-
-
-TMs = {}
-
-
 class TestManager:
     def __init__(self, questions, curr_question):
         self.questions = questions

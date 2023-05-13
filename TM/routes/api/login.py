@@ -18,11 +18,8 @@ class Login(BaseRoute, route="api"):
 
         if login_user(username, password):
             session_id = generate_session_id(username)
-            # Generate new session
             if session_id not in users:
-                user = User()
-                user.username = username
-                user.session_id = session_id
+                user = User(username, session_id)                
                 users[session_id] = user
 
                 data = {}
@@ -31,7 +28,7 @@ class Login(BaseRoute, route="api"):
                         data = json.load(f)
 
                 if session_id not in data:
-                    data[session_id] = []
+                    data[session_id] = {}
 
                 with open("data/session.json", "w") as f:
                     json.dump(data, f, indent=2)

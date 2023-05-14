@@ -1,4 +1,3 @@
-from utils.QB.qb_handler import QbHandler
 
 from ..base import BaseRoute
 from classes.user import User, users
@@ -9,10 +8,6 @@ class Question(BaseRoute, route="api"):
     '''
     def executor(req, path, qs, *args, **kwargs):
         headers = {}
-        
-        qb_handler = QbHandler()
-        qbs = qb_handler.qbs.items()
-        qb_list = [(qb[0], qb[1]) for qb in qbs]
         
         session_id = req.headers["Cookie"].split("=")[1]
         if session_id not in users or users.get(session_id) == {}:

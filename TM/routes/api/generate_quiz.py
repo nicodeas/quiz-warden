@@ -54,7 +54,7 @@ class GenerateQuiz(BaseRoute, route="api"):
 
         session[session_id] = {}
         session[session_id]["questions"] = question_data
-        session[session_id]["current_question"] = 0
+        session[session_id]["current_question"] = 1
         session[session_id]["completed"] = False
 
         with open("data/session.json", "w") as f:

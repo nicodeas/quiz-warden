@@ -1,3 +1,5 @@
+from utils.QB.qb_handler import QbHandler
+
 class TestManager:
     def __init__(self, questions, curr_question, completed):
         self.questions = questions
@@ -12,8 +14,22 @@ class TestManager:
 
     def get_question_info(self, q_id):
         question = self.questions[q_id-1]
-        print(question)
-        return {}
+        qb_handler = QbHandler()
+        qbs = qb_handler.qbs.items()
+        qb_list = [(qb[0], qb[1]) for qb in qbs]
+        
+        qb_addr = None
+        for qb in qb_list:
+            if qb[1] == question["language"]:
+                qb_addr = qb[0]
+                break
+        
+        if qb is None:
+            return {}
+        
+        question_info = qb_handler.get_question(qb_addr, question["q_id"])
+        
+        return question_info
 
     def check_answer(self, answer_index, qid):
         for q in self.questions:

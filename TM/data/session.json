@@ -12,9 +12,15 @@
         "attempts": 0,
         "correct": null,
         "language": "Python"
+      },
+      {
+        "q_id": "3",
+        "attempts": 0,
+        "correct": null,
+        "language": "Python"
       }
     ],
-    "current_question": 0,
+    "current_question": 1,
     "completed": false
   }
 }

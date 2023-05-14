@@ -7,5 +7,5 @@ def get_question(self, addr, q_id):
     res = self.send_request(addr, req)
     if res is None:
         return False
-    res = process_question(res)
+    res = process_question(res[0], res[1])
     return res

@@ -1,31 +1,19 @@
 class TestManager:
-    def __init__(self, questions, curr_question):
+    def __init__(self, questions, curr_question, completed):
         self.questions = questions
         self.current_question = curr_question
         self.max_questions = len(questions)
-
-        self.construct_attempts()
+        self.completed = completed
 
     def check_question_number(self, current_number):
         if 0 < current_number < self.max_questions:
-            self.question_number = current_number
+            self.current_question = current_number
             self.change_question()
 
-    def get_question_info(self):
-        if self.choices:
-            return {
-                "question": self.question,
-                "choices": self.choices,
-                "type": self.type,
-            }
-        return {"question": self.question, "type": self.type, "language": self.language}
-
-    # Dummy function
-    # self.questions needs to be constructed when we get the list of question IDs from the QB
-    # this code is used to generate ids (since i cannot get them until QB)
-    def construct_attempts(self):
-        for i in range(0, self.max_questions + 1):
-            self.questions.append({"qid": i + 1, "attempt": 3, "mark": 0})
+    def get_question_info(self, q_id):
+        question = self.questions[q_id-1]
+        print(question)
+        return {}
 
     def check_answer(self, answer_index, qid):
         for q in self.questions:

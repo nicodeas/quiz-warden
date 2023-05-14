@@ -14,8 +14,10 @@ def main():
     server = HTTPServer((HOST, PORT), RequestHandler)
     print(f"Started server on {HOST}:{PORT}")
 
-    threading.Thread(target=qb_health_check, args=[qb_handler]).start()
+    # Start health check thread
+    threading.Thread(target=qb_health_check, args=[qb_handler], daemon=True).start()
 
+    # Start server
     server.serve_forever()
 
 

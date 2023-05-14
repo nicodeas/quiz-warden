@@ -1,7 +1,7 @@
 import hashlib
 import json
 
-from user import users
+from classes.user import users
 
 
 # Verifies user credentials exist against pre-registered users

@@ -15,4 +15,4 @@ class State(BaseRoute, route="api"):
         payload = {}
         qb_instance = QbHandler()
         payload["activeQBs"] = list(qb_instance.qbs.values())
-        return 200, payload
+        return 200, payload, {}

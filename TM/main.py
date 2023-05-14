@@ -5,6 +5,7 @@ from config import HOST, PORT
 from utils.QB import QbHandler, qb_health_check
 from utils.request_handler import RequestHandler
 
+
 def main():
     print("Connecting to QBs...")
     qb_handler = QbHandler()

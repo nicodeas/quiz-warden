@@ -1,4 +1,5 @@
 import os
+
 from classes.user import User, users
 from utils.auth import *
 

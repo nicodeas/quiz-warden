@@ -1,9 +1,12 @@
-from utils.QB.qb_handler import QbHandler
-from classes.user import *
-from utils.auth import *
 import random
-from ..base import BaseRoute
+
+from classes.user import *
 from classes.user import User, users
+from utils.auth import *
+from utils.QB.qb_handler import QbHandler
+
+from ..base import BaseRoute
+
 
 class GenerateQuiz(BaseRoute, route="api"):
     def executor(req, path, qs, *args, **kwargs):
@@ -49,7 +52,8 @@ class GenerateQuiz(BaseRoute, route="api"):
             session = json.load(f)
 
         question_data = [
-            {"q_id": q, "attempts": 0, "correct": None, "language": l} for q, l in questions
+            {"q_id": q, "attempts": 0, "correct": None, "language": l}
+            for q, l in questions
         ]
 
         session[session_id] = {}

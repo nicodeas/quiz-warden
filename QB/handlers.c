@@ -47,7 +47,9 @@ void getQuestion(Request *request) {
                       request->question->choices->d);
   }
   if (request->question->type == IMAGE) {
-      size += snprintf(NULL, 0, "&%s$", request->question->imageFile);
+      size += snprintf(NULL, 0, "&%s^%s$",
+                      request->question->image1,
+                      request->question->image2);
   }
   // construct response
   char response[size + 1];
@@ -60,25 +62,31 @@ void getQuestion(Request *request) {
               request->question->choices->d);
   }
   if (request->question->type == IMAGE) {
-      sprintf(response + strlen(response), "&%s$", request->question->imageFile);
+      sprintf(response + strlen(response), "&%s^%s$",
+              request->question->image1,
+              request->question->image2);
   }
   // send response
   send(request->client_socket, response, strlen(response), 0);
   // send image if required
   if (request->question->type == IMAGE) {
-      sendFile(request->question->imageFile,request->client_socket);
+      // send both files
+      sendFile(request->question->image1,request->client_socket);
+      sendFile(request->question->image2,request->client_socket);
   }
 }
 
 void markQuestion(Request *request) {
-  if (request->question->type == CHOICE) {
+  // choice and image questions have same marking procedure
+  if (request->question->type == CHOICE || request->question->type == IMAGE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
         send(request->client_socket, "correct", strlen("correct"), 0);
     }
     else {
-      send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+        send(request->client_socket, "incorrect", strlen("incorrect"), 0);
     }  
   }
+  // TODO: mark code questions
 }
 
 void handleRequest(int client_socket) {

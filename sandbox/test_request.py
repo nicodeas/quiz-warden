@@ -5,8 +5,8 @@ from request_processors import *
 # debug: req variables for q_id and num_to_generate
 Q_TO_GET = 3
 NUM_TO_GENERATE = 4
-Q_TO_MARK = 2
-USER_ANSWER = "Blue"
+Q_TO_MARK = 3
+USER_ANSWER = "./cool-chris.png"
 
 HOST = "localhost"  # replace with server address
 PORT = 8080  # replace with server port
@@ -16,9 +16,9 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
 # request needs to contain a valid keyword else there will be an error
-#req = f"GET_QUESTION_BY_ID|{Q_TO_GET}"
+req = f"GET_QUESTION_BY_ID|{Q_TO_GET}"
 #req = f"GENERATE_QUESTIONS|{NUM_TO_GENERATE}"
-req = f"MARK_QUESTION_BY_ID|{Q_TO_MARK}|{USER_ANSWER}"
+#req = f"MARK_QUESTION_BY_ID|{Q_TO_MARK}|{USER_ANSWER}"
 s.send(req.encode())
 
 qb_response, image_data = receive_data(s)

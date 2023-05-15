@@ -8,7 +8,8 @@ def receive_data(s):
     # store question fields
     qb_response = b""
     # store image data
-    image_data = b""
+    image_data = []
+    current_image_data = b""
 
     # receive response from the server
     while True:
@@ -21,14 +22,21 @@ def receive_data(s):
             # reading image data!
             if image_index != -1:
                 qb_response += data[:image_index]
-                image_data += data[image_index + len(IMAGE_DATA_FLAG):]
+                current_image_data += data[image_index + len(IMAGE_DATA_FLAG):]
                 receiving_image_data = True
             else:
                 # no image flag; read as regular response
                 qb_response += data
         else:
-            image_data += data
+            current_image_data += data
+            # check for end of image marker (IEND chunk)
+            iend_index = current_image_data.find(b'IEND')
+            if iend_index != -1:
+                # add current image to list and start new image
+                image_data.append(current_image_data[:iend_index + 8])
+                current_image_data = current_image_data[iend_index + 8:]
     return qb_response, image_data
+
 
 # stores question fields in a dict; writes image_data to file if it exists
 def process_question(qb_response, image_data):
@@ -44,8 +52,9 @@ def process_question(qb_response, image_data):
         question['choices'] = question_parts[4].split('^')
     elif question['type'] == 'IMAGE':
         image_info =  question_parts[4].split('$')
-        question['image'] = image_info[0]
-        process_image_data(image_data, question['image'])
+        question['images'] = image_info[0].split('^')
+        process_image_data(image_data[0], question['images'][0])
+        process_image_data(image_data[1], question['images'][1])
     return question
 
 def process_image_data(image_data, filename):

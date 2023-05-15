@@ -46,8 +46,8 @@ typedef struct {
   char *text;
   Choices *choices;
   char *answer;
-  char *imageFile;
-  char *answerFile; // used to store correct answer for image question
+  char *image1;
+  char *image2;
 } Question;
 
 typedef struct {

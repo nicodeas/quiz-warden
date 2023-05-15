@@ -21,6 +21,7 @@ export const renderState = async (state) => {
   // conditionally remove navigation buttons
   const nextButton = document.getElementById("next-button");
   const backButton = document.getElementById("back-button");
+  console.log(currentQuestion, state.maxQuestions);
   if (currentQuestion == state.maxQuestions) {
     nextButton.style.display = "none";
   }

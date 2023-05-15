@@ -9,7 +9,8 @@ export const getQuestion = async (currentQuestionIndex) => {
       method: "GET",
     });
     const data = await res.json();
-    if (data.type == "CHOICE") {
+    console.log("data type ", data.type);
+    if (data.type == "CHOICE" || data.type == "IMAGE") {
       choices = data.choices;
     }
     renderQuestion(data.text, data.language, data.type, choices);

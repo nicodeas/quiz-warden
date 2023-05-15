@@ -14,7 +14,7 @@ class GenerateQuiz(BaseRoute, route="api"):
         message = "Success"
         headers = {}
 
-        NUM_QUESTIONS = 3
+        NUM_QUESTIONS = 4
 
         session_id = req.headers["Cookie"].split("=")[1]
         user: User = users[session_id]

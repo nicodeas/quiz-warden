@@ -1,3 +1,4 @@
+import { renderState } from "./quiz/renderState.js";
 import { getState } from "./utils/getState.js";
 
 const startQuiz = async () => {
@@ -14,6 +15,8 @@ const continueQuiz = async () => {
 };
 
 const state = await getState();
+
+renderState(false, state);
 
 const startButton = document.getElementById("start-quiz");
 

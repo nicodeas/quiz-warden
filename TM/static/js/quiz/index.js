@@ -16,4 +16,4 @@ getQuestion(currentQuestionIndex);
 
 export const state = await getState();
 
-renderState(state);
+renderState(true, state);

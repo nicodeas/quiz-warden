@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Login Page</title>
+  </head>
 
-<head>
-  <title>Login Page</title>
-</head>
+  <body>
+    <h1>Login Page</h1>
+    <form>
+      <label>Username:</label>
+      <input type="text" name="username" id="username" /><br />
+      <label>Password:</label>
+      <input type="password" name="password" id="password" /><br />
+      <button type="button" id="submit" onclick="loginUser()">Login</button>
+    </form>
 
-<body>
-  <h1>Login Page</h1>
-  <form>
-    <label>Username:</label>
-    <input type="text" name="username" id="username" /><br />
-    <label>Password:</label>
-    <input type="password" name="password" id="password" /><br />
-    <button type="button" id="submit" onclick="loginUser()">Login</button>
-  </form>
-
-  <script src="static/js/auth.js"></script>
-</body>
-
+    <script src="static/js/auth.js"></script>
+  </body>
 </html>

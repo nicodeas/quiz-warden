@@ -13,23 +13,21 @@ void parseRequest(Request *request) {
   // NOTE: don't mind the if else statements
   // can't exactly run a switch case on strings :(
   if (strcmp(token, "GENERATE_QUESTIONS") == 0) {
-    request->action = GENERATE_QUESTIONS;
-    request->num_to_generate = atoi(strtok(NULL, REQUEST_DELIM));
+      request->action = GENERATE_QUESTIONS;
+      request->num_to_generate = atoi(strtok(NULL, REQUEST_DELIM));
   } else if (strcmp(token, "MARK_QUESTION_BY_ID") == 0) {
-    token = strtok(NULL, REQUEST_DELIM);
-    int questionId = atoi(token);
-
-    request->question = QUESTION_BANK[questionId];
-    request->attempt = strdup(strtok(NULL, REQUEST_DELIM));
-    request->action = MARK_QUESTION_BY_ID;
+      request->action = MARK_QUESTION_BY_ID;
+      token = strtok(NULL, REQUEST_DELIM);
+      int questionId = atoi(token);
+      request->question = QUESTION_BANK[questionId];
+      request->user_answer = strdup(strtok(NULL, REQUEST_DELIM));
   } else if (strcmp(token, "GET_QUESTION_BY_ID") == 0) {
-    token = strtok(NULL, REQUEST_DELIM);
-    int questionId = atoi(token);
-
-    request->question = QUESTION_BANK[questionId];
-    request->action = GET_QUESTION_BY_ID;
+      request->action = GET_QUESTION_BY_ID;
+      token = strtok(NULL, REQUEST_DELIM);
+      int questionId = atoi(token);
+      request->question = QUESTION_BANK[questionId];
   } else if (strcmp(token, "HEALTH_CHECK") == 0) {
-    request->action = HEALTH_CHECK;
+      request->action = HEALTH_CHECK;
   }
 }
 
@@ -72,6 +70,17 @@ void getQuestion(Request *request) {
   }
 }
 
+void markQuestion(Request *request) {
+  if (request->question->type == CHOICE) {
+    if (strcmp(request->question->answer, request->user_answer) == 0) {
+        send(request->client_socket, "correct", strlen("correct"), 0);
+    }
+    else {
+      send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+    }  
+  }
+}
+
 void handleRequest(int client_socket) {
   // TODO: deal with multiple coding/image questions needing to be marked, need
   // some way of locking the exe file
@@ -100,6 +109,7 @@ void handleRequest(int client_socket) {
     }
     break;
   case (MARK_QUESTION_BY_ID):;
+    markQuestion(request);
     break;
   case (GET_QUESTION_BY_ID):;
     getQuestion(request);

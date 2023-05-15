@@ -27,7 +27,7 @@ class Login(BaseRoute, route="api"):
                 if os.path.exists("data/session.json"):
                     with open("data/session.json", "r") as f:
                         data = json.load(f)
-                if session_id not in data:
+                if session_id not in data or data.get(session_id) == {}:
                     data[session_id] = {}
                 else:
                     user.init_tm(

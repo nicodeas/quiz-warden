@@ -1,12 +1,10 @@
-import { getQuestion } from "./getQuestion.js";
-import { state } from "./index.js";
+import { state, question } from "./index.js";
 
 const checkButton = document.getElementById("check-button");
 
-//TODO: refactor to use QB
 checkButton.addEventListener("click", function (e) {
   e.preventDefault();
-  if (type == "CHOICE") {
+  if (question.type == "CHOICE") {
     const options = document.getElementsByName("option");
     let checkedQuestionIndex = -1;
     for (let i = 0; i < options.length; i++) {
@@ -19,10 +17,12 @@ checkButton.addEventListener("click", function (e) {
       alert("Please select an answer!");
       return;
     }
+    console.log(checkedQuestionIndex);
     checkQuestion(checkedQuestionIndex);
-  } else if (type == "CODE") {
+  } else if (question.type == "CODE") {
     const answer = document.getElementById("code-answer").value;
 
+    console.log(answer);
     checkQuestion(answer);
   }
 });

@@ -1,5 +1,5 @@
 export const renderQuestion = (data) => {
-  const { question, language, type, attempts, correct, choices } = data;
+  const { text, language, type, attempts, correct, choices } = data;
 
   const languageElement = document.getElementById("language");
   languageElement.innerHTML = language == "CLANG" ? "C" : "Python";
@@ -10,12 +10,12 @@ export const renderQuestion = (data) => {
 
   document.getElementById("question-attempts").innerHTML = attempts;
 
-  if (correct !== undefined) {
+  if (correct != undefined) {
     document.getElementById("question-result").innerHTML = correct;
-    document.getElementById("question-mark") = 3 - attempts
+    document.getElementById("question-mark").innerHTML = 3 - attempts
   }
 
-  document.getElementById("quiz-question").innerHTML = question;
+  document.getElementById("quiz-question").innerHTML = text;
 
   if (type == "CHOICE") {
     // create multichoice fields

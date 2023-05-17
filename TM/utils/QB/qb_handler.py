@@ -2,7 +2,7 @@ from .qb_health_check import do_health_check
 
 
 class QbHandler:
-    from . import generate_quiz, get_question, health_check, send_request
+    from . import generate_quiz, get_question, health_check, send_request, mark_question
 
     # Singleton
     def __new__(cls, *args, **kwargs):

@@ -12,7 +12,7 @@ if (qs) {
   currentQuestionIndex = qs;
 }
 
-getQuestion(currentQuestionIndex);
+export const question = await getQuestion(currentQuestionIndex);
 
 export const state = await getState();
 

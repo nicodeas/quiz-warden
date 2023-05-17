@@ -1,6 +1,5 @@
 // Makes a POST request with the index of the chosen answer
-//TODO: work with QB
-export const checkQuestion = async (questionAnswer) => {
+export const markQuestion = async (questionAnswer) => {
     const questionResultText = document.getElementById("question-result");
     const questionAttemptsText = document.getElementById("question-attempts");
     const questionMarkText = document.getElementById("question-attempts");

@@ -9,6 +9,7 @@ export const getQuestion = async (currentQuestionIndex) => {
     });
     const data = await res.json();
     renderQuestion(data);
+    return data;
   } catch (err) {
     console.error(err);
   }

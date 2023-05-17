@@ -23,7 +23,7 @@ class TestManager:
         qb_handler = QbHandler()
         qbs = qb_handler.qbs.items()
         qb_list = [(qb[0], qb[1]) for qb in qbs]
-        # Use language field of element to address correct QB
+        # Use language field of question to address correct QB
         qb_addr = None
         for qb in qb_list:
             if qb[1] == question["language"]:

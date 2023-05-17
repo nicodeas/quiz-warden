@@ -1,8 +1,9 @@
 import { state, question } from "./index.js";
+import { markQuestion } from "./markQuestion.js";
 
 const checkButton = document.getElementById("check-button");
 
-checkButton.addEventListener("click", function (e) {
+checkButton.addEventListener("click", async function (e) {
   e.preventDefault();
   if (question.type == "CHOICE") {
     const options = document.getElementsByName("option");
@@ -13,17 +14,17 @@ checkButton.addEventListener("click", function (e) {
         break;
       }
     }
+
     if (checkedQuestionIndex === -1) {
       alert("Please select an answer!");
       return;
     }
-    console.log(checkedQuestionIndex);
-    checkQuestion(checkedQuestionIndex);
+
+    await markQuestion(checkedQuestionIndex);
   } else if (question.type == "CODE") {
     const answer = document.getElementById("code-answer").value;
 
-    console.log(answer);
-    checkQuestion(answer);
+    await markQuestion(answer);
   }
 });
 

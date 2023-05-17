@@ -12,7 +12,10 @@ export const renderQuestion = (data) => {
 
   if (correct != undefined) {
     document.getElementById("question-result").innerHTML = correct;
-    document.getElementById("question-mark").innerHTML = 3 - attempts
+
+    // mark is 0 if incorrect, otherwise based on attempts
+    const mark = correct ? 4 - attempts : 0;
+    document.getElementById("question-mark").innerHTML = mark
   }
 
   document.getElementById("quiz-question").innerHTML = text;

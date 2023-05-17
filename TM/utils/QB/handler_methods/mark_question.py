@@ -1,4 +1,4 @@
-from utils.QB.request_processors import process_question
+from utils.QB.request_processors import return_mark
 
 
 def mark_question(self, addr, q_id, answer):
@@ -7,5 +7,5 @@ def mark_question(self, addr, q_id, answer):
     res = self.send_request(addr, req)
     if res is None:
         return False
-    res = process_question(res[0], res[1])
+    res = return_mark(res)
     return res

@@ -8,6 +8,7 @@ void parseRequest(Request *request) {
 
   // TODO: might want what happens when a non existent question gets requested
   char requestBuffer[BUFSIZ];
+  memset(requestBuffer, 0, sizeof(requestBuffer));
   recv(request->client_socket, requestBuffer, sizeof(requestBuffer), 0);
 
   char *token = strtok(requestBuffer, REQUEST_DELIM);
@@ -124,8 +125,15 @@ void markQuestion(Request *request) {
       answerFd = runC();
       break;
     }
+    FILE *answerfile = fdopen(answerFd, "r");
+    char answer[BUFSIZ];
+    fgets(answer, BUFSIZ, answerfile);
+    if (strcmp(request->question->answer, answer) == 0) {
+      send(request->client_socket, "correct", strlen("correct"), 0);
+    } else {
+      send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+    }
   }
-  // TODO: mark code questions
 }
 
 void handleRequest(int client_socket) {

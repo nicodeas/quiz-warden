@@ -1,9 +1,10 @@
 import io
 import os
 
+
 def receive_data(s):
     # flag denoting when stream of image data begins
-    IMAGE_DATA_FLAG = b'$'
+    IMAGE_DATA_FLAG = b"$"
     receiving_image_data = False
     # store question fields
     qb_response = b""
@@ -21,7 +22,7 @@ def receive_data(s):
             # reading image data!
             if image_index != -1:
                 qb_response += data[:image_index]
-                image_data += data[image_index + len(IMAGE_DATA_FLAG):]
+                image_data += data[image_index + len(IMAGE_DATA_FLAG) :]
                 receiving_image_data = True
             else:
                 # no image flag; read as regular response
@@ -30,23 +31,25 @@ def receive_data(s):
             image_data += data
     return qb_response, image_data
 
+
 # stores question fields in a dict; writes image_data to file if it exists
 def process_question(qb_response, image_data):
-    question_parts = qb_response.decode().split('&')
+    question_parts = qb_response.decode().split("&")
     # only receives fields to display question to user; marking handled by QB
     question = {
-        'id': int(question_parts[0]),
-        'language': question_parts[1],
-        'type': question_parts[2],
-        'text': question_parts[3]
+        "id": int(question_parts[0]),
+        "language": question_parts[1],
+        "type": question_parts[2],
+        "text": question_parts[3],
     }
-    if question['type'] == 'CHOICE':
-        question['choices'] = question_parts[4].split('^')
-    elif question['type'] == 'IMAGE':
-        image_info =  question_parts[4].split('$')
-        question['image'] = image_info[0]
-        process_image_data(image_data, question['image'])
+    if question["type"] == "CHOICE":
+        question["choices"] = question_parts[4].split("^")
+    elif question["type"] == "IMAGE":
+        image_info = question_parts[4].split("$")
+        question["image"] = image_info[0]
+        process_image_data(image_data, question["image"])
     return question
+
 
 def process_image_data(image_data, filename):
     # TODO: naming convention and directory for images
@@ -60,7 +63,8 @@ def process_image_data(image_data, filename):
     else:
         print("file already exists on TM!")
 
+
 # reads stream of q_ids and stores in list
 def process_generated_questions(qb_response):
-    questions = [question for question in qb_response.decode().split('&') if question]
+    questions = [question for question in qb_response.decode().split("&") if question]
     return questions

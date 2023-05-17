@@ -1,6 +1,6 @@
 import socket
-from request_processors import *
 
+from request_processors import *
 
 # debug: req variables for q_id and num_to_generate
 Q_TO_GET = 3
@@ -15,7 +15,7 @@ s.connect((HOST, PORT))
 
 # request needs to contain a valid keyword else there will be an error
 req = f"GET_QUESTION_BY_ID|{Q_TO_GET}"
-#req = f"GENERATE_QUESTIONS|{NUM_TO_GENERATE}"
+# req = f"GENERATE_QUESTIONS|{NUM_TO_GENERATE}"
 s.send(req.encode())
 
 qb_response, image_data = receive_data(s)

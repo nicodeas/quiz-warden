@@ -33,10 +33,10 @@ C ->
 D .
 $ *
 -----------------------------------------------------------------
-Q Print the 50th fibonacci number.
+Q Write a program to find the factorial of the number 5.
 T CODE
 L CLANG
-$ 12586269025
+$ 120
 -----------------------------------------------------------------
 Q Which of the following is the correct way to allocate memory dynamically in C?
 T CHOICE
@@ -60,8 +60,8 @@ I ./some-image-of-chris.png
 F ./some-black-and-white-image-of-chris
 $
 -----------------------------------------------------------------
-Q Print the 50th fibonacci number.
+Q Write a C program to check whether a given number 17 is prime or not. Return true or false
 T CODE
 L CLANG
-$ 12586269025
+$ true
 -----------------------------------------------------------------

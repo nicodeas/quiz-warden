@@ -18,6 +18,9 @@
 
 #define QUESTION_FILE "questions.txt"
 
+#define TMP_PATH "tmp.c"
+#define TMP_EXE_PATH "tmp"
+
 #define REQUEST_DELIM "|"
 
 typedef enum { CHOICE, IMAGE, CODE } QuestionType;
@@ -76,8 +79,10 @@ extern int createServer();
 extern void runServer(int server_socket);
 
 // util functions in util.c
-extern void compileC(char *fileName, char *outputFile);
+extern void compileC(Request *request);
 extern int runCode(char *exec, QuestionLanguage language);
+extern int runPython(Request *request);
+extern int runC();
 extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
@@ -89,10 +94,9 @@ extern const char *QuestionTypeToString(QuestionType type);
 extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
 extern void getQuestion(Request *request);
-extern void markQuestion(Request *request); // TODO: answer contains req from
-                                            // client parse to get question id
+extern void markQuestion(Request *request);
 extern void markChoice(int client_socket, int questionId);
-extern void markCode(int client_socket, int questionId, int fd); // TODO:
+extern void markCode(Request *request); // TODO:
 extern void
 markImage(int client_socket,
           int questionId); // TODO: send processed image back to TM. Then send

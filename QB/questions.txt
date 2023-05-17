@@ -18,7 +18,7 @@ $ Blue
 -----------------------------------------------------------------
 Q Which image of Chris is cooler?
 T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
+I ./static/img/some-image-of-chris.png
+F ./static/img/cool-chris.png
+$ ./static/img/cool-chris.png
 -----------------------------------------------------------------

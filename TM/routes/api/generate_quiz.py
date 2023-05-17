@@ -31,14 +31,21 @@ class GenerateQuiz(BaseRoute, route="api"):
             message = "No question banks loaded"
             return status, {"message": message}, headers
 
-        num_questions = random.randint(1, NUM_QUESTIONS)
-        # tuple (q_id, language)
-        questions = [
-            (q, qb_list[0][1])
-            for q in qb_handler.generate_quiz(qb_list[0][0], num_questions)
-        ]
+        elif len(qbs) == 1:
+            # tuple (q_id, language)
+            questions = [
+                (q, qb_list[0][1])
+                for q in qb_handler.generate_quiz(qb_list[0][0], NUM_QUESTIONS)
+            ]
 
-        if len(qbs) == 2:
+        elif len(qbs) == 2:
+            num_questions = random.randint(1, NUM_QUESTIONS)
+            # tuple (q_id, language)
+            questions = [
+                (q, qb_list[0][1])
+                for q in qb_handler.generate_quiz(qb_list[0][0], num_questions)
+            ]
+
             num_questions = NUM_QUESTIONS - num_questions
             # tuple (q_id, language)
             questions += [

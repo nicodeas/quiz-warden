@@ -21,5 +21,6 @@ class Question(BaseRoute, route="api"):
             return 400, {"message": "Question out of range"}, headers
 
         question_info = user.get_question_info(current_question)
+        user.current_question = current_question
 
         return 200, question_info, headers

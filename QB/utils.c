@@ -26,7 +26,12 @@ void sendFile(char *fname, int client_socket) {
   fclose(file);
 }
 
-void compileC(char *fileName, char *outputFile) {
+void compileC(Request *request) {
+  FILE *file = fopen(TMP_PATH, "w");
+  if (file == NULL) {
+    perror("Error opening file");
+  }
+  fprintf(file, "%s", request->user_answer);
   int pid;
   pid = fork();
   if (pid == -1) {
@@ -34,12 +39,60 @@ void compileC(char *fileName, char *outputFile) {
     exit(EXIT_FAILURE);
   } else if (pid == 0) {
     // compile code
-    execl(PATH_C, "cc", "-o", outputFile, fileName, NULL);
+    execl(PATH_C, "cc", "-o", TMP_EXE_PATH, TMP_PATH, NULL);
     fprintf(stderr, "Error during compilation\n");
     exit(EXIT_FAILURE);
   }
   // wait for compilation to complete
+  // TODO: change to waitpid to check for error code etc
   wait(NULL);
+}
+
+int runPython(Request *request) {
+  int fd[2];
+  if (pipe(fd) == -1) {
+    perror("pipe");
+    exit(EXIT_FAILURE);
+  }
+  int pid;
+  pid = fork();
+  if (pid == -1) {
+    perror("fork");
+    exit(EXIT_FAILURE);
+  } else if (pid == 0) {
+    dup2(fd[0], STDIN_FILENO);
+    dup2(fd[1], STDOUT_FILENO);
+    close(fd[1]);
+    close(fd[0]);
+    execl(PATH_PYTHON, "python3", NULL);
+  }
+  write(fd[1], request->user_answer, 50);
+  close(fd[1]);
+  // return read end for checking answer
+  return fd[0];
+}
+
+int runC() {
+  int fd[2];
+  if (pipe(fd) == -1) {
+    perror("pipe");
+    exit(EXIT_FAILURE);
+  }
+  int pid;
+  pid = fork();
+  if (pid == -1) {
+    perror("fork");
+    exit(EXIT_FAILURE);
+  } else if (pid == 0) {
+    dup2(fd[0], STDIN_FILENO);
+    dup2(fd[1], STDOUT_FILENO);
+    close(fd[1]);
+    close(fd[0]);
+    execl(TMP_EXE_PATH, TMP_EXE_PATH, NULL);
+  }
+  close(fd[1]);
+  // return read end for checking answer
+  return fd[0];
 }
 
 int runCode(char *exec, QuestionLanguage language) {

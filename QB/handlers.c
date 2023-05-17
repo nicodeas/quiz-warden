@@ -25,6 +25,11 @@ void parseRequest(Request *request) {
     token = strtok(NULL, REQUEST_DELIM);
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
+  } else if (strcmp(token, "GET_ANSWER_BY_ID") == 0) {
+    request->action = GET_ANSWER_BY_ID;
+    token = strtok(NULL, REQUEST_DELIM);
+    int questionId = atoi(token);
+    request->question = QUESTION_BANK[questionId];
   } else if (strcmp(token, "HEALTH_CHECK") == 0) {
     request->action = HEALTH_CHECK;
   }
@@ -71,6 +76,15 @@ void getQuestion(Request *request) {
   }
 }
 
+void getAnswer(Request *request) {
+  // construct response
+  size_t size = snprintf(NULL, 0, "%s", request->question->answer);
+  char response[size + 1];
+  sprintf(response, "%s", request->question->answer);
+  // send response
+  send(request->client_socket, response, strlen(response), 0);
+}
+
 void markQuestion(Request *request) {
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE || request->question->type == IMAGE) {
@@ -112,6 +126,9 @@ void handleRequest(int client_socket) {
     break;
   case (GET_QUESTION_BY_ID):;
     getQuestion(request);
+    break;
+  case (GET_ANSWER_BY_ID):;
+    getAnswer(request);
     break;
   case (HEALTH_CHECK):;
     // debug stuff, remove later

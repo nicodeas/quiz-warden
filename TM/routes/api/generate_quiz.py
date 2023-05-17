@@ -8,28 +8,35 @@ from ..base import BaseRoute
 
 class GenerateQuiz(BaseRoute, route="api"):
     def executor(req, path, qs, *args, **kwargs):
+        # Default values for status, message, and headers
         status = 200
         message = "Success"
         headers = {}
 
+        # Set number of questions to generate
         NUM_QUESTIONS = 3
 
+        # Get session_id from request header
         session_id = req.headers["Cookie"].split("=")[1]
+        # Get user onject using session_id
         user: User = users[session_id]
         if not user.completed:
             status = 400
             message = "A quiz has been generated already."
             return status, {"message": message}, headers
 
+        # Initialise new instance of QbHandler
         qb_handler = QbHandler()
         qbs = qb_handler.qbs.items()
         qb_list = [(qb[0], qb[1]) for qb in qbs]
 
+        # Check number of QBs online
         if len(qbs) == 0:
             status = 500
             message = "No question banks loaded"
             return status, {"message": message}, headers
 
+        # 1 QB online - get all questions from it
         elif len(qbs) == 1:
             # tuple (q_id, language)
             questions = [
@@ -37,6 +44,7 @@ class GenerateQuiz(BaseRoute, route="api"):
                 for q in qb_handler.generate_quiz(qb_list[0][0], NUM_QUESTIONS)
             ]
 
+        # 2 Qbs online - retrieve questions from each
         elif len(qbs) == 2:
             num_questions = random.randint(1, NUM_QUESTIONS)
             # tuple (q_id, language)

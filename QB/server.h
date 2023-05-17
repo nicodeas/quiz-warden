@@ -8,8 +8,8 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <unistd.h>
 #include <time.h>
+#include <unistd.h>
 
 #define BACKLOG 16
 
@@ -53,7 +53,6 @@ typedef struct {
 typedef struct {
   int client_socket;
   RequestAction action;
-  char *attempt;
   Question *question;
   int num_to_generate;
   char *user_answer;
@@ -90,8 +89,8 @@ extern const char *QuestionTypeToString(QuestionType type);
 extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
 extern void getQuestion(Request *request);
-extern void markQuestion(Request *request); // TODO: answer contains req from client
-                                        // parse to get question id
+extern void markQuestion(Request *request); // TODO: answer contains req from
+                                            // client parse to get question id
 extern void markChoice(int client_socket, int questionId);
 extern void markCode(int client_socket, int questionId, int fd); // TODO:
 extern void

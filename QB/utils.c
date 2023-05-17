@@ -88,7 +88,7 @@ int runCode(char *exec, QuestionLanguage language) {
 
 Request *newRequest(int client_socket) {
   Request *request = (Request *)malloc(sizeof(Request));
-  request->attempt = NULL;
+  request->user_answer = NULL;
   request->client_socket = client_socket;
   request->action = UNSPEC;
   request->question = NULL;
@@ -96,7 +96,7 @@ Request *newRequest(int client_socket) {
 }
 
 void freeRequest(Request *request) {
-  free(request->attempt);
+  free(request->user_answer);
   free(request);
 }
 
@@ -125,25 +125,25 @@ int *generateRandomQuestionIds(int numQuestions) {
 
 // helper functions for getQuestions
 const char *QuestionTypeToString(QuestionType type) {
-    switch (type) {
-        case CHOICE:
-            return "CHOICE";
-        case IMAGE:
-            return "IMAGE";
-        case CODE:
-            return "CODE";
-        default:
-            return "UNKNOWN";
-    }
+  switch (type) {
+  case CHOICE:
+    return "CHOICE";
+  case IMAGE:
+    return "IMAGE";
+  case CODE:
+    return "CODE";
+  default:
+    return "UNKNOWN";
+  }
 }
 
 const char *QuestionLanguageToString(QuestionLanguage language) {
-    switch (language) {
-        case PYTHON:
-            return "PYTHON";
-        case CLANG:
-            return "CLANG";
-        default:
-            return "UNKNOWN";
-    }
+  switch (language) {
+  case PYTHON:
+    return "PYTHON";
+  case CLANG:
+    return "CLANG";
+  default:
+    return "UNKNOWN";
+  }
 }

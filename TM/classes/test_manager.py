@@ -29,8 +29,8 @@ class TestManager:
             return {}
 
         question_info = qb_handler.get_question(qb_addr, question["q_id"])
-        question_info["attempts"] = self.questions[self.current_question]["attempts"]
-        question_info["correct"] = self.questions[self.current_question]["correct"]
+        question_info["attempts"] = self.questions[self.current_question - 1]["attempts"]
+        question_info["correct"] = self.questions[self.current_question - 1]["correct"]
         return question_info
 
     def check_answer(self, answer_index, qid):

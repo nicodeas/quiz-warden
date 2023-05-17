@@ -1,9 +1,20 @@
-export const renderQuestion = (question, language, type, choices) => {
+export const renderQuestion = (data) => {
+  const { question, language, type, attempts, correct, choices } = data;
+
   const languageElement = document.getElementById("language");
   languageElement.innerHTML = language == "CLANG" ? "C" : "Python";
+
   const answerContainer = document.getElementById("quiz-choices");
   // Reset the container to blank
   answerContainer.innerHTML = "";
+
+  document.getElementById("question-attempts").innerHTML = attempts;
+
+  if (correct !== undefined) {
+    document.getElementById("question-result").innerHTML = correct;
+    document.getElementById("question-mark") = 3 - attempts
+  }
+
   document.getElementById("quiz-question").innerHTML = question;
 
   if (type == "CHOICE") {

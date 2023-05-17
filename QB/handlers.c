@@ -118,6 +118,7 @@ void markQuestion(Request *request) {
     switch (request->question->language) {
     case PYTHON:
       answerFd = runPython(request);
+      break;
     case CLANG:
       compileC(request);
       answerFd = runC();

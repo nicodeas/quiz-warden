@@ -1,6 +1,5 @@
 #include "server.h"
 
-
 void parseRequest(Request *request) {
   // will not handle requests that are larger than bufsiz for this
   // project, question/answers should not be that long
@@ -16,18 +15,16 @@ void parseRequest(Request *request) {
     request->action = GENERATE_QUESTIONS;
     request->num_to_generate = atoi(strtok(NULL, REQUEST_DELIM));
   } else if (strcmp(token, "MARK_QUESTION_BY_ID") == 0) {
-    token = strtok(NULL, REQUEST_DELIM);
-    int questionId = atoi(token);
-
-    request->question = QUESTION_BANK[questionId];
-    request->attempt = strdup(strtok(NULL, REQUEST_DELIM));
     request->action = MARK_QUESTION_BY_ID;
-  } else if (strcmp(token, "GET_QUESTION_BY_ID") == 0) {
     token = strtok(NULL, REQUEST_DELIM);
     int questionId = atoi(token);
-
     request->question = QUESTION_BANK[questionId];
+    request->user_answer = strdup(strtok(NULL, REQUEST_DELIM));
+  } else if (strcmp(token, "GET_QUESTION_BY_ID") == 0) {
     request->action = GET_QUESTION_BY_ID;
+    token = strtok(NULL, REQUEST_DELIM);
+    int questionId = atoi(token);
+    request->question = QUESTION_BANK[questionId];
   } else if (strcmp(token, "HEALTH_CHECK") == 0) {
     request->action = HEALTH_CHECK;
   }
@@ -40,36 +37,50 @@ void getQuestion(Request *request) {
 
   // determine size of response
   // '&' delims elements of question, '^' delims multi-choice, '$' delims file
-  size_t size = snprintf(NULL, 0, "%i&%s&%s&%s", request->question->id, language, type, text);
+  size_t size = snprintf(NULL, 0, "%i&%s&%s&%s", request->question->id,
+                         language, type, text);
   if (request->question->type == CHOICE) {
-      size += snprintf(NULL, 0, "&%s^%s^%s^%s",
-                      request->question->choices->a,
-                      request->question->choices->b,
-                      request->question->choices->c,
-                      request->question->choices->d);
+    size +=
+        snprintf(NULL, 0, "&%s^%s^%s^%s", request->question->choices->a,
+                 request->question->choices->b, request->question->choices->c,
+                 request->question->choices->d);
   }
   if (request->question->type == IMAGE) {
-      size += snprintf(NULL, 0, "&%s$", request->question->imageFile);
+    size += snprintf(NULL, 0, "&%s^%s$", request->question->image1,
+                     request->question->image2);
   }
   // construct response
   char response[size + 1];
   sprintf(response, "%i&%s&%s&%s", request->question->id, language, type, text);
   if (request->question->type == CHOICE) {
-      sprintf(response + strlen(response), "&%s^%s^%s^%s",
-              request->question->choices->a,
-              request->question->choices->b,
-              request->question->choices->c,
-              request->question->choices->d);
+    sprintf(response + strlen(response), "&%s^%s^%s^%s",
+            request->question->choices->a, request->question->choices->b,
+            request->question->choices->c, request->question->choices->d);
   }
   if (request->question->type == IMAGE) {
-      sprintf(response + strlen(response), "&%s$", request->question->imageFile);
+    sprintf(response + strlen(response), "&%s^%s$", request->question->image1,
+            request->question->image2);
   }
   // send response
   send(request->client_socket, response, strlen(response), 0);
   // send image if required
   if (request->question->type == IMAGE) {
-      sendFile(request->question->imageFile,request->client_socket);
+    // send both files
+    sendFile(request->question->image1, request->client_socket);
+    sendFile(request->question->image2, request->client_socket);
   }
+}
+
+void markQuestion(Request *request) {
+  // choice and image questions have same marking procedure
+  if (request->question->type == CHOICE || request->question->type == IMAGE) {
+    if (strcmp(request->question->answer, request->user_answer) == 0) {
+      send(request->client_socket, "correct", strlen("correct"), 0);
+    } else {
+      send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+    }
+  }
+  // TODO: mark code questions
 }
 
 void handleRequest(int client_socket) {
@@ -83,23 +94,21 @@ void handleRequest(int client_socket) {
     if (request->question) {
       printf("Request question %s\n", request->question->text);
     }
-    if (request->attempt) {
-      printf("Request Question attempt: %s\n", request->attempt);
-    }
   }
 
   // handle based on action
   switch (request->action) {
   case (GENERATE_QUESTIONS):;
     int *questions = generateRandomQuestionIds(request->num_to_generate);
-    
+
     for (int i = 0; i < request->num_to_generate; i++) {
       char id_str[12];
-      sprintf(id_str,"%i&", questions[i]);
+      sprintf(id_str, "%i&", questions[i]);
       send(request->client_socket, id_str, strlen(id_str), 0);
     }
     break;
   case (MARK_QUESTION_BY_ID):;
+    markQuestion(request);
     break;
   case (GET_QUESTION_BY_ID):;
     getQuestion(request);

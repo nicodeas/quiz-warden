@@ -11,11 +11,11 @@ C The memory address of a variable
 D The data type of a variable
 $ The size of a variable in bytes
 -----------------------------------------------------------------
-Q Write a function that turns an image black and white, a sample image is provided to you below
+Q Which image of Chris is cooler?
 T IMAGE
 I ./some-image-of-chris.png
-F ./some-black-and-white-image-of-chris
-$
+F ./cool-chris.png
+$ ./cool-chris.png
 -----------------------------------------------------------------
 Q Which header file should be included to perform input and output operations in C?
 T CHOICE
@@ -54,11 +54,11 @@ C ->
 D .
 $ &
 -----------------------------------------------------------------
-Q Write a function that turns an image black and white, a sample image is provided to you below
+Q Which image of Chris is cooler?
 T IMAGE
 I ./some-image-of-chris.png
-F ./some-black-and-white-image-of-chris
-$
+F ./cool-chris.png
+$ ./cool-chris.png
 -----------------------------------------------------------------
 Q Write a C program to check whether a given number 17 is prime or not. Return true or false
 T CODE

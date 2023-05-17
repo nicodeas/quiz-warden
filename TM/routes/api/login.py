@@ -1,7 +1,8 @@
+import json
 import os
 
 from classes.user import User, users
-from utils.auth import *
+from utils.auth import generate_session_id, login_user
 
 from ..base import BaseRoute
 

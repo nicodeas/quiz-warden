@@ -1,6 +1,4 @@
 # Global dictionary to store users
-import hashlib
-
 from classes import TestManager
 
 users = {}

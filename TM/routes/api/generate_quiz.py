@@ -1,8 +1,7 @@
+import json
 import random
 
-from classes.user import *
 from classes.user import User, users
-from utils.auth import *
 from utils.QB.qb_handler import QbHandler
 
 from ..base import BaseRoute

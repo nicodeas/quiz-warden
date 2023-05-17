@@ -11,24 +11,28 @@ def receive_data(s):
     # store image data
     image_data = b""
 
-    # receive response from the server
+    data = io.BytesIO()
     while True:
-        data = s.recv(io.DEFAULT_BUFFER_SIZE)
-        if not data:
+        res = s.recv(io.DEFAULT_BUFFER_SIZE)
+        if not res:
             break
-        # check for image data flag
-        if not receiving_image_data:
-            image_index = data.find(IMAGE_DATA_FLAG)
-            # reading image data!
-            if image_index != -1:
-                qb_response += data[:image_index]
-                image_data += data[image_index + len(IMAGE_DATA_FLAG) :]
-                receiving_image_data = True
-            else:
-                # no image flag; read as regular response
-                qb_response += data
+        data.write(res)
+
+    data = data.getvalue()
+
+    # check for image data flag
+    if not receiving_image_data:
+        image_index = data.find(IMAGE_DATA_FLAG)
+        # reading image data!
+        if image_index != -1:
+            qb_response += data[:image_index]
+            image_data += data[image_index + len(IMAGE_DATA_FLAG) :]
+            receiving_image_data = True
         else:
-            image_data += data
+            # no image flag; read as regular response
+            qb_response += data
+    else:
+        image_data += data
     return qb_response, image_data
 
 

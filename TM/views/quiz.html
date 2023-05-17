@@ -5,12 +5,15 @@
     <title>Quiz</title>
     <link rel="stylesheet" href="static/css/quiz.css" />
   </head>
+
   <body>
     <h1>Quiz</h1>
-
+    <h2 id="language"></h2>
+    <h2>
+      <span id="current-question"></span> / <span id="max-questions"></span>
+    </h2>
     <h2 id="quiz-question"></h2>
-
-    <p>Please input your answer<span id="language"></span></p>
+    <p>Please input your answer</p>
 
     <form>
       <div id="quiz-choices"></div>
@@ -25,6 +28,11 @@
         <button id="next-button">Next</button>
       </div>
     </form>
-    <script src="static/js/quiz.js"></script>
+
+    <p>Question Bank Status:</p>
+    <p>Python: <span id="python-bank-status"></span></p>
+    <p>C: <span id="c-bank-status"></span></p>
+    <div></div>
+    <script type="module" src="static/js/quiz/index.js"></script>
   </body>
 </html>

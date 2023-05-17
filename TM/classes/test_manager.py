@@ -1,46 +1,36 @@
-import json
+from utils.QB.qb_handler import QbHandler
 
 
 class TestManager:
-    def __init__(self):
-        self.max_questions = 0
-        self.question = ""
-        self.choices = []
-        self.question_number = 1
-        self.questions = []
-        self.type = None
-        self.language = None
-        self.question_info = {}
-
-        # dummy variables until QB exists
-        self.dummy_questions = []
-        self.answer = -1
-
-        with open("data/questions.json", "r") as f:
-            self.dummy_questions = json.load(f)["questions"]
-            self.max_questions = len(self.dummy_questions)
-        self.construct_attempts()
+    def __init__(self, questions, curr_question, completed):
+        self.questions = questions
+        self.current_question = curr_question
+        self.max_questions = len(questions)
+        self.completed = completed
 
     def check_question_number(self, current_number):
         if 0 < current_number < self.max_questions:
-            self.question_number = current_number
+            self.current_question = current_number
             self.change_question()
 
-    def get_question_info(self):
-        if self.choices:
-            return {
-                "question": self.question,
-                "choices": self.choices,
-                "type": self.type,
-            }
-        return {"question": self.question, "type": self.type, "language": self.language}
+    def get_question_info(self, q_id):
+        question = self.questions[q_id - 1]
+        qb_handler = QbHandler()
+        qbs = qb_handler.qbs.items()
+        qb_list = [(qb[0], qb[1]) for qb in qbs]
 
-    # Dummy function
-    # self.questions needs to be constructed when we get the list of question IDs from the QB
-    # this code is used to generate ids (since i cannot get them until QB)
-    def construct_attempts(self):
-        for i in range(0, self.max_questions + 1):
-            self.questions.append({"qid": i + 1, "attempt": 3, "mark": 0})
+        qb_addr = None
+        for qb in qb_list:
+            if qb[1] == question["language"]:
+                qb_addr = qb[0]
+                break
+
+        if qb is None:
+            return {}
+
+        question_info = qb_handler.get_question(qb_addr, question["q_id"])
+
+        return question_info
 
     def check_answer(self, answer_index, qid):
         for q in self.questions:
@@ -71,6 +61,3 @@ class TestManager:
         self.type = new_question["type"]
         self.answer = new_question["answer"]
         print(self.language)
-
-
-test_manager = TestManager()

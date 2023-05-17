@@ -22,5 +22,7 @@ class Question(BaseRoute, route="api"):
 
         question_info = user.get_question_info(current_question)
         user.current_question = current_question
+        
+        user.dump_sessions()
 
         return 200, question_info, headers

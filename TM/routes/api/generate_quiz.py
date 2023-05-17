@@ -53,22 +53,12 @@ class GenerateQuiz(BaseRoute, route="api"):
                 for q in qb_handler.generate_quiz(qb_list[1][0], num_questions)
             ]
 
-        session = {}
-        with open("data/session.json", "r") as f:
-            session = json.load(f)
-
         question_data = [
             {"q_id": q, "attempts": 0, "correct": None, "language": l}
             for q, l in questions
         ]
-
-        session[session_id] = {}
-        session[session_id]["questions"] = question_data
-        session[session_id]["current_question"] = 1
-        session[session_id]["completed"] = False
-
-        with open("data/session.json", "w") as f:
-            json.dump(session, f, indent=2)
-
         user.init_tm(question_data, 1, False)
+        
+        user.dump_sessions()
+
         return status, {"message": message}, headers

@@ -29,7 +29,8 @@ class TestManager:
             return {}
 
         question_info = qb_handler.get_question(qb_addr, question["q_id"])
-
+        question_info["attempts"] = self.questions[self.current_question]["attempts"]
+        question_info["correct"] = self.questions[self.current_question]["correct"]
         return question_info
 
     def check_answer(self, answer_index, qid):
@@ -46,8 +47,8 @@ class TestManager:
                 else:
                     if q["attempt"] > 0:
                         q["attempt"] -= 1
-                    return {"correct": False, "attempts": q["attempt"]}
-        return {"correct": False, "attempts": 0}
+                    return {"correct": False, "attempt": q["attempt"]}
+        return {"correct": False, "attempt": 0}
 
     # dummy function until QB exists
     def change_question(self):

@@ -9,11 +9,13 @@ export const getQuestion = async (currentQuestionIndex) => {
       method: "GET",
     });
     const data = await res.json();
-    console.log("data type ", data.type);
+
+    console.log("data.", data.type, data);
     if (data.type == "CHOICE" || data.type == "IMAGE") {
       choices = data.choices;
     }
-    renderQuestion(data.text, data.language, data.type, choices);
+    // just added data.image until multiple images get sent as choices (?).
+    renderQuestion(data.text, data.language, data.type, choices, data.image);
   } catch (err) {
     console.error(err);
   }

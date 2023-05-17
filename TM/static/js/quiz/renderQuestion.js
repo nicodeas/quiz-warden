@@ -1,11 +1,11 @@
-export const renderQuestion = (question, language, type, choices) => {
+export const renderQuestion = (question, language, type, choices, image) => {
   const languageElement = document.getElementById("language");
   languageElement.innerHTML = language;
   const answerContainer = document.getElementById("quiz-choices");
   // Reset the container to blank
   answerContainer.innerHTML = "";
   document.getElementById("quiz-question").innerHTML = question;
-  console.log("Question", question, language, type, choices);
+  // Render question elements based on question type
   if (type == "CHOICE") {
     // create multichoice fields
     choices.forEach((choice, idx) => {
@@ -28,20 +28,25 @@ export const renderQuestion = (question, language, type, choices) => {
     textarea.id = "code-answer";
     answerContainer.append(textarea);
   } else if (type == "IMAGE") {
-    choices.forEach((choice, idx) => {
-      console.log("choice ", choice);
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.name = "option";
-      radio.value = choice;
-      radio.id = `choice-${idx}`;
-      const image = document.createElement("img");
-      image.src = choice;
+    // uncomment when images are choices
+    // choices.forEach((choice, idx) => {
+    //   console.log("choice ", choice);
+    //   const radio = document.createElement("input");
+    //   radio.type = "radio";
+    //   radio.name = "option";
+    //   radio.value = choice;
+    //   radio.id = `choice-${idx}`;
+    //   const image = document.createElement("img");
+    //   image.src = choice;
 
-      const choiceContainer = document.createElement("div");
-      choiceContainer.appendChild(radio);
-      choiceContainer.appendChild(image);
-      answerContainer.appendChild(choiceContainer);
-    });
+    //   const choiceContainer = document.createElement("div");
+    //   choiceContainer.appendChild(radio);
+    //   choiceContainer.appendChild(image);
+    //   answerContainer.appendChild(choiceContainer);
+    // });
+    const fileName = image.split("/").pop();
+    const imgElement = document.createElement("img");
+    imgElement.src = `static/images/${fileName}`;
+    answerContainer.appendChild(imgElement);
   }
 };

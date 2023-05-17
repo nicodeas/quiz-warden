@@ -81,8 +81,8 @@ void buildQuestionBank() {
       currentQuestion = (Question *)malloc(sizeof(Question));
       currentQuestion->choices = NULL;
       currentQuestion->answer = NULL;
-      currentQuestion->imageFile = NULL;
-      currentQuestion->answerFile = NULL;
+      currentQuestion->image1 = NULL;
+      currentQuestion->image2 = NULL;
       currentQuestion->text = text;
       currentQuestion->id = -1;
       break;
@@ -122,9 +122,14 @@ void buildQuestionBank() {
       currentQuestion->answer = text;
       break;
 
-    // image
+    // image 1
     case ('I'):
-      currentQuestion->imageFile = text;
+      currentQuestion->image1 = text;
+      break;
+
+    // image 2
+    case ('F'):
+      currentQuestion->image2 = text;
       break;
 
     // language
@@ -138,11 +143,6 @@ void buildQuestionBank() {
                 buffer);
         exit(EXIT_FAILURE);
       }
-      break;
-
-    // file containing correct image question answer
-    case ('F'):
-      currentQuestion->answerFile = text;
       break;
 
     default:

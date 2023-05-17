@@ -8,8 +8,8 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <unistd.h>
 #include <time.h>
+#include <unistd.h>
 
 #define BACKLOG 16
 
@@ -46,16 +46,16 @@ typedef struct {
   char *text;
   Choices *choices;
   char *answer;
-  char *imageFile;
-  char *answerFile; // used to store correct answer for image question
+  char *image1;
+  char *image2;
 } Question;
 
 typedef struct {
   int client_socket;
   RequestAction action;
-  char *attempt;
   Question *question;
   int num_to_generate;
+  char *user_answer;
 } Request;
 
 #define QUESTION_BANK_SIZE 512
@@ -89,8 +89,8 @@ extern const char *QuestionTypeToString(QuestionType type);
 extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
 extern void getQuestion(Request *request);
-extern void markQuestion(char *answer); // TODO: answer contains req from client
-                                        // parse to get question id
+extern void markQuestion(Request *request); // TODO: answer contains req from
+                                            // client parse to get question id
 extern void markChoice(int client_socket, int questionId);
 extern void markCode(int client_socket, int questionId, int fd); // TODO:
 extern void

@@ -5,9 +5,11 @@ from ..base import BaseRoute
 
 class Logout(BaseRoute, route="api"):
     def executor(req, path, qs, *args, **kwargs):
+        # Get session_token from request headers
         cookies = req.headers["Cookie"]
         session_token = cookies.split("=")[1]
 
+        # Default vlues for status, message, and headers
         status = 500
         message = "Failed to logout"
         headers = {}

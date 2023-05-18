@@ -16,9 +16,9 @@ C Blue
 D Green
 $ Blue
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
+Q Repair the first 8 bytes of the .png file "corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10"
 T IMAGE
-I ./static/img/some-image-of-chris.png
+L PYTHON
+I ./static/img/corrupt-chris.png
 F ./static/img/cool-chris.png
-$ ./static/img/cool-chris.png
 -----------------------------------------------------------------

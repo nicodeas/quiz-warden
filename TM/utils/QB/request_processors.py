@@ -49,7 +49,7 @@ def process_question(qb_response, image_data):
     if question["type"] == "CHOICE":
         question["choices"] = question_parts[4].split("^")
     elif question["type"] == "IMAGE":
-        image_info = question_parts[4].split("$")
+        image_info = question_parts[4].split("^")
         question["image"] = image_info[0]
         process_image_data(image_data, question["image"])
     return question
@@ -59,7 +59,6 @@ def process_image_data(image_data, filename):
     # TODO: naming convention and directory for images
     # possibly just name after question?
     # could images just be stored on TM?
-
     # check file hasn't already been requested
     if not os.path.exists(filename):
         with open(filename, "wb") as f:

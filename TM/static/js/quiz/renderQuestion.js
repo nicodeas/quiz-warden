@@ -23,30 +23,10 @@ export const renderQuestion = (question, language, type, choices, image) => {
       choiceContainer.appendChild(label);
       answerContainer.appendChild(choiceContainer);
     });
-  } else if (type == "CODE") {
+  } else if (type == "CODE" || type == "IMAGE") {
+    // Create a text area for code questions
     const textarea = document.createElement("textarea");
     textarea.id = "code-answer";
     answerContainer.append(textarea);
-  } else if (type == "IMAGE") {
-    // uncomment when images are choices
-    // choices.forEach((choice, idx) => {
-    //   console.log("choice ", choice);
-    //   const radio = document.createElement("input");
-    //   radio.type = "radio";
-    //   radio.name = "option";
-    //   radio.value = choice;
-    //   radio.id = `choice-${idx}`;
-    //   const image = document.createElement("img");
-    //   image.src = choice;
-
-    //   const choiceContainer = document.createElement("div");
-    //   choiceContainer.appendChild(radio);
-    //   choiceContainer.appendChild(image);
-    //   answerContainer.appendChild(choiceContainer);
-    // });
-    const fileName = image.split("/").pop();
-    const imgElement = document.createElement("img");
-    imgElement.src = `static/images/${fileName}`;
-    answerContainer.appendChild(imgElement);
   }
 };

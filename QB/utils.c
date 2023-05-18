@@ -85,7 +85,17 @@ int runCode(Request *request) {
     }
   }
   close(fd[1]);
-  return fd[0];
+  signal(SIGALRM, handleAlarm);
+  alarm(EXE_TIMEOUT);
+  waitpid(timedPid, &status, 0);
+  if (WIFSIGNALED(status)) {
+    // child process timed out
+    return -1;
+  } else {
+    // cancel alarm and return read end of pipe
+    alarm(0);
+    return fd[0];
+  }
 }
 
 Request *newRequest(int client_socket) {

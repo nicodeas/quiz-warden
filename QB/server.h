@@ -14,6 +14,7 @@
 
 #define BACKLOG 16
 
+#define EXE_TIMEOUT 2
 #define PATH_PYTHON "/bin/python3"
 #define PATH_C "/bin/cc"
 

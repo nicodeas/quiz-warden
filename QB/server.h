@@ -95,6 +95,7 @@ extern void freeRequest(Request *request);
 extern int *generateRandomQuestionIds(int numQuestions);
 extern const char *QuestionLanguageToString(QuestionLanguage language);
 extern const char *QuestionTypeToString(QuestionType type);
+extern void saveAnswerLocally(Request *request);
 extern void handleAlarm(int sig);
 
 // handler functions in handlers.c

@@ -100,26 +100,43 @@ void markQuestion(Request *request) {
     printf("%s\n", request->user_answer);
     printf("=====\tEnd of Summary\t=====\n");
   }
+
   char response[BUFSIZ];
   memset(response, 0, sizeof(response));
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
+
       sprintf(response, "CORRECT|");
       send(request->client_socket, response, strlen(response), 0);
+
       return;
     } else {
+
       sprintf(response, "INCORRECT|");
       send(request->client_socket, response, strlen(response), 0);
+
       return;
     }
   } else if (request->question->type == IMAGE) {
-    FILE *answerFile;
 
-    // create python file storing user's attempt
-    answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
-    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
-    fclose(answerFile);
+    saveAnswerLocally(request);
+
+    // NOTE: there are no C questions for images yet
+    if (request->question->language == CLANG) {
+      int result = compileC();
+      if (result != -1) {
+        FILE *errorFile = fdopen(result, "r");
+        char error[4096];
+        memset(error, 0, sizeof(error));
+        fgets(error, 4096, errorFile);
+        fclose(errorFile);
+        close(result);
+        sprintf(response, "ERROR|%s", error);
+        send(request->client_socket, response, strlen(response), 0);
+        return;
+      }
+    }
 
     int answerFd = runCode(request);
     if (answerFd == -1) {
@@ -162,20 +179,8 @@ void markQuestion(Request *request) {
     }
     return;
   } else if (request->question->type == CODE) {
-    // save to tmp file so we do not need to deal with piping into interpreter
-    FILE *answerFile;
-
-    // a little messy but can tidy up down the track
-    switch (request->question->language) {
-    case PYTHON:
-      answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
-      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
-      fclose(answerFile);
-      break;
-    case CLANG:
-      answerFile = fopen(CLANG_USER_ANSWER_PATH, "w");
-      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
-      fclose(answerFile);
+    saveAnswerLocally(request);
+    if (request->question->language == CLANG) {
       int result = compileC();
       if (result != -1) {
         FILE *errorFile = fdopen(result, "r");
@@ -188,7 +193,6 @@ void markQuestion(Request *request) {
         send(request->client_socket, response, strlen(response), 0);
         return;
       }
-      break;
     }
 
     int answerFd = runCode(request);

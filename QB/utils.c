@@ -190,5 +190,19 @@ const char *QuestionLanguageToString(QuestionLanguage language) {
     return "UNKNOWN";
   }
 }
+void saveAnswerLocally(Request *request) {
+  FILE *answerFile;
+  switch (request->question->language) {
+  case PYTHON:
+    answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
+    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+    fclose(answerFile);
+    break;
+  case CLANG:
+    answerFile = fopen(CLANG_USER_ANSWER_PATH, "w");
+    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+    fclose(answerFile);
+  }
+}
 
 void handleAlarm(int sig) { kill(timedPid, SIGTERM); }

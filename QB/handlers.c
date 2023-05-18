@@ -159,12 +159,6 @@ void handleRequest(int client_socket) {
   Request *request = newRequest(client_socket);
   parseRequest(request);
 
-  if (DEBUG) {
-    if (request->question) {
-      printf("Request question %s\n", request->question->text);
-    }
-  }
-
   // handle based on action
   switch (request->action) {
   case (GENERATE_QUESTIONS):;

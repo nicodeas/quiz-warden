@@ -72,6 +72,10 @@ void getQuestion(Request *request) {
 }
 
 void getAnswer(Request *request) {
+  if (request->question->type == IMAGE) {
+    sendFile(request->question->answerFile, request);
+    return;
+  }
   send(request->client_socket, request->question->answer,
        strlen(request->question->answer), 0);
 }

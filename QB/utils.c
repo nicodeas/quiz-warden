@@ -190,6 +190,7 @@ const char *QuestionLanguageToString(QuestionLanguage language) {
     return "UNKNOWN";
   }
 }
+
 void saveAnswerLocally(Request *request) {
   FILE *answerFile;
   switch (request->question->language) {

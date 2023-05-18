@@ -1,5 +1,7 @@
-from utils.QB.qb_handler import QbHandler
 from base64 import b64encode
+
+from utils.QB.qb_handler import QbHandler
+
 
 class TestManager:
     # TestManager class constructor
@@ -66,7 +68,7 @@ class TestManager:
             return {}
 
         answer = qb_handler.get_answer(qb_addr, question["q_id"])
-        
+
         if answer is not None:
             answer = b64encode(answer).decode("utf-8")
         return {"answer": answer}

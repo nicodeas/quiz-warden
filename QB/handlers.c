@@ -14,7 +14,7 @@ void parseRequest(Request *request) {
   if (DEBUG) {
     printf("=====\tRequest Buffer received\t=====\n");
     printf("%s\n", requestBuffer);
-    printf("=====\tEnd of Request\t=====");
+    printf("=====\tEnd of Request\t=====\n");
   }
 
   char *token = strtok(requestBuffer, REQUEST_DELIM);

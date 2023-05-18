@@ -119,7 +119,7 @@ void markQuestion(Request *request) {
            request->question->language == PYTHON ? "PYTHON" : "CLANG");
     printf("=====\tUser's attempt\t=====\n ");
     printf("%s\n", request->user_answer);
-    printf("=====\tEnd of User's attempt\n");
+    printf("=====\tEnd of User's attempt\t=====\n");
   }
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE || request->question->type == IMAGE) {

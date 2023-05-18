@@ -16,7 +16,7 @@ export const renderQuestion = (data) => {
 
     document.getElementById(
       "question-result"
-    ).innerText = `Result: <span id="result">${
+    ).innerHTML = `Result: <span id="result">${
       correct ? "Correct" : "Incorrect"
     }</span>`;
 

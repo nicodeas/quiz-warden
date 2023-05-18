@@ -100,8 +100,8 @@ void markQuestion(Request *request) {
 
     int answerFd = runCode(request);
     if (answerFd == -1) {
-      send(request->client_socket, "Execution timed out",
-           strlen("Execution timed out"), 0);
+      sprintf(response, "TIMEOUT|");
+      send(request->client_socket, response, strlen(response), 0);
       return;
     }
 
@@ -153,8 +153,8 @@ void markQuestion(Request *request) {
 
     int answerFd = runCode(request);
     if (answerFd == -1) {
-      send(request->client_socket, "Execution timed out",
-           strlen("Execution timed out"), 0);
+      sprintf(response, "TIMEOUT|");
+      send(request->client_socket, response, strlen(response), 0);
       return;
     }
 

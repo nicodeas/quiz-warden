@@ -9,6 +9,12 @@ void parseRequest(Request *request) {
   memset(requestBuffer, 0, sizeof(requestBuffer));
   recv(request->client_socket, requestBuffer, sizeof(requestBuffer), 0);
 
+  if (DEBUG) {
+    printf("=====\tRequest Buffer received\t=====\n");
+    printf("%s\n", requestBuffer);
+    printf("=====\tEnd of Request\t=====\n");
+  }
+
   char *token = strtok(requestBuffer, REQUEST_DELIM);
   // NOTE: don't mind the if else statements
   // can't exactly run a switch case on strings :(
@@ -75,6 +81,18 @@ void getQuestion(Request *request) {
 }
 
 void markQuestion(Request *request) {
+  if (DEBUG) {
+    printf("=====\tMarking Question Summary\t=====\n");
+    printf("id:\t\t %d\n", request->question->id);
+    printf("Question:\t%s\n", request->question->text);
+    printf("Language: \t %s\n",
+           request->question->language == PYTHON ? "PYTHON" : "CLANG");
+    printf("User's answer:\n ");
+    printf("%s\n", request->user_answer);
+    printf("=====\tEnd of Summary\t=====\n");
+  }
+  char response[BUFSIZ];
+  memset(response, 0, sizeof(response));
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE || request->question->type == IMAGE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
@@ -82,8 +100,58 @@ void markQuestion(Request *request) {
     } else {
       send(request->client_socket, "incorrect", strlen("incorrect"), 0);
     }
+  } else if (request->question->type == CODE) {
+    // save to tmp file so we do not need to deal with piping into interpreter
+    FILE *answerFile;
+
+    // a little messy but can tidy up down the track
+    switch (request->question->language) {
+    case PYTHON:
+      answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
+      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+      fclose(answerFile);
+      break;
+    case CLANG:
+      answerFile = fopen(CLANG_USER_ANSWER_PATH, "w");
+      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+      fclose(answerFile);
+      int result = compileC();
+      if (result != -1) {
+        FILE *errorFile = fdopen(result, "r");
+        char error[4096];
+        memset(error, 0, sizeof(error));
+        fgets(error, 4096, errorFile);
+        fclose(errorFile);
+        close(result);
+        sprintf(response, "ERROR|%s", error);
+        send(request->client_socket, response, strlen(response), 0);
+        return;
+      }
+      break;
+    }
+
+    int answerFd = runCode(request);
+    if (answerFd == -1) {
+      send(request->client_socket, "Execution timed out",
+           strlen("Execution timed out"), 0);
+      return;
+    }
+
+    FILE *executionOutputFile = fdopen(answerFd, "r");
+    char answer[4096];
+    memset(answer, 0, sizeof(answer));
+    fgets(answer, 4096, executionOutputFile);
+    fclose(executionOutputFile);
+    close(answerFd);
+    // Compare answers
+    if (strcmp(request->question->answer, answer) == 0) {
+      sprintf(response, "CORRECT|");
+      send(request->client_socket, response, strlen(response), 0);
+    } else {
+      sprintf(response, "INCORRECT|%s", answer);
+      send(request->client_socket, response, strlen(response), 0);
+    }
   }
-  // TODO: mark code questions
 }
 
 void handleRequest(int client_socket) {
@@ -92,12 +160,6 @@ void handleRequest(int client_socket) {
   printf("handling request ...\n");
   Request *request = newRequest(client_socket);
   parseRequest(request);
-
-  if (DEBUG) {
-    if (request->question) {
-      printf("Request question %s\n", request->question->text);
-    }
-  }
 
   // handle based on action
   switch (request->action) {

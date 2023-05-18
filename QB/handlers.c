@@ -80,13 +80,14 @@ void getQuestion(Request *request) {
 
 void markQuestion(Request *request) {
   if (DEBUG) {
-    printf("Marking question with id:\t %d\n", request->question->id);
+    printf("=====\tMarking Question Summary\t=====\n");
+    printf("id:\t\t %d\n", request->question->id);
     printf("Question:\t%s\n", request->question->text);
-    printf("Question language: \t %s\n",
+    printf("Language: \t %s\n",
            request->question->language == PYTHON ? "PYTHON" : "CLANG");
-    printf("=====\tUser's attempt\t=====\n ");
+    printf("User's answer:\n ");
     printf("%s\n", request->user_answer);
-    printf("=====\tEnd of User's attempt\t=====\n");
+    printf("=====\tEnd of Summary\t=====\n");
   }
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE || request->question->type == IMAGE) {

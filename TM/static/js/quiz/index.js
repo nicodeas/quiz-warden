@@ -1,5 +1,6 @@
 import { getQuestion } from "./getQuestion.js";
 import "./events.js";
+import "./renderResult.js";
 import { renderState } from "./renderState.js";
 import { getState } from "../utils/getState.js";
 
@@ -12,7 +13,7 @@ if (qs) {
   currentQuestionIndex = qs;
 }
 
-getQuestion(currentQuestionIndex);
+export const question = await getQuestion(currentQuestionIndex);
 
 export const state = await getState();
 

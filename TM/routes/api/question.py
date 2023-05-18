@@ -24,9 +24,11 @@ class Question(BaseRoute, route="api"):
         if current_question < 1 or current_question > user.max_questions:
             return 400, {"message": "Question out of range"}, headers
 
+        user.current_question = current_question
+        user.dump_sessions()
+
         # Get question information for current question
         question_info = user.get_question_info(current_question)
         # Update user's current question
-        user.current_question = current_question
 
         return 200, question_info, headers

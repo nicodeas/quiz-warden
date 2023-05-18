@@ -77,12 +77,8 @@ void getQuestion(Request *request) {
 }
 
 void getAnswer(Request *request) {
-  // construct response
-  size_t size = snprintf(NULL, 0, "%s", request->question->answer);
-  char response[size + 1];
-  sprintf(response, "%s", request->question->answer);
-  // send response
-  send(request->client_socket, response, strlen(response), 0);
+  send(request->client_socket, request->question->answer,
+       strlen(request->question->answer), 0);
 }
 
 void markQuestion(Request *request) {

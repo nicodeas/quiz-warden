@@ -10,10 +10,13 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
 attempt = ""
-with open("try.py") as f:
+with open("./fix_png_header.py") as f:
     attempt = f.read()
 # request needs to contain a valid keyword else there will be an error
-req = "MARK_QUESTION_BY_ID|0|" + attempt
+
+#attempt = "def fix_png_header(input_filename, output_filename):\n\twith open(input_filename, 'rb') as f:\n\t\tdata = f.read()\n\t\tdata = bytearray(data)\n\t\tpng_header = [137, 80, 78, 71, 13, 10, 26, 10]\n\t\tfor i in range(8):\n\t\t\tdata[i] = png_header[i]\n\twith open(output_filename, 'wb') as f:\n\t\tf.write(data)\nfix_png_header('./static/img/corrupt-chris.png', './static/img/user_output.png')"
+
+req = "MARK_QUESTION_BY_ID|3|" + attempt
 
 print(attempt)
 s.send(req.encode())

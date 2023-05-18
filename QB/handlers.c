@@ -34,6 +34,11 @@ void parseRequest(Request *request) {
     token = strtok(NULL, REQUEST_DELIM);
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
+  } else if (strcmp(token, "GET_ANSWER_BY_ID") == 0) {
+    request->action = GET_ANSWER_BY_ID;
+    token = strtok(NULL, REQUEST_DELIM);
+    int questionId = atoi(token);
+    request->question = QUESTION_BANK[questionId];
   } else if (strcmp(token, "HEALTH_CHECK") == 0) {
     request->action = HEALTH_CHECK;
   }
@@ -64,6 +69,11 @@ void getQuestion(Request *request) {
   }
   // send response
   send(request->client_socket, response, strlen(response), 0);
+}
+
+void getAnswer(Request *request) {
+  send(request->client_socket, request->question->answer,
+       strlen(request->question->answer), 0);
 }
 
 void markQuestion(Request *request) {
@@ -163,6 +173,9 @@ void handleRequest(int client_socket) {
     break;
   case (GET_QUESTION_BY_ID):;
     getQuestion(request);
+    break;
+  case (GET_ANSWER_BY_ID):;
+    getAnswer(request);
     break;
   case (HEALTH_CHECK):;
     // debug stuff, remove later

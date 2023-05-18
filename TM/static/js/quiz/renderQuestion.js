@@ -1,4 +1,4 @@
-export const renderQuestion = (question, language, type, choices, image) => {
+export const renderQuestion = (question, language, type, choices) => {
   const languageElement = document.getElementById("language");
   languageElement.innerHTML = language == "CLANG" ? "C" : "Python";
   const answerContainer = document.getElementById("quiz-choices");

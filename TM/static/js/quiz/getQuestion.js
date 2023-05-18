@@ -10,8 +10,7 @@ export const getQuestion = async (currentQuestionIndex) => {
     });
     const data = await res.json();
 
-    console.log("data.", data.type, data);
-    if (data.type == "CHOICE" || data.type == "IMAGE") {
+    if (data.type == "CHOICE") {
       choices = data.choices;
     }
     // just added data.image until multiple images get sent as choices (?).

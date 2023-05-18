@@ -1,5 +1,7 @@
 #include "server.h"
 
+int timedPid;
+
 void sendFile(char *fname, int client_socket) {
   // think of this function this way, it is not exactly sending a "file" but
   // rather it is reading a file in chunks and sending that to the other end
@@ -26,55 +28,73 @@ void sendFile(char *fname, int client_socket) {
   fclose(file);
 }
 
-void compileC(char *fileName, char *outputFile) {
-  int pid;
-  pid = fork();
-  if (pid == -1) {
-    perror("fork");
-    exit(EXIT_FAILURE);
-  } else if (pid == 0) {
-    // compile code
-    execl(PATH_C, "cc", "-o", outputFile, fileName, NULL);
-    fprintf(stderr, "Error during compilation\n");
-    exit(EXIT_FAILURE);
+int compileC() {
+  if (DEBUG) {
+    printf("Compiling C code...\n");
   }
-  // wait for compilation to complete
-  wait(NULL);
-}
-
-int runCode(char *exec, QuestionLanguage language) {
-  // NOTE: not sure if we should use exec name or abs path
   int fd[2];
   if (pipe(fd) == -1) {
     perror("pipe");
     exit(EXIT_FAILURE);
   }
-
   int pid;
+  int status;
   pid = fork();
   if (pid == -1) {
     perror("fork");
     exit(EXIT_FAILURE);
   } else if (pid == 0) {
+    close(fd[0]);
+    dup2(fd[1], STDERR_FILENO);
+    // compile code
+    execl(PATH_C, "cc", "-o", USER_ANSWER_EXE_PATH, CLANG_USER_ANSWER_PATH,
+          NULL);
+    fprintf(stderr, "Error invoking C compiler!\n");
+    exit(EXIT_FAILURE);
+  }
+  // close write end
+  close(fd[1]);
+  // wait for compilation to complete
+  wait(&status);
+  if (status == 0) {
+    close(fd[0]);
+    return -1;
+  } else {
+    // return pipe to get error message
+    return fd[0];
+  }
+  if (DEBUG) {
+    printf("Compilation complete!\n");
+  }
+}
+
+int runCode(Request *request) {
+  if (DEBUG) {
+    printf("Executing User's code\n");
+  }
+  int fd[2];
+  if (pipe(fd) == -1) {
+    perror("pipe");
+    exit(EXIT_FAILURE);
+  }
+  int status;
+  timedPid = fork();
+  if (timedPid == -1) {
+    perror("fork");
+    exit(EXIT_FAILURE);
+  } else if (timedPid == 0) {
     dup2(fd[1], STDOUT_FILENO);
     close(fd[0]);
     close(fd[1]);
-    char execName[64];
-
-    // create exec string for C code, not in use for python
-    char *execStart = "./";
-    strcpy(execName, execStart);
-    strcat(execName, exec);
-
-    switch (language) {
+    switch (request->question->language) {
     case (PYTHON):
-      execl(PATH_PYTHON, "python3", exec, NULL);
-      fprintf(stderr, "failed to run code");
+      execl(PATH_PYTHON, "python3", PYTHON_USER_ANSWER_PATH, NULL);
+      fprintf(stderr, "failed to run code\n");
       exit(EXIT_FAILURE);
       break;
     case (CLANG):
-      execl(execName, execName, NULL);
-      fprintf(stderr, "failed to run code");
+      execl(USER_ANSWER_EXE_PATH, USER_ANSWER_EXE_PATH, NULL);
+      fprintf(stderr, "failed to run code\n");
       exit(EXIT_FAILURE);
       break;
     default:
@@ -83,7 +103,17 @@ int runCode(char *exec, QuestionLanguage language) {
     }
   }
   close(fd[1]);
-  return fd[0];
+  signal(SIGALRM, handleAlarm);
+  alarm(EXE_TIMEOUT);
+  waitpid(timedPid, &status, 0);
+  if (WIFSIGNALED(status)) {
+    // child process timed out
+    return -1;
+  } else {
+    // cancel alarm and return read end of pipe
+    alarm(0);
+    return fd[0];
+  }
 }
 
 Request *newRequest(int client_socket) {
@@ -147,3 +177,5 @@ const char *QuestionLanguageToString(QuestionLanguage language) {
     return "UNKNOWN";
   }
 }
+
+void handleAlarm(int sig) { kill(timedPid, SIGTERM); }

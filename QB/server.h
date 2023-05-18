@@ -74,6 +74,8 @@ extern int NUM_QUESTIONS; // write to this when building question bank to keep
                           // be required
 extern bool DEBUG;
 
+extern int timed_pid;
+
 // server functions in server.c
 extern void buildQuestionBank(); // TODO: setup function on server startup to
                                  // retrieve questions

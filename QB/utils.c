@@ -149,3 +149,5 @@ const char *QuestionLanguageToString(QuestionLanguage language) {
     return "UNKNOWN";
   }
 }
+
+void handleAlarm(int sig) { kill(timed_pid, SIGTERM); }

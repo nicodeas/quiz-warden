@@ -45,6 +45,7 @@ void compileC() {
 }
 
 int runC() {
+  // NOT IN USE
   int fd[2];
   if (pipe(fd) == -1) {
     perror("pipe");
@@ -67,14 +68,15 @@ int runC() {
   return fd[0];
 }
 
-int runCode(char *exec, QuestionLanguage language) {
-  // NOTE: not sure if we should use exec name or abs path
+int runCode(Request *request) {
+  if (DEBUG) {
+    printf("Executing User's code\n");
+  }
   int fd[2];
   if (pipe(fd) == -1) {
     perror("pipe");
     exit(EXIT_FAILURE);
   }
-
   int pid;
   pid = fork();
   if (pid == -1) {
@@ -84,21 +86,14 @@ int runCode(char *exec, QuestionLanguage language) {
     dup2(fd[1], STDOUT_FILENO);
     close(fd[0]);
     close(fd[1]);
-    char execName[64];
-
-    // create exec string for C code, not in use for python
-    char *execStart = "./";
-    strcpy(execName, execStart);
-    strcat(execName, exec);
-
-    switch (language) {
+    switch (request->question->language) {
     case (PYTHON):
-      execl(PATH_PYTHON, "python3", exec, NULL);
+      execl(PATH_PYTHON, "python3", PYTHON_USER_ANSWER_PATH, NULL);
       fprintf(stderr, "failed to run code");
       exit(EXIT_FAILURE);
       break;
     case (CLANG):
-      execl(execName, execName, NULL);
+      execl(USER_ANSWER_EXE_PATH, USER_ANSWER_EXE_PATH, NULL);
       fprintf(stderr, "failed to run code");
       exit(EXIT_FAILURE);
       break;

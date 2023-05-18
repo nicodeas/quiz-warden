@@ -73,12 +73,12 @@ int runCode(Request *request) {
     switch (request->question->language) {
     case (PYTHON):
       execl(PATH_PYTHON, "python3", PYTHON_USER_ANSWER_PATH, NULL);
-      fprintf(stderr, "failed to run code");
+      fprintf(stderr, "failed to run code\n");
       exit(EXIT_FAILURE);
       break;
     case (CLANG):
       execl(USER_ANSWER_EXE_PATH, USER_ANSWER_EXE_PATH, NULL);
-      fprintf(stderr, "failed to run code");
+      fprintf(stderr, "failed to run code\n");
       exit(EXIT_FAILURE);
       break;
     default:

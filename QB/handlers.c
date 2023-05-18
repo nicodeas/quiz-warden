@@ -82,10 +82,12 @@ void markQuestion(Request *request) {
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
-      send(request->client_socket, "correct", strlen("correct"), 0);
+      sprintf(response, "CORRECT|");
+      send(request->client_socket, response, strlen(response), 0);
       return;
     } else {
-      send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+      sprintf(response, "INCORRECT|");
+      send(request->client_socket, response, strlen(response), 0);
       return;
     }
   } else if (request->question->type == IMAGE) {
@@ -116,8 +118,8 @@ void markQuestion(Request *request) {
         return;
       }
     }
-
-    send(request->client_socket, "correct", strlen("correct"), 0);
+    sprintf(response, "CORRECT|");
+    send(request->client_socket, response, strlen(response), 0);
     return;
   } else if (request->question->type == CODE) {
     // save to tmp file so we do not need to deal with piping into interpreter

@@ -11,12 +11,6 @@ C The memory address of a variable
 D The data type of a variable
 $ The size of a variable in bytes
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
-T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
------------------------------------------------------------------
 Q Which header file should be included to perform input and output operations in C?
 T CHOICE
 A <stdio.h>
@@ -54,12 +48,6 @@ C ->
 D .
 $ &
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
-T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
------------------------------------------------------------------
 Q Write a C program to check whether a given number 17 is prime or not. Return true or false
 T CODE
 L CLANG
@@ -78,11 +66,11 @@ C To allow a module to be run as a standalone program
 D To import a module from another module
 $ To allow a module to be run as a standalone program
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
+Q Repair the first 8 bytes of the .png file "corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10"
 T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
+L PYTHON
+I ./static/img/corrupt-chris.png
+F ./static/img/cool-chris.png
 -----------------------------------------------------------------
 Q What is the difference between 'append' and 'extend' methods in Python lists?
 T CHOICE
@@ -125,10 +113,4 @@ B '==' checks if two objects have the same value, while 'is' checks if two objec
 C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
 D There is no such thing as '==' and 'is' operators in Python
 $ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
------------------------------------------------------------------
-Q Which image of Chris is cooler?
-T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
 -----------------------------------------------------------------

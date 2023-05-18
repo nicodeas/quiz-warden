@@ -59,9 +59,9 @@ C '==' checks if two objects are the same object, while 'is' checks if two objec
 D There is no such thing as '==' and 'is' operators in Python
 $ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
+Q Repair the first 8 bytes of the .png file "corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10"
 T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
+L PYTHON
+I ./static/img/corrupt-chris.png
+F ./static/img/cool-chris.png
 -----------------------------------------------------------------

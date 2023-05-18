@@ -5,6 +5,7 @@ export const renderQuestion = (data) => {
   languageElement.innerHTML = language == "CLANG" ? "C" : "Python";
 
   const answerContainer = document.getElementById("quiz-choices");
+  const outputImage = document.getElementById("output-image");
   // Reset the container to blank
   answerContainer.innerHTML = "";
 
@@ -26,6 +27,9 @@ export const renderQuestion = (data) => {
     // mark is 0 if incorrect, otherwise based on attempts
     const mark = correct ? 4 - attempts : 0;
     document.getElementById("question-mark").innerHTML = `Mark: ${mark}`;
+    console.log(type, data);
+    if (type == "IMAGE") {
+    }
   }
 
   document.getElementById("quiz-question").innerHTML = text;

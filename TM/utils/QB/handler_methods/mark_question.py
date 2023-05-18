@@ -6,5 +6,5 @@ def mark_question(self, addr, q_id, answer):
     res = self.send_request(addr, req)
     if res is None:
         return False
-    res = return_mark(res[0])
+    res = return_mark(res)
     return res

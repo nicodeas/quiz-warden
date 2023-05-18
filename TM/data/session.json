@@ -2,7 +2,7 @@
   "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918": {
     "questions": [
       {
-        "q_id": "6",
+        "q_id": "8",
         "attempts": 3,
         "correct": false,
         "language": "Python"
@@ -50,7 +50,7 @@
         "language": "Python"
       },
       {
-        "q_id": "16",
+        "q_id": "14",
         "attempts": 1,
         "correct": null,
         "language": "Python"
@@ -62,7 +62,7 @@
         "language": "Python"
       }
     ],
-    "current_question": 9,
+    "current_question": 1,
     "completed": false
   }
 }

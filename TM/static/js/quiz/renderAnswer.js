@@ -1,6 +1,7 @@
 export const renderAnswer = (data) => {
-  const imageOutputElement = document.getElementById("output-image");
-  //imageOutputElement.src = data;
-  // TODO Change to static/img/...
-  imageOutputElement.src = "some-image-of-chris.png";
+  if (data.type === "image") {
+
+    const imageOutputElement = document.getElementById("output-image");
+    imageOutputElement.src = `data:image/png;base64, ${data.answer}`;
+  }
 };

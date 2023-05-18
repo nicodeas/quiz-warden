@@ -27,6 +27,9 @@ void sendFile(char *fname, int client_socket) {
 }
 
 void compileC() {
+  if (DEBUG) {
+    printf("Compiling C code...\n");
+  }
   int pid;
   pid = fork();
   if (pid == -1) {
@@ -42,6 +45,9 @@ void compileC() {
   // wait for compilation to complete
   // TODO: change to waitpid to check for error code etc
   wait(NULL);
+  if (DEBUG) {
+    printf("Compilation complete!\n");
+  }
 }
 
 int runC() {

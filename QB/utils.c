@@ -60,7 +60,7 @@ int runC() {
     dup2(fd[1], STDOUT_FILENO);
     close(fd[1]);
     close(fd[0]);
-    execl(TMP_EXE_PATH, TMP_EXE_PATH, NULL);
+    execl(USER_ANSWER_EXE_PATH, USER_ANSWER_EXE_PATH, NULL);
   }
   close(fd[1]);
   // return read end for checking answer

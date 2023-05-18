@@ -108,18 +108,35 @@ void markQuestion(Request *request) {
     FILE *user_output = fopen(USER_OUTPUT_PNG, "rb");
     FILE *expected_output = fopen(request->question->answerFile, "rb");
 
-    int c1, c2;
+    if (expected_output == NULL) {
+      sprintf(response, "ERROR|Answer for image does not exist on QB");
+      send(request->client_socket, response, strlen(response), 0);
+    }
+    if (user_output == NULL) {
+      sprintf(response, "INCORRECT|No file was created");
+      send(request->client_socket, response, strlen(response), 0);
+      printf("useroutput not open");
+    }
 
-    while ((c1 = fgetc(user_output)) != EOF ||
-           (c2 = fgetc(expected_output)) != EOF) {
+    int c1, c2;
+    do {
+      c1 = fgetc(user_output);
+      c2 = fgetc(expected_output);
       if (c1 != c2) {
         sprintf(response, "INCORRECT|");
         send(request->client_socket, response, strlen(response), 0);
+        if (unlink(USER_OUTPUT_PNG) == -1) {
+          perror("Unlink USER_OUTPUT_PNG");
+        }
         return;
       }
-    }
+    } while (c1 != EOF && c2 != EOF);
+
     sprintf(response, "CORRECT|");
     send(request->client_socket, response, strlen(response), 0);
+    if (unlink(USER_OUTPUT_PNG) == -1) {
+      perror("Unlink USER_OUTPUT_PNG");
+    }
     return;
   } else if (request->question->type == CODE) {
     // save to tmp file so we do not need to deal with piping into interpreter

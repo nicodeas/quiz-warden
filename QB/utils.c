@@ -28,25 +28,41 @@ void sendFile(char *fname, int client_socket) {
   fclose(file);
 }
 
-void compileC() {
+int compileC() {
   if (DEBUG) {
     printf("Compiling C code...\n");
   }
+  int fd[2];
+  if (pipe(fd) == -1) {
+    perror("pipe");
+    exit(EXIT_FAILURE);
+  }
   int pid;
+  int status;
   pid = fork();
   if (pid == -1) {
     perror("fork");
     exit(EXIT_FAILURE);
   } else if (pid == 0) {
+    close(fd[0]);
+    dup2(fd[1], STDERR_FILENO);
     // compile code
     execl(PATH_C, "cc", "-o", USER_ANSWER_EXE_PATH, CLANG_USER_ANSWER_PATH,
           NULL);
-    fprintf(stderr, "Error during compilation\n");
+    fprintf(stderr, "Error invoking C compiler!\n");
     exit(EXIT_FAILURE);
   }
+  // close write end
+  close(fd[1]);
   // wait for compilation to complete
-  // TODO: change to waitpid to check for error code etc
-  wait(NULL);
+  wait(&status);
+  if (status == 0) {
+    close(fd[0]);
+    return -1;
+  } else {
+    // return pipe to get error message
+    return fd[0];
+  }
   if (DEBUG) {
     printf("Compilation complete!\n");
   }

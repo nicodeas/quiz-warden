@@ -89,6 +89,8 @@ void markQuestion(Request *request) {
     printf("%s\n", request->user_answer);
     printf("=====\tEnd of Summary\t=====\n");
   }
+  char response[BUFSIZ];
+  memset(response, 0, sizeof(response));
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE || request->question->type == IMAGE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
@@ -111,7 +113,18 @@ void markQuestion(Request *request) {
       answerFile = fopen(CLANG_USER_ANSWER_PATH, "w");
       fprintf(answerFile, request->user_answer, strlen(request->user_answer));
       fclose(answerFile);
-      compileC();
+      int result = compileC();
+      if (result != -1) {
+        FILE *errorFile = fdopen(result, "r");
+        char error[4096];
+        memset(error, 0, sizeof(error));
+        fgets(error, 4096, errorFile);
+        fclose(errorFile);
+        close(result);
+        sprintf(response, "ERROR|%s", error);
+        send(request->client_socket, response, strlen(response), 0);
+        return;
+      }
       break;
     }
 

@@ -85,7 +85,7 @@ extern int createServer();
 extern void runServer(int server_socket);
 
 // util functions in util.c
-extern void compileC();
+extern int compileC();
 extern int runCode(Request *request);
 extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);

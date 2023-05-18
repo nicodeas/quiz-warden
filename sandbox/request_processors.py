@@ -80,3 +80,6 @@ def process_generated_questions(qb_response):
 def return_mark(qb_response):
     return qb_response == b"correct"
 
+def return_answer(qb_response):
+    return qb_response.decode()
+

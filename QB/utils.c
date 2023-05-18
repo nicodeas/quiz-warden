@@ -2,7 +2,7 @@
 
 int timedPid;
 
-void sendFile(char *fname, int client_socket) {
+void sendFile(char *fname, Request *request) {
   // think of this function this way, it is not exactly sending a "file" but
   // rather it is reading a file in chunks and sending that to the other end
   printf("Sending file ...\n");
@@ -15,11 +15,10 @@ void sendFile(char *fname, int client_socket) {
     perror("fopen");
     exit(EXIT_FAILURE);
   }
-
   // number of bytes read is size * count, in this case size = 1 and count =
   // BUFSIZ, it will work the other way round as well
   while ((nread = fread(buffer, 1, BUFSIZ, file)) > 0) {
-    nsend = send(client_socket, buffer, nread, 0);
+    nsend = send(request->client_socket, buffer, nread, 0);
     if (nsend == -1) {
       perror("Send file");
       exit(EXIT_FAILURE);

@@ -34,6 +34,7 @@ typedef enum {
   GENERATE_QUESTIONS,
   MARK_QUESTION_BY_ID,
   GET_QUESTION_BY_ID,
+  GET_ANSWER_BY_ID,
   HEALTH_CHECK,
   UNSPEC
 } RequestAction;
@@ -87,7 +88,7 @@ extern void runServer(int server_socket);
 // util functions in util.c
 extern int compileC();
 extern int runCode(Request *request);
-extern void sendFile(char *fname, int client_socket);
+extern void sendFile(char *fname, Request *request);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
 extern int *generateRandomQuestionIds(int numQuestions);
@@ -100,11 +101,9 @@ extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
 extern void getQuestion(Request *request);
 extern void markQuestion(Request *request);
-extern void markChoice(int client_socket, int questionId);
-extern void
-markImage(int client_socket,
-          int questionId); // TODO: send processed image back to TM. Then send
-                           // whether answer is correct/wrong?
+extern void markImage(int client_socket,
+                      int questionId); // TODO: not sure if we will need this or
+                                       // if it can be done in mark Question
 
 // debug functions
 extern void printQuestionBank();

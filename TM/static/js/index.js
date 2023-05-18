@@ -20,15 +20,17 @@ renderState(false, state);
 
 const startButton = document.getElementById("start-quiz");
 
-if (!state.completed) {
-  startButton.innerText = "Continue Quiz";
-}
-
-startButton.addEventListener("click", async (e) => {
-  e.preventDefault();
+if (startButton) {
   if (!state.completed) {
-    continueQuiz();
-  } else {
-    startQuiz();
+    startButton.innerText = "Continue Quiz";
   }
-});
+
+  startButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (!state.completed) {
+      continueQuiz();
+    } else {
+      startQuiz();
+    }
+  });
+}

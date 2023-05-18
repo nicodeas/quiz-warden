@@ -19,26 +19,35 @@ void parseRequest(Request *request) {
   // NOTE: don't mind the if else statements
   // can't exactly run a switch case on strings :(
   if (strcmp(token, "GENERATE_QUESTIONS") == 0) {
+
     request->action = GENERATE_QUESTIONS;
     request->num_to_generate = atoi(strtok(NULL, REQUEST_DELIM));
+
   } else if (strcmp(token, "MARK_QUESTION_BY_ID") == 0) {
+
     request->action = MARK_QUESTION_BY_ID;
     token = strtok(NULL, REQUEST_DELIM);
+
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
-    printf("question id: %i\n", questionId);
     request->user_answer = strdup(strtok(NULL, REQUEST_DELIM));
-    printf("user answer: %s\n", request->user_answer);
+
   } else if (strcmp(token, "GET_QUESTION_BY_ID") == 0) {
+
     request->action = GET_QUESTION_BY_ID;
     token = strtok(NULL, REQUEST_DELIM);
+
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
+
   } else if (strcmp(token, "GET_ANSWER_BY_ID") == 0) {
+
     request->action = GET_ANSWER_BY_ID;
     token = strtok(NULL, REQUEST_DELIM);
+
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
+
   } else if (strcmp(token, "HEALTH_CHECK") == 0) {
     request->action = HEALTH_CHECK;
   }

@@ -16,7 +16,7 @@ class State(BaseRoute, route="api"):
     - maxQuestions: The maximum number of questions in the quiz.
     - currentQuestion: The current question number.
     - completed: Whether or not the user has completed the quiz.
-    - totalScore: The total score of the user for the quiz.
+    - totalMarks: The total marks of the user for the quiz.
     """
 
     def executor(req, path, qs, *args, **kwargs):
@@ -31,14 +31,14 @@ class State(BaseRoute, route="api"):
             payload["currentQuestion"] = user.current_question
             payload["completed"] = user.completed
 
-            total_score = 0
+            total_marks = 0
 
             for question in user.questions:
                 if question["correct"]:
-                    total_score += (
+                    total_marks += (
                         4 - question["attempts"] if question["attempts"] else 0
                     )
-            payload["totalScore"] = total_score
+            payload["totalMarks"] = total_marks
 
         payload["activeQBs"] = list(qb_instance.qbs.values())
         return 200, payload, {}

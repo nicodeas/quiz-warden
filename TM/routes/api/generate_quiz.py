@@ -14,7 +14,7 @@ class GenerateQuiz(BaseRoute, route="api"):
         headers = {}
 
         # Set number of questions to generate
-        NUM_QUESTIONS = 3
+        NUM_QUESTIONS = 10
 
         # Get session_id from request header
         session_id = req.headers["Cookie"].split("=")[1]

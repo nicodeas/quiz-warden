@@ -2,14 +2,14 @@ export const renderQuestion = (data) => {
   const { text, language, type, attempts, correct, choices } = data;
 
   const languageElement = document.getElementById("language");
-  languageElement.innerHTML = language == "CLANG" ? "C" : "Python";
+  languageElement.innerText = language == "CLANG" ? "C" : "Python";
 
   const answerContainer = document.getElementById("quiz-choices");
   const outputImage = document.getElementById("output-image");
   // Reset the container to blank
-  answerContainer.innerHTML = "";
+  answerContainer.innerText = "";
 
-  document.getElementById("question-attempts").innerHTML = attempts;
+  document.getElementById("question-attempts").innerText = attempts;
 
   if (correct != undefined) {
     // disable check button
@@ -26,13 +26,13 @@ export const renderQuestion = (data) => {
 
     // mark is 0 if incorrect, otherwise based on attempts
     const mark = correct ? 4 - attempts : 0;
-    document.getElementById("question-mark").innerHTML = `Mark: ${mark}`;
+    document.getElementById("question-mark").innerText = `Mark: ${mark}`;
     console.log(type, data);
     if (type == "IMAGE") {
     }
   }
 
-  document.getElementById("quiz-question").innerHTML = text;
+  document.getElementById("quiz-question").innerText = text;
 
   if (type == "CHOICE") {
     // create multichoice fields
@@ -43,7 +43,7 @@ export const renderQuestion = (data) => {
       radio.value = choice;
       radio.id = `choice-${idx}`;
       const label = document.createElement("label");
-      label.innerHTML = choice;
+      label.innerText = choice;
       label.setAttribute("for", `choice-${idx}`);
 
       const choiceContainer = document.createElement("div");

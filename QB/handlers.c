@@ -136,17 +136,18 @@ void markQuestion(Request *request) {
     }
 
     FILE *executionOutputFile = fdopen(answerFd, "r");
-    char answer[BUFSIZ];
+    char answer[4096];
     memset(answer, 0, sizeof(answer));
-    fgets(answer, BUFSIZ, executionOutputFile);
+    fgets(answer, 4096, executionOutputFile);
     fclose(executionOutputFile);
     close(answerFd);
-
     // Compare answers
     if (strcmp(request->question->answer, answer) == 0) {
-      send(request->client_socket, "correct", strlen("correct"), 0);
+      sprintf(response, "CORRECT|");
+      send(request->client_socket, response, strlen(response), 0);
     } else {
-      send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+      sprintf(response, "INCORRECT|%s", answer);
+      send(request->client_socket, response, strlen(response), 0);
     }
   }
 }

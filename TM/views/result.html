@@ -4,19 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <title>Quiz Result</title>
+  <link rel="stylesheet" href="static/css/global.css" />
 </head>
 
 <body>
   <h1>Quiz Result</h1>
   <h2 id="quiz-question">
-    <h2>Congratulations <span id="username"></span>!</h2>
+    <h2>You have finished the quiz!</h2>
     <h3>Your total mark is <span id="total-marks"></span> / 10</h3>
-    <button id="home-button">Return home</button>
+    <a class="home-link" href="/">
+      <button>Return home</button>
+    </a>
     <button id="logout" onclick="logoutUser()">Logout</button>
-
-    <p>Question Bank Status:</p>
-    <p>Python: <span id="python-bank-status"></span></p>
-    <p>C: <span id="c-bank-status"></span></p>
 
     <script type="module" src="static/js/quiz/renderResult.js"></script>
     <script src="static/js/auth.js"></script>

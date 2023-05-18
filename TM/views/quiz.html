@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Quiz</title>
+    <link rel="stylesheet" href="static/css/global.css" />
     <link rel="stylesheet" href="static/css/quiz.css" />
   </head>
 
@@ -32,7 +33,9 @@
         <button id="next-button">Next</button>
       </div>
     </form>
-    <button id="home-button">Return home</button>
+    <a class="home-link" href="/">
+      <button>Return home</button>
+    </a>
     <button id="logout" onclick="logoutUser()">Logout</button>
 
     <p>Question Bank Status:</p>

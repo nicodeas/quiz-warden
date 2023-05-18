@@ -29,7 +29,7 @@ const loginUser = async () => {
     window.location.href = "http://localhost:8000";
   } else {
     const loginError = document.getElementById("login-error");
-    loginError.innerHTML =
+    loginError.innerText =
       "Failed to login: Invalid credentials";
   }
 };

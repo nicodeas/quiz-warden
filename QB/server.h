@@ -75,7 +75,7 @@ extern int NUM_QUESTIONS; // write to this when building question bank to keep
                           // be required
 extern bool DEBUG;
 
-extern int timed_pid;
+extern int timedPid;
 
 // server functions in server.c
 extern void buildQuestionBank(); // TODO: setup function on server startup to
@@ -92,6 +92,7 @@ extern void freeRequest(Request *request);
 extern int *generateRandomQuestionIds(int numQuestions);
 extern const char *QuestionLanguageToString(QuestionLanguage language);
 extern const char *QuestionTypeToString(QuestionType type);
+extern void handleAlarm(int sig);
 
 // handler functions in handlers.c
 extern void parseRequest(Request *request);

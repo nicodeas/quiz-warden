@@ -1,6 +1,5 @@
 import { getQuestion } from "./getQuestion.js";
 import "./events.js";
-import "./renderResult.js";
 import { renderState } from "./renderState.js";
 import { getState } from "../utils/getState.js";
 
@@ -17,4 +16,8 @@ export const question = await getQuestion(currentQuestionIndex);
 
 export const state = await getState();
 
-renderState(true, state);
+if (state.completed) {
+  window.location.href = "/result";
+}
+
+await renderState(true, state);

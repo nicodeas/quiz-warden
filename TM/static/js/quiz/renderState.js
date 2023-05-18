@@ -13,7 +13,7 @@ export const renderState = async (isQuiz, state) => {
   cBankStatusElement.style.color = cBankStatus ? "green" : "red";
   
   if (isQuiz) {
-    document.getElementById("total-score").innerHTML = state.totalScore;
+    document.getElementById("total-marks").innerHTML = state.totalMarks;
 
     const currentQuestionElement = document.getElementById("current-question");
     const maxQuestionsElement = document.getElementById("max-questions");

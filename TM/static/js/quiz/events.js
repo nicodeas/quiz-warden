@@ -27,18 +27,10 @@ checkButton.addEventListener("click", async function (e) {
 
 document.getElementById("next-button").addEventListener("click", function (e) {
   e.preventDefault();
-  const questionAttemptsText = document.getElementById("question-attempts");
-  questionAttemptsText.innerHTML = "";
-  checkButton.disabled = false;
-
   window.location.href = "/quiz?question=" + (state.currentQuestion + 1);
 });
 
 document.getElementById("back-button").addEventListener("click", function (e) {
   e.preventDefault();
-  const questionAttemptsText = document.getElementById("question-attempts");
-  questionAttemptsText.innerHTML = "";
-  checkButton.disabled = false;
-
   window.location.href = "/quiz?question=" + (state.currentQuestion - 1);
 });

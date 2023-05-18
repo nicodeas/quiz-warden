@@ -21,7 +21,7 @@ export const renderQuestion = (data) => {
 
     // mark is 0 if incorrect, otherwise based on attempts
     const mark = correct ? 4 - attempts : 0;
-    document.getElementById("question-mark").innerHTML = `Mark: ${mark}`
+    document.getElementById("question-mark").innerHTML = `Marks: ${mark}`
   }
 
   document.getElementById("quiz-question").innerHTML = text;

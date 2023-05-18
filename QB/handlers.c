@@ -91,6 +91,7 @@ void markQuestion(Request *request) {
   } else if (request->question->type == IMAGE) {
     FILE *answerFile;
 
+    // create python file storing user's attempt
     answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
     fprintf(answerFile, request->user_answer, strlen(request->user_answer));
     fclose(answerFile);
@@ -102,18 +103,18 @@ void markQuestion(Request *request) {
       return;
     }
 
-    FILE *user_output = fopen(request->question->imageFile, "rb");
+    FILE *user_output = fopen(USER_OUTPUT_PNG, "rb");
     FILE *expected_output = fopen(request->question->answerFile, "rb");
 
     int c1, c2;
-    do {
-        c1 = fgetc(user_output);
-        c2 = fgetc(expected_output);
-        if (c1 != c2) {
-          send(request->client_socket, "incorrect", strlen("incorrect"), 0);
-          return;
-        }
-    } while (c1 != EOF && c2 != EOF);
+
+    while ((c1 = fgetc(user_output)) != EOF ||
+           (c2 = fgetc(expected_output)) != EOF) {
+      if (c1 != c2) {
+        send(request->client_socket, "incorrect", strlen("INCORRECT|"), 0);
+        return;
+      }
+    }
 
     send(request->client_socket, "correct", strlen("correct"), 0);
     return;

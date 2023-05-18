@@ -30,19 +30,19 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 return
 
-        # # Check if user is authenticated
-        # if path != "login" and not path.startswith("static"):
-        #     session_token = None
-        #     if "Cookie" in self.headers:
-        #         cookies = self.headers["Cookie"]
-        #         session_token = cookies.split("=")[1]
+        # Check if user is authenticated
+        if path != "login" and not path.startswith("static"):
+            session_token = None
+            if "Cookie" in self.headers:
+                cookies = self.headers["Cookie"]
+                session_token = cookies.split("=")[1]
 
-        #     if not is_valid_session(session_token):
-        #         # User is not authenticated, redirect to login page
-        #         self.send_response(302)
-        #         self.send_header("Location", "/login")
-        #         self.end_headers()
-        #         return
+            if not is_valid_session(session_token):
+                # User is not authenticated, redirect to login page
+                self.send_response(302)
+                self.send_header("Location", "/login")
+                self.end_headers()
+                return
 
         if path.startswith("static/") and os.path.exists(path):
             if path.endswith(".css"):

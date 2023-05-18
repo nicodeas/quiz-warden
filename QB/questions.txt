@@ -16,8 +16,9 @@ C Blue
 D Green
 $ Blue
 -----------------------------------------------------------------
-Q Write a function that turns an image black and white, a sample image is provided to you below
+Q Which image of Chris is cooler?
 T IMAGE
-I ./some-image-of-chris.png
-F ./some-black-and-white-image-of-chris
+I ./static/img/some-image-of-chris.png
+F ./static/img/cool-chris.png
+$ ./static/img/cool-chris.png
 -----------------------------------------------------------------

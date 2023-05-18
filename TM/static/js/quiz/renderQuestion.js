@@ -11,11 +11,17 @@ export const renderQuestion = (data) => {
   document.getElementById("question-attempts").innerHTML = attempts;
 
   if (correct != undefined) {
-    document.getElementById("question-result").innerHTML = correct;
+    // disable check button
+    document.getElementById("check-button").disabled = true;
+
+    document.getElementById("question-result").innerHTML = `Result: <span id="result">${correct ? "Correct" : "Incorrect"}</span>`;
+
+    // style red or green
+    document.getElementById("result").style.color = correct ? "green" : "red";
 
     // mark is 0 if incorrect, otherwise based on attempts
     const mark = correct ? 4 - attempts : 0;
-    document.getElementById("question-mark").innerHTML = mark
+    document.getElementById("question-mark").innerHTML = `Mark: ${mark}`
   }
 
   document.getElementById("quiz-question").innerHTML = text;

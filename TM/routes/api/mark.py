@@ -12,7 +12,6 @@ class Mark(BaseRoute, route="api"):
         headers = {}
         
         post_data = kwargs.get("post_data")
-        print(post_data)
         answer = post_data.get("answer", "")
         current_question = int(post_data.get("number", ""))
 
@@ -28,6 +27,17 @@ class Mark(BaseRoute, route="api"):
 
         is_correct = user.mark_question(current_question, answer)
 
+        if is_correct:
+            user.questions[current_question - 1]["correct"] = True
+        else:
+            if user.questions[current_question - 1]["attempts"] == 3:
+                user.questions[current_question - 1]["correct"] = False
+            else:
+                user.questions[current_question - 1]["attempts"] += 1
+                
+        if not any(q["correct"] is None for q in user.questions):
+            user.completed = True
+                
         user.dump_sessions()
 
         return 200, {"is_correct": is_correct}, headers

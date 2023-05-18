@@ -1,6 +1,5 @@
 import { getQuestion } from "./getQuestion.js";
 import "./events.js";
-import "./renderResult.js";
 import { renderState } from "./renderState.js";
 import { getState } from "../utils/getState.js";
 

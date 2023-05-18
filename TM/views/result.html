@@ -9,8 +9,8 @@
     <h1>Quiz Result</h1>
     <h2 id="quiz-question">
       <h2>Congratulations <span id="username"></span>!</h2>
-      <h3>Your total mark is <span id="mark">6</span> /
-      <span id="total-mark">10</span>
+      <h3>Your total mark is <span id="mark"></span> /
+      <span id="total-mark"></span>
     </h3>
     <button id="home-button">Return home</button>
     <button id="logout" onclick="logoutUser()">Logout</button>
@@ -19,7 +19,7 @@
     <p>Python: <span id="python-bank-status"></span></p>
     <p>C: <span id="c-bank-status"></span></p>
 
-    <script src="static/js/quiz/renderResult.js"></script>
+    <script type="module" src="static/js/quiz/renderResult.js"></script>
     <script type="module" src="static/js/index.js"></script>
     <script src="static/js/auth.js"></script>
   </body>

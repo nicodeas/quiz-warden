@@ -42,3 +42,8 @@ document.getElementById("back-button").addEventListener("click", function (e) {
 
   window.location.href = "/quiz?question=" + (state.currentQuestion - 1);
 });
+
+document.getElementById("home-button").addEventListener("click", function (e) {
+  e.preventDefault();
+  window.location.href = "/";
+});

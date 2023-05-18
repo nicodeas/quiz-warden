@@ -51,11 +51,11 @@ def process_question(qb_response, image_data):
     }
     if question['type'] == 'CHOICE':
         question['choices'] = question_parts[4].split('^')
-    elif question['type'] == 'IMAGE':
-        image_info =  question_parts[4].split('$')
-        question['images'] = image_info[0].split('^')
-        process_image_data(image_data[0], question['images'][0])
-        process_image_data(image_data[1], question['images'][1])
+    #elif question['type'] == 'IMAGE':
+    #    image_info =  question_parts[4].split('$')
+    #    question['images'] = image_info[0].split('^')
+    #  process_image_data(image_data[0], question['images'][0])
+    #    process_image_data(image_data[1], question['images'][1])
     return question
 
 def process_image_data(image_data, filename):

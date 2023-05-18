@@ -45,10 +45,6 @@ void getQuestion(Request *request) {
                  request->question->choices->b, request->question->choices->c,
                  request->question->choices->d);
   }
-  if (request->question->type == IMAGE) {
-    size += snprintf(NULL, 0, "&%s^%s$", request->question->image1,
-                     request->question->image2);
-  }
   // construct response
   char response[size + 1];
   sprintf(response, "%i&%s&%s&%s", request->question->id, language, type, text);
@@ -57,23 +53,13 @@ void getQuestion(Request *request) {
             request->question->choices->a, request->question->choices->b,
             request->question->choices->c, request->question->choices->d);
   }
-  if (request->question->type == IMAGE) {
-    sprintf(response + strlen(response), "&%s^%s$", request->question->image1,
-            request->question->image2);
-  }
   // send response
   send(request->client_socket, response, strlen(response), 0);
-  // send image if required
-  if (request->question->type == IMAGE) {
-    // send both files
-    sendFile(request->question->image1, request->client_socket);
-    sendFile(request->question->image2, request->client_socket);
-  }
 }
 
 void markQuestion(Request *request) {
-  // choice and image questions have same marking procedure
-  if (request->question->type == CHOICE || request->question->type == IMAGE) {
+  // TODO: Mark image questions
+  if (request->question->type == CHOICE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
       send(request->client_socket, "correct", strlen("correct"), 0);
     } else {

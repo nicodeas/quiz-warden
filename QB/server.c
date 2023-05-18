@@ -81,8 +81,8 @@ void buildQuestionBank() {
       currentQuestion = (Question *)malloc(sizeof(Question));
       currentQuestion->choices = NULL;
       currentQuestion->answer = NULL;
-      currentQuestion->image1 = NULL;
-      currentQuestion->image2 = NULL;
+      currentQuestion->imageFile = NULL;
+      currentQuestion->answerFile = NULL;
       currentQuestion->text = text;
       currentQuestion->id = -1;
       break;
@@ -124,12 +124,12 @@ void buildQuestionBank() {
 
     // image 1
     case ('I'):
-      currentQuestion->image1 = text;
+      currentQuestion->imageFile = text;
       break;
 
     // image 2
     case ('F'):
-      currentQuestion->image2 = text;
+      currentQuestion->answerFile = text;
       break;
 
     // language

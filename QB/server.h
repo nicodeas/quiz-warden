@@ -96,7 +96,6 @@ extern void handleRequest(int client_socket);
 extern void getQuestion(Request *request);
 extern void markQuestion(Request *request);
 extern void markChoice(int client_socket, int questionId);
-extern void markCode(Request *request); // TODO:
 extern void
 markImage(int client_socket,
           int questionId); // TODO: send processed image back to TM. Then send

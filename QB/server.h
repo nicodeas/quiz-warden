@@ -1,6 +1,7 @@
 #define _POSIX_C_SOURCE 200809L // enables strdup()
 #include <getopt.h>
 #include <netinet/in.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,10 +14,16 @@
 
 #define BACKLOG 16
 
+#define EXE_TIMEOUT 2
 #define PATH_PYTHON "/bin/python3"
 #define PATH_C "/bin/cc"
 
 #define QUESTION_FILE "questions.txt"
+
+#define CLANG_USER_ANSWER_PATH "./code.c"
+#define PYTHON_USER_ANSWER_PATH "./code.py"
+
+#define USER_ANSWER_EXE_PATH "./compiled_code"
 
 #define REQUEST_DELIM "|"
 
@@ -69,6 +76,8 @@ extern int NUM_QUESTIONS; // write to this when building question bank to keep
                           // be required
 extern bool DEBUG;
 
+extern int timedPid;
+
 // server functions in server.c
 extern void buildQuestionBank(); // TODO: setup function on server startup to
                                  // retrieve questions
@@ -76,23 +85,22 @@ extern int createServer();
 extern void runServer(int server_socket);
 
 // util functions in util.c
-extern void compileC(char *fileName, char *outputFile);
-extern int runCode(char *exec, QuestionLanguage language);
+extern int compileC();
+extern int runCode(Request *request);
 extern void sendFile(char *fname, int client_socket);
 extern Request *newRequest(int client_socket);
 extern void freeRequest(Request *request);
 extern int *generateRandomQuestionIds(int numQuestions);
 extern const char *QuestionLanguageToString(QuestionLanguage language);
 extern const char *QuestionTypeToString(QuestionType type);
+extern void handleAlarm(int sig);
 
 // handler functions in handlers.c
 extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
 extern void getQuestion(Request *request);
-extern void markQuestion(Request *request); // TODO: answer contains req from
-                                            // client parse to get question id
+extern void markQuestion(Request *request);
 extern void markChoice(int client_socket, int questionId);
-extern void markCode(int client_socket, int questionId, int fd); // TODO:
 extern void
 markImage(int client_socket,
           int questionId); // TODO: send processed image back to TM. Then send

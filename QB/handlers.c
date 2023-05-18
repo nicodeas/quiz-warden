@@ -216,9 +216,10 @@ void markQuestion(Request *request) {
 }
 
 void handleRequest(int client_socket) {
-  // TODO: deal with multiple coding/image questions needing to be marked, need
-  // some way of locking the exe file
-  printf("handling request ...\n");
+  if (DEBUG) {
+    printf("handling request ...\n");
+  }
+
   Request *request = newRequest(client_socket);
   parseRequest(request);
 
@@ -233,26 +234,24 @@ void handleRequest(int client_socket) {
       send(request->client_socket, id_str, strlen(id_str), 0);
     }
     break;
-  case (MARK_QUESTION_BY_ID):;
+  case (MARK_QUESTION_BY_ID):
     markQuestion(request);
     break;
-  case (GET_QUESTION_BY_ID):;
+  case (GET_QUESTION_BY_ID):
     getQuestion(request);
     break;
-  case (GET_ANSWER_BY_ID):;
+  case (GET_ANSWER_BY_ID):
     getAnswer(request);
     break;
-  case (HEALTH_CHECK):;
-    // debug stuff, remove later
-    char *resp = LANGUAGE;
-    send(request->client_socket, resp, strlen(resp), 0);
+  case (HEALTH_CHECK):
+    send(request->client_socket, LANGUAGE, strlen(LANGUAGE), 0);
     break;
+
   case (UNSPEC):;
     break;
   }
 
-  // clean up resources, possibly add a function to remove tmp file created by
-  // compilation
+  // clean up resources and close connection
   freeRequest(request);
   close(client_socket);
   exit(EXIT_SUCCESS);

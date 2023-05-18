@@ -27,8 +27,7 @@ class Mark(BaseRoute, route="api"):
 
 
         is_correct = user.mark_question(current_question, answer)
-        print(is_correct)
 
         user.dump_sessions()
 
-        return 200, {}, headers
+        return 200, {"is_correct": is_correct}, headers

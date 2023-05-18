@@ -6,6 +6,7 @@ void parseRequest(Request *request) {
 
   // TODO: might want what happens when a non existent question gets requested
   char requestBuffer[BUFSIZ];
+  memset(requestBuffer, 0, sizeof(requestBuffer));
   recv(request->client_socket, requestBuffer, sizeof(requestBuffer), 0);
 
   char *token = strtok(requestBuffer, REQUEST_DELIM);
@@ -19,7 +20,9 @@ void parseRequest(Request *request) {
     token = strtok(NULL, REQUEST_DELIM);
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
+    printf("question id: %i\n", questionId);
     request->user_answer = strdup(strtok(NULL, REQUEST_DELIM));
+    printf("user answer: %s\n", request->user_answer);
   } else if (strcmp(token, "GET_QUESTION_BY_ID") == 0) {
     request->action = GET_QUESTION_BY_ID;
     token = strtok(NULL, REQUEST_DELIM);

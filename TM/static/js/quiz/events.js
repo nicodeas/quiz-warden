@@ -7,20 +7,20 @@ checkButton.addEventListener("click", async function (e) {
   e.preventDefault();
   if (question.type == "CHOICE") {
     const options = document.getElementsByName("option");
-    let checkedQuestionIndex = -1;
+    let answer = null;
     for (let i = 0; i < options.length; i++) {
       if (options[i].checked) {
-        checkedQuestionIndex = i;
+        answer = options[i].value;
         break;
       }
     }
 
-    if (checkedQuestionIndex === -1) {
+    if (answer === -1) {
       alert("Please select an answer!");
       return;
     }
+    await markQuestion(answer);
 
-    await markQuestion(checkedQuestionIndex);
   } else if (question.type == "CODE") {
     const answer = document.getElementById("code-answer").value;
 

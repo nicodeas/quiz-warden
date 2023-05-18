@@ -1,3 +1,5 @@
+import { renderAnswer } from "./renderAnswer.js";
+
 export const renderQuestion = (data) => {
   const { text, language, type, attempts, correct, choices } = data;
 
@@ -28,7 +30,9 @@ export const renderQuestion = (data) => {
     const mark = correct ? 4 - attempts : 0;
     document.getElementById("question-mark").innerText = `Mark: ${mark}`;
     console.log(type, data);
+    // Render the question output if the type is image
     if (type == "IMAGE") {
+      renderAnswer("/some-image-of-chris.png");
     }
   }
 

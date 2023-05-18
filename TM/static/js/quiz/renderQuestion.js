@@ -35,6 +35,7 @@ export const renderQuestion = (data) => {
   document.getElementById("quiz-question").innerText = text;
 
   if (type == "CHOICE") {
+    console.log(choices);
     // create multichoice fields
     choices.forEach((choice, idx) => {
       const radio = document.createElement("input");

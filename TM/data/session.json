@@ -2,27 +2,51 @@
   "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918": {
     "questions": [
       {
-        "q_id": "8",
-        "attempts": 1,
-        "correct": null,
+        "q_id": "6",
+        "attempts": 3,
+        "correct": false,
         "language": "Python"
       },
       {
-        "q_id": "17",
+        "q_id": "0",
+        "attempts": 3,
+        "correct": false,
+        "language": "Python"
+      },
+      {
+        "q_id": "10",
+        "attempts": 3,
+        "correct": false,
+        "language": "Python"
+      },
+      {
+        "q_id": "3",
+        "attempts": 3,
+        "correct": false,
+        "language": "Python"
+      },
+      {
+        "q_id": "4",
         "attempts": 1,
-        "correct": null,
+        "correct": true,
+        "language": "Python"
+      },
+      {
+        "q_id": "8",
+        "attempts": 3,
+        "correct": false,
+        "language": "Python"
+      },
+      {
+        "q_id": "12",
+        "attempts": 1,
+        "correct": true,
         "language": "Python"
       },
       {
         "q_id": "13",
         "attempts": 1,
-        "correct": null,
-        "language": "Python"
-      },
-      {
-        "q_id": "5",
-        "attempts": 1,
-        "correct": null,
+        "correct": true,
         "language": "Python"
       },
       {
@@ -32,41 +56,13 @@
         "language": "Python"
       },
       {
-        "q_id": "14",
-        "attempts": 1,
-        "correct": null,
-        "language": "Python"
-      },
-      {
-        "q_id": "19",
-        "attempts": 1,
-        "correct": null,
-        "language": "Python"
-      },
-      {
-        "q_id": "9",
-        "attempts": 1,
-        "correct": null,
-        "language": "Python"
-      },
-      {
-        "q_id": "3",
-        "attempts": 1,
-        "correct": null,
-        "language": "Python"
-      },
-      {
-        "q_id": "6",
+        "q_id": "1",
         "attempts": 1,
         "correct": null,
         "language": "Python"
       }
     ],
-<<<<<<< HEAD
-    "current_question": 1,
-=======
-    "current_question": 8,
->>>>>>> main
+    "current_question": 9,
     "completed": false
   }
 }

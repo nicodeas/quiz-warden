@@ -42,6 +42,7 @@ def receive_data(s):
 # stores question fields in a dict; writes image_data to file if it exists
 def process_question(qb_response, image_data):
     question_parts = qb_response.decode().split("&")
+    print(question_parts)
     # only receives fields to display question to user; marking handled by QB
     question = {
         "id": int(question_parts[0]),

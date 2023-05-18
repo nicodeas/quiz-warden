@@ -18,8 +18,10 @@
 
 #define QUESTION_FILE "questions.txt"
 
-#define TMP_PATH "tmp.c"
-#define TMP_EXE_PATH "tmp"
+#define CLANG_USER_ANSWER_PATH "./code.c"
+#define PYTHON_USER_ANSWER_PATH "./code.py"
+
+#define USER_ANSWER_EXE_PATH "./compiled_code"
 
 #define REQUEST_DELIM "|"
 

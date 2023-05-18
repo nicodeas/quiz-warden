@@ -127,20 +127,33 @@ void markQuestion(Request *request) {
       send(request->client_socket, "incorrect", strlen("incorrect"), 0);
     }
   } else if (request->question->type == CODE) {
-    // open this fd at the end to mark code
-    int answerFd;
+    // save to tmp file so we do not need to deal with piping into interpreter
+    FILE *answerFile;
+
+    // a little messy but can tidy up down the track
     switch (request->question->language) {
     case PYTHON:
-      answerFd = runPython(request);
+      answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
+      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+      fclose(answerFile);
       break;
     case CLANG:
-      compileC(request);
-      answerFd = runC();
+      answerFile = fopen(CLANG_USER_ANSWER_PATH, "w");
+      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+      fclose(answerFile);
+      compileC();
       break;
     }
-    FILE *answerfile = fdopen(answerFd, "r");
+
+    int answerFd = runCode(request);
+    FILE *executionOutputFile = fdopen(answerFd, "r");
     char answer[BUFSIZ];
-    fgets(answer, BUFSIZ, answerfile);
+    memset(answer, 0, sizeof(answer));
+    fgets(answer, BUFSIZ, executionOutputFile);
+    fclose(executionOutputFile);
+    close(answerFd);
+
+    // Compare answers
     if (strcmp(request->question->answer, answer) == 0) {
       send(request->client_socket, "correct", strlen("correct"), 0);
     } else {

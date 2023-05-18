@@ -1,14 +1,12 @@
 import { renderQuestion } from "./renderQuestion.js";
 
 export const getQuestion = async (currentQuestionIndex) => {
-  document.getElementById("question-result").innerText = "";
-
   try {
     const res = await fetch("/api/question?number=" + currentQuestionIndex, {
       method: "GET",
     });
     const data = await res.json();
-    renderQuestion(data);
+    await renderQuestion(data);
     return data;
   } catch (err) {
     console.error(err);

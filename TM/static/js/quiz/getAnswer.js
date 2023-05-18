@@ -1,15 +1,17 @@
 import { renderAnswer } from "./renderAnswer.js";
 
-export const getAnswer = async (currentQuestionIndex) => {
-  document.getElementById("question-result").innerText = "";
-
+export const getAnswer = async (currentQuestionIndex, type) => {
+  let data = null;
   try {
     const res = await fetch("/api/answer?number=" + currentQuestionIndex, {
       method: "GET",
     });
-    const data = await res.json();
-    renderAnswer(data);
+    data = await res.json();
+    console.log(data);
   } catch (err) {
     console.error(err);
+  }
+  if (data != undefined) {
+    renderAnswer(data, type);
   }
 };

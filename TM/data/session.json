@@ -3,7 +3,7 @@
     "questions": [
       {
         "q_id": "8",
-        "attempts": 3,
+        "attempts": 1,
         "correct": false,
         "language": "Python"
       },
@@ -51,8 +51,8 @@
       },
       {
         "q_id": "14",
-        "attempts": 1,
-        "correct": null,
+        "attempts": 3,
+        "correct": false,
         "language": "Python"
       },
       {
@@ -62,7 +62,7 @@
         "language": "Python"
       }
     ],
-    "current_question": 1,
+    "current_question": 7,
     "completed": false
   }
 }

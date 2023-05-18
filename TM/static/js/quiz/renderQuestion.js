@@ -9,7 +9,6 @@ export const renderQuestion = async (data) => {
   languageElement.innerText = language == "CLANG" ? "C" : "Python";
 
   const answerContainer = document.getElementById("quiz-choices");
-  const outputImage = document.getElementById("output-image");
   // Reset the container to blank
   answerContainer.innerText = "";
 
@@ -33,9 +32,8 @@ export const renderQuestion = async (data) => {
     document.getElementById("question-mark").innerText = `Mark: ${mark}`;
     console.log(type, data);
 
-    // Render the question output if the type is image
-    if (type == "IMAGE") {
-      getAnswer(state.currentQuestion);
+    if (correct != undefined) {
+      await getAnswer(state.currentQuestion, type);
     }
   }
 

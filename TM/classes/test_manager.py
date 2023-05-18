@@ -68,6 +68,5 @@ class TestManager:
         answer = qb_handler.get_answer(qb_addr, question["q_id"])
         
         if answer is not None:
-            type = "image"
             answer = b64encode(answer).decode("utf-8")
-        return {"answer": answer, "type": type}
+        return {"answer": answer}

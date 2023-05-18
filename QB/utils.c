@@ -26,12 +26,7 @@ void sendFile(char *fname, int client_socket) {
   fclose(file);
 }
 
-void compileC(Request *request) {
-  FILE *file = fopen(TMP_PATH, "w");
-  if (file == NULL) {
-    perror("Error opening file");
-  }
-  fprintf(file, "%s", request->user_answer);
+void compileC() {
   int pid;
   pid = fork();
   if (pid == -1) {
@@ -39,7 +34,8 @@ void compileC(Request *request) {
     exit(EXIT_FAILURE);
   } else if (pid == 0) {
     // compile code
-    execl(PATH_C, "cc", "-o", TMP_EXE_PATH, TMP_PATH, NULL);
+    execl(PATH_C, "cc", "-o", USER_ANSWER_EXE_PATH, CLANG_USER_ANSWER_PATH,
+          NULL);
     fprintf(stderr, "Error during compilation\n");
     exit(EXIT_FAILURE);
   }

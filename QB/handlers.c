@@ -83,9 +83,40 @@ void markQuestion(Request *request) {
   if (request->question->type == CHOICE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
       send(request->client_socket, "correct", strlen("correct"), 0);
+      return;
     } else {
       send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+      return;
     }
+  } else if (request->question->type == IMAGE) {
+    FILE *answerFile;
+
+    answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
+    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+    fclose(answerFile);
+
+    int answerFd = runCode(request);
+    if (answerFd == -1) {
+      send(request->client_socket, "Execution timed out",
+           strlen("Execution timed out"), 0);
+      return;
+    }
+
+    FILE *user_output = fopen(request->question->imageFile, "rb");
+    FILE *expected_output = fopen(request->question->answerFile, "rb");
+
+    int c1, c2;
+    do {
+        c1 = fgetc(user_output);
+        c2 = fgetc(expected_output);
+        if (c1 != c2) {
+          send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+          return;
+        }
+    } while (c1 != EOF && c2 != EOF);
+
+    send(request->client_socket, "correct", strlen("correct"), 0);
+    return;
   } else if (request->question->type == CODE) {
     // save to tmp file so we do not need to deal with piping into interpreter
     FILE *answerFile;

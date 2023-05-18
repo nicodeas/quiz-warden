@@ -11,12 +11,6 @@ C To allow a module to be run as a standalone program
 D To import a module from another module
 $ To allow a module to be run as a standalone program
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
-T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
------------------------------------------------------------------
 Q What is the difference between 'append' and 'extend' methods in Python lists?
 T CHOICE
 A There is no difference, they are the same
@@ -64,4 +58,3 @@ T IMAGE
 L PYTHON
 I ./static/img/corrupt-chris.png
 F ./static/img/cool-chris.png
------------------------------------------------------------------

@@ -11,6 +11,12 @@ void parseRequest(Request *request) {
   memset(requestBuffer, 0, sizeof(requestBuffer));
   recv(request->client_socket, requestBuffer, sizeof(requestBuffer), 0);
 
+  if (DEBUG) {
+    printf("=====\tRequest Buffer received\t=====\n");
+    printf("%s\n", requestBuffer);
+    printf("=====\tEnd of Request\t=====");
+  }
+
   char *token = strtok(requestBuffer, REQUEST_DELIM);
   // NOTE: don't mind the if else statements
   // can't exactly run a switch case on strings :(

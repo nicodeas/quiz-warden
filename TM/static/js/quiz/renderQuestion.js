@@ -1,6 +1,8 @@
 import { getAnswer } from "./getAnswer.js";
+import { getState } from "../utils/getState.js";
 
-export const renderQuestion = (data) => {
+export const renderQuestion = async (data) => {
+  const state = await getState();
   const { text, language, type, attempts, correct, choices } = data;
 
   const languageElement = document.getElementById("language");
@@ -30,9 +32,10 @@ export const renderQuestion = (data) => {
     const mark = correct ? 4 - attempts : 0;
     document.getElementById("question-mark").innerText = `Mark: ${mark}`;
     console.log(type, data);
+
     // Render the question output if the type is image
     if (type == "IMAGE") {
-      getAnswer(9); // TODO: Get current Index
+      getAnswer(state.currentQuestion);
     }
   }
 

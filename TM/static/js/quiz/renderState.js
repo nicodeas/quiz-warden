@@ -11,7 +11,7 @@ export const renderState = async (isQuiz, state) => {
   pythonBankStatusElement.style.color = pythonBankStatus ? "green" : "red";
   cBankStatusElement.innerHTML = cBankStatus ? "Online" : "Offline";
   cBankStatusElement.style.color = cBankStatus ? "green" : "red";
-  
+
   if (isQuiz) {
     document.getElementById("total-marks").innerHTML = state.totalMarks;
 

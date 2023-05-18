@@ -14,7 +14,11 @@ export const renderQuestion = (data) => {
     // disable check button
     document.getElementById("check-button").disabled = true;
 
-    document.getElementById("question-result").innerHTML = `Result: <span id="result">${correct ? "Correct" : "Incorrect"}</span>`;
+    document.getElementById(
+      "question-result"
+    ).innerHTML = `Result: <span id="result">${
+      correct ? "Correct" : "Incorrect"
+    }</span>`;
 
     // style red or green
     document.getElementById("result").style.color = correct ? "green" : "red";
@@ -43,7 +47,8 @@ export const renderQuestion = (data) => {
       choiceContainer.appendChild(label);
       answerContainer.appendChild(choiceContainer);
     });
-  } else if (type == "CODE") {
+  } else if (type == "CODE" || type == "IMAGE") {
+    // Create a text area for code questions
     const textarea = document.createElement("textarea");
     textarea.id = "code-answer";
     answerContainer.append(textarea);

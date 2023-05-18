@@ -49,8 +49,10 @@ class RequestHandler(BaseHTTPRequestHandler):
                 content_type = "text/css"
             elif path.endswith(".js"):
                 content_type = "text/javascript"
+            elif path.endswith(".png"):
+                content_type = "image/png"
 
-            with open(path, "r") as file:
+            with open(path, "rb") as file:
                 status = 200
                 response = file.read()
 
@@ -70,7 +72,11 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.send_header(header, value)
 
         self.end_headers()
-        self.wfile.write(response.encode())
+        
+        if isinstance(response, str):
+            response = response.encode()
+
+        self.wfile.write(response)
 
     def do_POST(self):
         routes = BaseRoute.routes

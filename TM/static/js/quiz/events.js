@@ -1,30 +1,28 @@
-import { getQuestion } from "./getQuestion.js";
-import { state } from "./index.js";
+import { state, question } from "./index.js";
+import { markQuestion } from "./markQuestion.js";
 
 const checkButton = document.getElementById("check-button");
 
-//TODO: refactor to use QB
-checkButton.addEventListener("click", function (e) {
+checkButton.addEventListener("click", async function (e) {
   e.preventDefault();
-  if (type == "CHOICE") {
+  let answer = null;
+  if (question.type == "CHOICE") {
     const options = document.getElementsByName("option");
-    let checkedQuestionIndex = -1;
     for (let i = 0; i < options.length; i++) {
       if (options[i].checked) {
-        checkedQuestionIndex = i;
+        answer = options[i].value;
         break;
       }
     }
-    if (checkedQuestionIndex === -1) {
+
+    if (answer === -1) {
       alert("Please select an answer!");
       return;
     }
-    checkQuestion(checkedQuestionIndex);
-  } else if (type == "CODE") {
-    const answer = document.getElementById("code-answer").value;
-
-    checkQuestion(answer);
+  } else if (question.type == "CODE") {
+    answer = document.getElementById("code-answer").value;
   }
+  await markQuestion(answer);
 });
 
 document.getElementById("next-button").addEventListener("click", function (e) {

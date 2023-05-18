@@ -1,3 +1,6 @@
 *.out
 *.o
 main
+code.c
+code.py
+compiled_code

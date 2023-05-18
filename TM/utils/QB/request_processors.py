@@ -48,10 +48,6 @@ def process_question(qb_response, image_data):
     }
     if question["type"] == "CHOICE":
         question["choices"] = question_parts[4].split("^")
-    elif question["type"] == "IMAGE":
-        image_info = question_parts[4].split("^")
-        question["image"] = image_info[0]
-        process_image_data(image_data, question["image"])
     return question
 
 
@@ -71,3 +67,8 @@ def process_image_data(image_data, filename):
 def process_generated_questions(qb_response):
     questions = [question for question in qb_response.decode().split("&") if question]
     return questions
+
+
+# checks if answer sent to QB is correct
+def return_mark(qb_response):
+    return qb_response == b"correct"

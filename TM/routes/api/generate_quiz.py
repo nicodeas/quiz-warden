@@ -1,4 +1,3 @@
-import json
 import random
 
 from classes.user import User, users
@@ -61,27 +60,12 @@ class GenerateQuiz(BaseRoute, route="api"):
                 for q in qb_handler.generate_quiz(qb_list[1][0], num_questions)
             ]
 
-        # Get session data from JSON file
-        session = {}
-        with open("data/session.json", "r") as f:
-            session = json.load(f)
-
-        # Create list of dicts containing questions data for each question
         question_data = [
-            {"q_id": q, "attempts": 0, "correct": None, "language": l}
+            {"q_id": q, "attempts": 1, "correct": None, "language": l}
             for q, l in questions
         ]
-
-        # Update session data with generated questions and current question index
-        session[session_id] = {}
-        session[session_id]["questions"] = question_data
-        session[session_id]["current_question"] = 1
-        session[session_id]["completed"] = False
-
-        # Save updated session data to JSON file
-        with open("data/session.json", "w") as f:
-            json.dump(session, f, indent=2)
-
-        # Initialise user's test manager with questions and current question index
         user.init_tm(question_data, 1, False)
+
+        user.dump_sessions()
+
         return status, {"message": message}, headers

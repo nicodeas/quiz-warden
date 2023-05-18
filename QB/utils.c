@@ -44,30 +44,6 @@ void compileC() {
   wait(NULL);
 }
 
-int runPython(Request *request) {
-  int fd[2];
-  if (pipe(fd) == -1) {
-    perror("pipe");
-    exit(EXIT_FAILURE);
-  }
-  int pid;
-  pid = fork();
-  if (pid == -1) {
-    perror("fork");
-    exit(EXIT_FAILURE);
-  } else if (pid == 0) {
-    dup2(fd[0], STDIN_FILENO);
-    dup2(fd[1], STDOUT_FILENO);
-    close(fd[1]);
-    close(fd[0]);
-    execl(PATH_PYTHON, "python3", NULL);
-  }
-  write(fd[1], request->user_answer, 50);
-  close(fd[1]);
-  // return read end for checking answer
-  return fd[0];
-}
-
 int runC() {
   int fd[2];
   if (pipe(fd) == -1) {

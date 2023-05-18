@@ -1,4 +1,4 @@
-import { renderAnswer } from "./renderAnswer.js";
+import { getAnswer } from "./getAnswer.js";
 
 export const renderQuestion = (data) => {
   const { text, language, type, attempts, correct, choices } = data;
@@ -32,7 +32,7 @@ export const renderQuestion = (data) => {
     console.log(type, data);
     // Render the question output if the type is image
     if (type == "IMAGE") {
-      renderAnswer("/some-image-of-chris.png");
+      getAnswer(9); // TODO: Get current Index
     }
   }
 

@@ -1,6 +1,6 @@
 import { renderAnswer } from "./renderAnswer.js";
 
-export const getQuestion = async (currentQuestionIndex) => {
+export const getAnswer = async (currentQuestionIndex) => {
   document.getElementById("question-result").innerText = "";
 
   try {

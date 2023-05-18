@@ -15,8 +15,8 @@
 #define BACKLOG 16
 
 #define EXE_TIMEOUT 2
-#define PATH_PYTHON "/bin/python3"
-#define PATH_C "/bin/cc"
+#define PATH_PYTHON "/usr/bin/python3"
+#define PATH_C "/usr/bin/cc"
 
 #define QUESTION_FILE "questions.txt"
 
@@ -24,6 +24,7 @@
 #define PYTHON_USER_ANSWER_PATH "./code.py"
 
 #define USER_ANSWER_EXE_PATH "./compiled_code"
+#define USER_OUTPUT_PNG "./static/img/user_output.png"
 
 #define REQUEST_DELIM "|"
 

@@ -72,6 +72,10 @@ void getQuestion(Request *request) {
 }
 
 void getAnswer(Request *request) {
+  if (request->question->type == IMAGE) {
+    sendFile(request->question->answerFile, request);
+    return;
+  }
   send(request->client_socket, request->question->answer,
        strlen(request->question->answer), 0);
 }
@@ -92,10 +96,62 @@ void markQuestion(Request *request) {
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
-      send(request->client_socket, "correct", strlen("correct"), 0);
+      sprintf(response, "CORRECT|");
+      send(request->client_socket, response, strlen(response), 0);
+      return;
     } else {
-      send(request->client_socket, "incorrect", strlen("incorrect"), 0);
+      sprintf(response, "INCORRECT|");
+      send(request->client_socket, response, strlen(response), 0);
+      return;
     }
+  } else if (request->question->type == IMAGE) {
+    FILE *answerFile;
+
+    // create python file storing user's attempt
+    answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
+    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+    fclose(answerFile);
+
+    int answerFd = runCode(request);
+    if (answerFd == -1) {
+      sprintf(response, "TIMEOUT|");
+      send(request->client_socket, response, strlen(response), 0);
+      return;
+    }
+
+    FILE *user_output = fopen(USER_OUTPUT_PNG, "rb");
+    FILE *expected_output = fopen(request->question->answerFile, "rb");
+
+    if (expected_output == NULL) {
+      sprintf(response, "ERROR|Answer for image does not exist on QB");
+      send(request->client_socket, response, strlen(response), 0);
+    }
+    if (user_output == NULL) {
+      sprintf(response, "INCORRECT|No file was created");
+      send(request->client_socket, response, strlen(response), 0);
+      printf("useroutput not open");
+    }
+
+    int c1, c2;
+    do {
+      c1 = fgetc(user_output);
+      c2 = fgetc(expected_output);
+      if (c1 != c2) {
+        sprintf(response, "INCORRECT|");
+        send(request->client_socket, response, strlen(response), 0);
+        if (unlink(USER_OUTPUT_PNG) == -1) {
+          perror("Unlink USER_OUTPUT_PNG");
+        }
+        return;
+      }
+    } while (c1 != EOF && c2 != EOF);
+
+    sprintf(response, "CORRECT|");
+    send(request->client_socket, response, strlen(response), 0);
+    if (unlink(USER_OUTPUT_PNG) == -1) {
+      perror("Unlink USER_OUTPUT_PNG");
+    }
+    return;
   } else if (request->question->type == CODE) {
     // save to tmp file so we do not need to deal with piping into interpreter
     FILE *answerFile;
@@ -128,8 +184,8 @@ void markQuestion(Request *request) {
 
     int answerFd = runCode(request);
     if (answerFd == -1) {
-      send(request->client_socket, "Execution timed out",
-           strlen("Execution timed out"), 0);
+      sprintf(response, "TIMEOUT|");
+      send(request->client_socket, response, strlen(response), 0);
       return;
     }
 

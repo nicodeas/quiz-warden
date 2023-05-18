@@ -79,6 +79,7 @@ def process_generated_questions(qb_response):
 
 # checks if answer sent to QB is correct
 def return_mark(qb_response):
+# TODO: rewrite this to new standard - split by | and check
     return qb_response == b"correct"
 
 def return_answer(qb_response):

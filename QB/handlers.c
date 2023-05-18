@@ -112,6 +112,15 @@ void markCode(Request *request) {
 }
 
 void markQuestion(Request *request) {
+  if (DEBUG) {
+    printf("Marking question with id:\t %d\n", request->question->id);
+    printf("Question:\t%s\n", request->question->text);
+    printf("Question language: \t %s\n",
+           request->question->language == PYTHON ? "PYTHON" : "CLANG");
+    printf("=====\tUser's attempt\t=====\n ");
+    printf("%s\n", request->user_answer);
+    printf("=====\tEnd of User's attempt\n");
+  }
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE || request->question->type == IMAGE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {

@@ -1,5 +1,7 @@
 #include "server.h"
 
+int timedPid;
+
 void sendFile(char *fname, int client_socket) {
   // think of this function this way, it is not exactly sending a "file" but
   // rather it is reading a file in chunks and sending that to the other end
@@ -59,12 +61,12 @@ int runCode(Request *request) {
     perror("pipe");
     exit(EXIT_FAILURE);
   }
-  int pid;
-  pid = fork();
-  if (pid == -1) {
+  int status;
+  timedPid = fork();
+  if (timedPid == -1) {
     perror("fork");
     exit(EXIT_FAILURE);
-  } else if (pid == 0) {
+  } else if (timedPid == 0) {
     dup2(fd[1], STDOUT_FILENO);
     close(fd[0]);
     close(fd[1]);
@@ -160,4 +162,4 @@ const char *QuestionLanguageToString(QuestionLanguage language) {
   }
 }
 
-void handleAlarm(int sig) { kill(timed_pid, SIGTERM); }
+void handleAlarm(int sig) { kill(timedPid, SIGTERM); }

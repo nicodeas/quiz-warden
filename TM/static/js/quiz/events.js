@@ -5,9 +5,9 @@ const checkButton = document.getElementById("check-button");
 
 checkButton.addEventListener("click", async function (e) {
   e.preventDefault();
+  let answer = null;
   if (question.type == "CHOICE") {
     const options = document.getElementsByName("option");
-    let answer = null;
     for (let i = 0; i < options.length; i++) {
       if (options[i].checked) {
         answer = options[i].value;
@@ -19,13 +19,10 @@ checkButton.addEventListener("click", async function (e) {
       alert("Please select an answer!");
       return;
     }
-    await markQuestion(answer);
-
   } else if (question.type == "CODE") {
-    const answer = document.getElementById("code-answer").value;
-
-    await markQuestion(answer);
+    answer = document.getElementById("code-answer").value;
   }
+  await markQuestion(answer);
 });
 
 document.getElementById("next-button").addEventListener("click", function (e) {

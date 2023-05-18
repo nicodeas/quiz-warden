@@ -26,7 +26,9 @@ class TestManager:
             return {}
         # Request question information from QB using handler
         question_info = qb_handler.get_question(qb_addr, question["q_id"])
-        question_info["attempts"] = self.questions[self.current_question - 1]["attempts"]
+        question_info["attempts"] = self.questions[self.current_question - 1][
+            "attempts"
+        ]
         question_info["correct"] = self.questions[self.current_question - 1]["correct"]
         return question_info
 

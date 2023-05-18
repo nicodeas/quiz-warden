@@ -9,8 +9,8 @@
       },
       {
         "q_id": "1",
-        "attempts": 1,
-        "correct": null,
+        "attempts": 3,
+        "correct": false,
         "language": "Python"
       },
       {
@@ -20,7 +20,7 @@
         "language": "Python"
       }
     ],
-    "current_question": 1,
+    "current_question": 2,
     "completed": false
   }
 }

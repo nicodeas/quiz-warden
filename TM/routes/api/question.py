@@ -26,7 +26,7 @@ class Question(BaseRoute, route="api"):
 
         user.current_question = current_question
         user.dump_sessions()
-        
+
         # Get question information for current question
         question_info = user.get_question_info(current_question)
         # Update user's current question

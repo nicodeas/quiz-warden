@@ -73,6 +73,7 @@ def process_generated_questions(qb_response):
     questions = [question for question in qb_response.decode().split("&") if question]
     return questions
 
+
 # checks if answer sent to QB is correct
 def return_mark(qb_response):
     return qb_response == b"correct"

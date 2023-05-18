@@ -65,7 +65,7 @@ class GenerateQuiz(BaseRoute, route="api"):
             for q, l in questions
         ]
         user.init_tm(question_data, 1, False)
-        
+
         user.dump_sessions()
 
         return status, {"message": message}, headers

@@ -111,7 +111,8 @@ void markQuestion(Request *request) {
     while ((c1 = fgetc(user_output)) != EOF ||
            (c2 = fgetc(expected_output)) != EOF) {
       if (c1 != c2) {
-        send(request->client_socket, "incorrect", strlen("INCORRECT|"), 0);
+        sprintf(response, "INCORRECT|");
+        send(request->client_socket, response, strlen(response), 0);
         return;
       }
     }

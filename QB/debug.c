@@ -11,8 +11,8 @@ void printQuestionBank() {
     switch (question->type) {
     case IMAGE:
       printf("Question type: IMAGE\n");
-      printf("\tIMAGE file1: %s\n", question->image1);
-      printf("\tIMAGE file2: %s\n", question->image2);
+      printf("\tIMAGE file1: %s\n", question->imageFile);
+      printf("\tIMAGE file2: %s\n", question->answerFile);
       break;
     case CODE:
       printf("Question type: CODE\n");

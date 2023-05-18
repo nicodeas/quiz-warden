@@ -53,8 +53,8 @@ typedef struct {
   char *text;
   Choices *choices;
   char *answer;
-  char *image1;
-  char *image2;
+  char *imageFile;
+  char *answerFile;
 } Question;
 
 typedef struct {

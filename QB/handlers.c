@@ -1,7 +1,4 @@
 #include "server.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
 void parseRequest(Request *request) {
   // will not handle requests that are larger than bufsiz for this

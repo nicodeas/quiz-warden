@@ -1,6 +1,10 @@
-const returnHomeButton = document.getElementById("home-button");
+import { getState } from "../utils/getState.js";
 
-returnHomeButton.addEventListener("click", function (e) {
-  e.preventDefault();
-  window.location.href = "/";
-});
+const state = await getState();
+
+if (state.completed) {
+  document.getElementById("total-marks").innerText = state.totalMarks;
+  document.getElementById("max-marks").innerText = state.maxQuestions * 3;
+} else {
+  window.location.href = "/quiz";
+}

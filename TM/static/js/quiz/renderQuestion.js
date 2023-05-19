@@ -46,6 +46,11 @@ export const renderQuestion = async (data) => {
 
     // style red or green
     document.getElementById("result").style.color = correct ? "green" : "red";
+  }
+
+  if (correct != undefined) {
+    // disable check button
+    document.getElementById("check-button").disabled = true;
 
     // disable check button
     document.getElementById("check-button").disabled = true;

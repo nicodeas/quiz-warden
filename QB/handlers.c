@@ -58,7 +58,7 @@ void getQuestion(Request *request) {
   const char *text = request->question->text;
 
   // determine size of response
-  // '&' delims elements of question, '^' delims multi-choice, '$' delims file
+  // '&' delims elements of question, '^' delims multi-choice
   size_t size = snprintf(NULL, 0, "%i&%s&%s&%s", request->question->id,
                          language, type, text);
   if (request->question->type == CHOICE) {

@@ -32,6 +32,7 @@ class TestManager:
             "attempts"
         ]
         question_info["correct"] = self.questions[self.current_question - 1]["correct"]
+        question_info["errors"] = self.questions[self.current_question - 1]["errors"]
         return question_info
 
     def mark_question(self, q_number, answer):

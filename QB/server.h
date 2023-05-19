@@ -83,8 +83,7 @@ extern bool DEBUG;
 extern int timedPid;
 
 // server functions in server.c
-extern void buildQuestionBank(); // TODO: setup function on server startup to
-                                 // retrieve questions
+extern void buildQuestionBank();
 extern int createServer();
 extern void runServer(int server_socket);
 
@@ -104,9 +103,6 @@ extern void parseRequest(Request *request);
 extern void handleRequest(int client_socket);
 extern void getQuestion(Request *request);
 extern void markQuestion(Request *request);
-extern void markImage(int client_socket,
-                      int questionId); // TODO: not sure if we will need this or
-                                       // if it can be done in mark Question
 
 // debug functions
 extern void printQuestionBank();

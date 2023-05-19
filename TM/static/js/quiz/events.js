@@ -17,13 +17,13 @@ checkButton.addEventListener("click", async function (e) {
         break;
       }
     }
+  } else {
+    answer = document.getElementById("code-answer").value || null;
+  }
 
-    if (answer === -1) {
-      alert("Please select an answer!");
-      return;
-    }
-  } else if (question.type == "CODE") {
-    answer = document.getElementById("code-answer").value;
+  if (answer === null) {
+    alert("Please input an answer!");
+    return;
   }
   await markQuestion(answer);
 });

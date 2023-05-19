@@ -24,7 +24,7 @@ class Mark(BaseRoute, route="api"):
         if current_question < 1 or current_question > user.max_questions:
             return 400, {"message": "Question out of range"}, headers
 
-        is_correct = user.mark_question(current_question, answer)
+        is_correct, error_message = user.mark_question(current_question, answer)
 
         if is_correct:
             user.questions[current_question - 1]["correct"] = True
@@ -39,4 +39,11 @@ class Mark(BaseRoute, route="api"):
 
         user.dump_sessions()
 
-        return 200, {"is_correct": is_correct}, headers
+        return (
+            200,
+            {
+                "is_correct": is_correct,
+                "message": error_message if error_message else "",
+            },
+            headers,
+        )

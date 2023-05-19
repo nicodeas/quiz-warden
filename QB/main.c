@@ -1,4 +1,5 @@
 #include "server.h"
+#include <stdio.h>
 
 int PORT;
 char *LANGUAGE;
@@ -12,7 +13,7 @@ void usage(char *progname) {
           "  -p PORT	The port number to run this server\n\n"
           "Languages (case sensitive):\n"
           "  C\n"
-          "  PYTHON\n",
+          "  Python\n",
           progname);
   exit(EXIT_FAILURE);
 }
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
   // config resources
   if ((strcmp(argv[optind], "C") == 0)) {
     QUESTION_FILE = CLANG_QUESTION_FILE;
-  } else if (strcmp(argv[optind], "PYTHON") == 0) {
+  } else if (strcmp(argv[optind], "Python") == 0) {
     QUESTION_FILE = PYTHON_QUESTION_FILE;
   } else {
     fprintf(stderr, "Invalid language specified\n");
@@ -54,6 +55,12 @@ int main(int argc, char *argv[]) {
   LANGUAGE = argv[optind];
 
   buildQuestionBank();
+
+  if (NUM_QUESTIONS < 10) {
+    fprintf(stderr, "Less than 10 questions in question file: %s\n",
+            QUESTION_FILE);
+    exit(EXIT_FAILURE);
+  }
 
   if (DEBUG) {
     printQuestionBank();

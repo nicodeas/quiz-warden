@@ -33,17 +33,18 @@ class Mark(BaseRoute, route="api"):
                 user.questions[current_question - 1]["correct"] = False
             else:
                 user.questions[current_question - 1]["attempts"] += 1
-
         if not any(q["correct"] is None for q in user.questions):
             user.completed = True
+
+        print(error_message)
+        user.questions[current_question - 1]["errors"] = (
+            error_message if error_message else ""
+        )
 
         user.dump_sessions()
 
         return (
             200,
-            {
-                "is_correct": is_correct,
-                "message": error_message if error_message else "",
-            },
+            {},
             headers,
         )

@@ -3,7 +3,7 @@ import { getState } from "../utils/getState.js";
 
 export const renderQuestion = async (data) => {
   const state = await getState();
-  const { text, language, type, attempts, correct, choices } = data;
+  const { text, language, type, attempts, correct, choices, errors } = data;
 
   const languageElement = document.getElementById("language");
   languageElement.innerText = language == "CLANG" ? "C" : "Python";
@@ -14,10 +14,9 @@ export const renderQuestion = async (data) => {
 
   document.getElementById("question-attempts").innerText = attempts;
 
-  if (correct != undefined) {
-    // disable check button
-    document.getElementById("check-button").disabled = true;
+  document.getElementById("errors").innerText = errors;
 
+  if (attempts !== 1) {
     document.getElementById(
       "question-result"
     ).innerHTML = `Result: <span id="result">${
@@ -26,6 +25,11 @@ export const renderQuestion = async (data) => {
 
     // style red or green
     document.getElementById("result").style.color = correct ? "green" : "red";
+  }
+
+  if (correct != undefined) {
+    // disable check button
+    document.getElementById("check-button").disabled = true;
 
     // mark is 0 if incorrect, otherwise based on attempts
     const mark = correct ? 4 - attempts : 0;

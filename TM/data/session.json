@@ -66,13 +66,13 @@
       },
       {
         "q_id": "7",
-        "attempts": 1,
-        "correct": null,
+        "attempts": 3,
+        "correct": true,
         "language": "Python",
         "errors": ""
       }
     ],
-    "current_question": 9,
+    "current_question": 10,
     "completed": false
   }
 }

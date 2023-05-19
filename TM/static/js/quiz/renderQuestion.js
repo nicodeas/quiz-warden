@@ -42,6 +42,15 @@ export const renderQuestion = async (data) => {
   }
 
   if (correct != undefined) {
+    document.getElementById(
+      "question-result"
+    ).innerHTML = `Result: <span id="result">${
+      correct ? "Correct" : "Incorrect"
+    }</span>`;
+
+    // style red or green
+    document.getElementById("result").style.color = correct ? "green" : "red";
+
     // disable check button
     document.getElementById("check-button").disabled = true;
 

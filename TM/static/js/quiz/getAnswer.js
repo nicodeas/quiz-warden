@@ -7,7 +7,6 @@ export const getAnswer = async (currentQuestionIndex, type) => {
       method: "GET",
     });
     data = await res.json();
-    console.log(data);
   } catch (err) {
     console.error(err);
   }

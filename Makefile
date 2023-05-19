@@ -1,3 +1,3 @@
 both:
-      make -C TM
-      make -C QB
+	make -C TM
+	make -C QB

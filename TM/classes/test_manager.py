@@ -24,7 +24,7 @@ class TestManager:
                 qb_addr = qb[0]
                 break
 
-        if qb is None:
+        if len(qb_list) == 0:
             return {}
         # Request question information from QB using handler
         question_info = qb_handler.get_question(qb_addr, question["q_id"])

@@ -61,7 +61,7 @@ class GenerateQuiz(BaseRoute, route="api"):
             ]
 
         question_data = [
-            {"q_id": q, "attempts": 1, "correct": None, "language": l}
+            {"q_id": q, "attempts": 1, "correct": None, "language": l, "errors": ""}
             for q, l in questions
         ]
         user.init_tm(question_data, 1, False)

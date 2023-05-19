@@ -2,6 +2,9 @@ from utils.QB.request_processors import return_mark
 
 
 def mark_question(self, addr, q_id, answer):
+    '''
+    Marks question by id. Returns a tuple of (is_correct, error)
+    '''
     req = f"MARK_QUESTION_BY_ID|{q_id}|{answer}"
     res = self.send_request(addr, req)
 

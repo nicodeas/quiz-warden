@@ -17,7 +17,7 @@ checkButton.addEventListener("click", async function (e) {
         break;
       }
     }
-  } else if (question.type == "CODE") {
+  } else if (question.type == "CODE" || question.type == "IMAGE") {
     answer = document.getElementById("code-answer").value || null;
   }
 

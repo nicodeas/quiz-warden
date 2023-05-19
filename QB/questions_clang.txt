@@ -1,4 +1,4 @@
-Q Print the 50th fibonacci number.
+Q Print the 50th fibonacci number. Please print output to stdout.
 T CODE
 $ 12586269025
 L CLANG
@@ -21,16 +21,7 @@ D <string.h>
 $ <stdio.h>
 L CLANG
 -----------------------------------------------------------------
-Q Which operator is used to access the value at a specific memory address in C?
-T CHOICE
-A *
-B &
-C ->
-D .
-$ *
-L CLANG
------------------------------------------------------------------
-Q Write a program to find the factorial of the number 5.
+Q Write a program to find the factorial of the number 5. Please print output to stdout.
 T CODE
 $ 120
 L CLANG
@@ -44,19 +35,49 @@ D All of the above
 $ All of the above
 L CLANG
 -----------------------------------------------------------------
-Q Which operator is used to access the address of a variable in C?
-T CHOICE
-A *
-B &
-C ->
-D .
-$ &
-L CLANG
------------------------------------------------------------------
-Q Write a C program to check whether a given number 17 is prime or not. Return true or false
+Q Write a C program to check whether a given number 17 is prime or not. Please return true or false output to stdout.
 T CODE
 L CLANG
 $ true
+-----------------------------------------------------------------
+Q Repair the first 8 bytes of "./static/img/corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10". Write output to "./static/img/user_output.png"
+T IMAGE
+L CLANG
+I ./static/img/corrupt-chris.png
+F ./static/img/cool-chris.png
+-----------------------------------------------------------------
+Q The file './static/img/catdog.png' contains data for two images, separated by b'===='. Write a program which writes the data of the second image to './static/img/user_output.png'
+T IMAGE
+L CLANG
+I ./static/img/catdog.png
+F ./static/img/dog.png
+-----------------------------------------------------------------
+Q Which of the following is NOT a valid data type in C?
+T CHOICE
+A int
+B float
+C string
+D char
+$ string
+L CLANG
+-----------------------------------------------------------------
+Q What is the correct way to initialize an array in C?
+T CHOICE
+A int array[] = {1, 2, 3, 4, 5};
+B array[5] = {1, 2, 3, 4, 5};
+C int array[5] = {1, 2, 3, 4, 5};
+D char int array[5];
+$ int array[] = {1, 2, 3, 4, 5};
+L CLANG
+-----------------------------------------------------------------
+Q Which header file should be included to use the strlen() function in C?
+T CHOICE
+A <stdio.h>
+B <math.h>
+C <stdlib.h>
+D <string.h>
+$ <string.h>
+L CLANG
 -----------------------------------------------------------------
 Q Write a C program to check whether a given number 17 is prime or not. Return true or false
 T CODE

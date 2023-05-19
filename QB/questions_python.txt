@@ -1,7 +1,7 @@
 Q Print the first 10 fibonacci numbers delimited by spaces.
 T CODE
-L PYTHON
 $ 0 1 1 2 3 5 8 13 21 34
+L PYTHON
 -----------------------------------------------------------------
 Q What is the purpose of the 'if __name__ == '__main__':' statement in Python?
 T CHOICE
@@ -10,6 +10,14 @@ B To define a function in a module
 C To allow a module to be run as a standalone program
 D To import a module from another module
 $ To allow a module to be run as a standalone program
+L PYTHON
+-----------------------------------------------------------------
+Q Which image of Chris is cooler?
+T IMAGE
+I ./some-image-of-chris.png
+F ./cool-chris.png
+$ ./cool-chris.png
+L PYTHON
 -----------------------------------------------------------------
 Q What is the difference between 'append' and 'extend' methods in Python lists?
 T CHOICE
@@ -18,16 +26,17 @@ B 'append' adds multiple elements to the end of a list, while 'extend' adds a si
 C There is no such thing as 'append' and 'extend' methods in Python lists
 D 'append' adds a single element to the end of a list, while 'extend' adds multiple elements to the end of a list
 $ 'append' adds a single element to the end of a list, while 'extend' adds multiple elements to the end of a list
+L PYTHON
 -----------------------------------------------------------------
 Q Print the squares of numbers from 1 to 10 delimited by spaces.
 T CODE
-L PYTHON
 $ 1 4 9 16 25 36 49 64 81 100
+L PYTHON
 -----------------------------------------------------------------
 Q Write a program that calculates the sum of the numbers from 1 to 20.
 T CODE
-L PYTHON
 $ 210
+L PYTHON
 -----------------------------------------------------------------
 Q Which of the following is not a valid Python variable name?
 T CHOICE
@@ -36,6 +45,7 @@ B _variable
 C 2variable
 D variable2
 $ 2variable
+L PYTHON
 -----------------------------------------------------------------
 Q What is the difference between a list and a tuple in Python?
 T CHOICE
@@ -44,6 +54,7 @@ B A list can contain only one type of data while a tuple can contain multiple ty
 C A list can be nested while a tuple cannot
 D A list can be nested while a tuple cannot
 $ A list is mutable while a tuple is immutable
+L PYTHON
 -----------------------------------------------------------------
 Q What is the difference between '==' and 'is' operators in Python?
 T CHOICE
@@ -52,9 +63,5 @@ B '==' checks if two objects have the same value, while 'is' checks if two objec
 C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
 D There is no such thing as '==' and 'is' operators in Python
 $ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
------------------------------------------------------------------
-Q Repair the first 8 bytes of the .png file "corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10"
-T IMAGE
 L PYTHON
-I ./static/img/corrupt-chris.png
-F ./static/img/cool-chris.png
+-----------------------------------------------------------------

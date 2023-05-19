@@ -1,3 +1,5 @@
+// This file contains all the event handlers for the quiz pages
+
 import { state, question } from "./index.js";
 import { markQuestion } from "./markQuestion.js";
 
@@ -8,19 +10,20 @@ checkButton.addEventListener("click", async function (e) {
   let answer = null;
   if (question.type == "CHOICE") {
     const options = document.getElementsByName("option");
+    // loop throught all multiple choice options to find the selected one
     for (let i = 0; i < options.length; i++) {
       if (options[i].checked) {
         answer = options[i].value;
         break;
       }
     }
+  } else {
+    answer = document.getElementById("code-answer").value || null;
+  }
 
-    if (answer === -1) {
-      alert("Please select an answer!");
-      return;
-    }
-  } else if (question.type == "CODE") {
-    answer = document.getElementById("code-answer").value;
+  if (answer === null) {
+    alert("Please input an answer!");
+    return;
   }
   await markQuestion(answer);
 });

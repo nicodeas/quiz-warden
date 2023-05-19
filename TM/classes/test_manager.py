@@ -1,3 +1,5 @@
+from base64 import b64encode
+
 from utils.QB.qb_handler import QbHandler
 
 
@@ -49,3 +51,24 @@ class TestManager:
 
         is_correct = qb_handler.mark_question(qb_addr, question["q_id"], answer)
         return is_correct
+
+    def get_answer(self, q_numer):
+        question = self.questions[q_numer - 1]
+        qb_handler = QbHandler()
+        qbs = qb_handler.qbs.items()
+        qb_list = [(qb[0], qb[1]) for qb in qbs]
+
+        qb_addr = None
+        for qb in qb_list:
+            if qb[1] == question["language"]:
+                qb_addr = qb[0]
+                break
+
+        if qb is None:
+            return {}
+
+        answer = qb_handler.get_answer(qb_addr, question["q_id"])
+
+        if answer is not None:
+            answer = b64encode(answer).decode("utf-8")
+        return {"answer": answer}

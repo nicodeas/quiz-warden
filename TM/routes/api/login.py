@@ -30,27 +30,10 @@ class Login(BaseRoute, route="api"):
             user = User(username, session_id)
             users[session_id] = user
 
-            # Load session data from JSON file if it exists
-            data = {}
-            if os.path.exists("data/session.json"):
-                with open("data/session.json", "r") as f:
-                    data = json.load(f)
+            user.load_session()
+            user.dump_sessions()
 
-            if session_id not in data or data.get(session_id) == {}:
-                # Initialise session data as an empty dict
-                data[session_id] = {}
-            else:
-                # Session data exists for this user - retrive data for their session
-                user.init_tm(
-                    data[session_id]["questions"],
-                    data[session_id]["current_question"],
-                    data[session_id]["completed"],
-                )
-            # Save updated session data to JSON file
-            with open("data/session.json", "w") as f:
-                json.dump(data, f, indent=2)
-
-        # Set cookie header with generated session_id
+            # Set cookie header with generated session_id
         cookie = f"session_token={session_id}; Path=/; Max-Age=99999999;"
         headers = {"Set-Cookie": cookie}
         # Set status and message to indicate successful login

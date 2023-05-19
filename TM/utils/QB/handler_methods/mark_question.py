@@ -11,6 +11,7 @@ def mark_question(self, addr, q_id, answer):
     incorrect_prefix = "INCORRECT|"
     timeout_prefix = "TIMEOUT|"
 
+    res = res.decode()
     if not res:
         return False, None
     elif res.startswith(correct_prefix):

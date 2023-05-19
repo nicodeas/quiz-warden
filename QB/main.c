@@ -1,4 +1,5 @@
 #include "server.h"
+#include <stdio.h>
 
 int PORT;
 char *LANGUAGE;
@@ -54,6 +55,12 @@ int main(int argc, char *argv[]) {
   LANGUAGE = argv[optind];
 
   buildQuestionBank();
+
+  if (NUM_QUESTIONS < 10) {
+    fprintf(stderr, "Less than 10 questions in question file: %s\n",
+            QUESTION_FILE);
+    exit(EXIT_FAILURE);
+  }
 
   if (DEBUG) {
     printQuestionBank();

@@ -43,6 +43,8 @@ void runServer(int server_socket) {
       close(server_socket);
       handleRequest(client_socket);
     }
+    // Do not wait if you want to handle requests concurrently
+    wait(NULL);
     // handler failed
     close(client_socket);
   }

@@ -21,15 +21,6 @@ D <string.h>
 $ <stdio.h>
 L CLANG
 -----------------------------------------------------------------
-Q Which operator is used to access the value at a specific memory address in C?
-T CHOICE
-A *
-B &
-C ->
-D .
-$ *
-L CLANG
------------------------------------------------------------------
 Q Write a program to find the factorial of the number 5.
 T CODE
 $ 120
@@ -42,15 +33,6 @@ B calloc(size_t num, size_t size)
 C realloc(void *ptr, size_t size)
 D All of the above
 $ All of the above
-L CLANG
------------------------------------------------------------------
-Q Which operator is used to access the address of a variable in C?
-T CHOICE
-A *
-B &
-C ->
-D .
-$ &
 L CLANG
 -----------------------------------------------------------------
 Q Write a C program to check whether a given number 17 is prime or not. Return true or false

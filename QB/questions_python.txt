@@ -12,13 +12,6 @@ D To import a module from another module
 $ To allow a module to be run as a standalone program
 L PYTHON
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
-T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
-L PYTHON
------------------------------------------------------------------
 Q What is the difference between 'append' and 'extend' methods in Python lists?
 T CHOICE
 A There is no difference, they are the same

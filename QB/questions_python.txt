@@ -1,4 +1,4 @@
-Q Print the first 10 fibonacci numbers delimited by spaces.
+Q Print the first 10 fibonacci numbers delimited by spaces. Please do not print a newline.
 T CODE
 $ 0 1 1 2 3 5 8 13 21 34
 L PYTHON
@@ -12,13 +12,6 @@ D To import a module from another module
 $ To allow a module to be run as a standalone program
 L PYTHON
 -----------------------------------------------------------------
-Q Which image of Chris is cooler?
-T IMAGE
-I ./some-image-of-chris.png
-F ./cool-chris.png
-$ ./cool-chris.png
-L PYTHON
------------------------------------------------------------------
 Q What is the difference between 'append' and 'extend' methods in Python lists?
 T CHOICE
 A There is no difference, they are the same
@@ -28,12 +21,12 @@ D 'append' adds a single element to the end of a list, while 'extend' adds multi
 $ 'append' adds a single element to the end of a list, while 'extend' adds multiple elements to the end of a list
 L PYTHON
 -----------------------------------------------------------------
-Q Print the squares of numbers from 1 to 10 delimited by spaces.
+Q Print the squares of numbers from 1 to 10 delimited by spaces. Please do not print a newline.
 T CODE
 $ 1 4 9 16 25 36 49 64 81 100
 L PYTHON
 -----------------------------------------------------------------
-Q Write a program that calculates the sum of the numbers from 1 to 20.
+Q Write a program that calculates the sum of the numbers from 1 to 20. Please do not print a newline.
 T CODE
 $ 210
 L PYTHON
@@ -65,39 +58,32 @@ D There is no such thing as '==' and 'is' operators in Python
 $ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
 L PYTHON
 -----------------------------------------------------------------
-Q What is the difference between '==' and 'is' operators in Python?
+Q Repair the first 8 bytes of "./static/img/corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10". Write output to "./static/img/user_output.png"
+T IMAGE
+L PYTHON
+I ./static/img/corrupt-chris.png
+F ./static/img/cool-chris.png
+-----------------------------------------------------------------
+Q The file './static/img/catdog.png' contains data for two images, separated by b'===='. Write a program which writes the data of the second image to './static/img/user_output.png'
+T IMAGE
+L PYTHON
+I ./static/img/catdog.png
+F ./static/img/dog.png
+-----------------------------------------------------------------
+Q What is the purpose of the range() function in Python?
 T CHOICE
-A '==' and 'is' are the same thing in Python
-B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
-C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
-D There is no such thing as '==' and 'is' operators in Python
-$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+A It generates a sequence of numbers.
+B It performs mathematical calculations.
+C It converts a string to uppercase.
+D It reads input from the user.
+$ It generates a sequence of numbers.
 L PYTHON
 -----------------------------------------------------------------
-Q What is the difference between '==' and 'is' operators in Python?
+Q What is the correct way to check if a key exists in a dictionary in Python?
 T CHOICE
-A '==' and 'is' are the same thing in Python
-B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
-C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
-D There is no such thing as '==' and 'is' operators in Python
-$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
-L PYTHON
------------------------------------------------------------------
-Q What is the difference between '==' and 'is' operators in Python?
-T CHOICE
-A '==' and 'is' are the same thing in Python
-B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
-C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
-D There is no such thing as '==' and 'is' operators in Python
-$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
-L PYTHON
------------------------------------------------------------------
-Q What is the difference between '==' and 'is' operators in Python?
-T CHOICE
-A '==' and 'is' are the same thing in Python
-B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
-C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
-D There is no such thing as '==' and 'is' operators in Python
-$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
-L PYTHON
+A exists(dictionary, key)
+B dictionary[key]
+C key in dictionary
+D dictionary.exists(key)
+$ key in dictionary
 -----------------------------------------------------------------

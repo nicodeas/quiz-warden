@@ -58,3 +58,15 @@ D There is no such thing as '==' and 'is' operators in Python
 $ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
 L PYTHON
 -----------------------------------------------------------------
+Q Repair the first 8 bytes of "./static/img/corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10". Write output to "./static/img/user_output.png"
+T IMAGE
+L PYTHON
+I ./static/img/corrupt-chris.png
+F ./static/img/cool-chris.png
+-----------------------------------------------------------------
+Q The file './static/img/catdog.png' contains data for two images, separated by b'===='. Write a program which writes the data of the second image to './static/img/user_output.png'
+T IMAGE
+L PYTHON
+I ./static/img/catdog.png
+F ./static/img/dog.png
+-----------------------------------------------------------------

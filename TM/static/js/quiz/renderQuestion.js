@@ -8,27 +8,23 @@ export const renderQuestion = async (data) => {
   const languageElement = document.getElementById("language");
   const quizQuestion = document.getElementById("quiz-question");
   const questionAttempt = document.getElementById("question-attempts");
-  //const attemptText = document.getElementById("attempt-text");
+  const errorText = document.getElementById("errors");
   const hasActiveQB = state.activeQBs.length > 0;
+
   // Make sure we have an active QBs
   if (hasActiveQB) {
     languageElement.innerText = language == "CLANG" ? "C" : "Python";
     quizQuestion.innerText = text;
     questionAttempt.innerText = attempts;
+    errorText.innerText = errors;
   } else {
     languageElement.innerText = `Question bank for question ${state.currentQuestion} is offline!`;
-    quizQuestion.innerText = "";
-    //attemptText.style.display = "none";
-    //attemptText.innerText = "";
+    errorText.innerText = "";
   }
 
   const answerContainer = document.getElementById("quiz-choices");
   // Reset the container to blank
   answerContainer.innerText = "";
-
-  document.getElementById("question-attempts").innerText = attempts;
-
-  document.getElementById("errors").innerText = errors;
 
   if (attempts !== 1) {
     document.getElementById(

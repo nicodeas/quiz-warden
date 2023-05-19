@@ -19,26 +19,35 @@ void parseRequest(Request *request) {
   // NOTE: don't mind the if else statements
   // can't exactly run a switch case on strings :(
   if (strcmp(token, "GENERATE_QUESTIONS") == 0) {
+
     request->action = GENERATE_QUESTIONS;
     request->num_to_generate = atoi(strtok(NULL, REQUEST_DELIM));
+
   } else if (strcmp(token, "MARK_QUESTION_BY_ID") == 0) {
+
     request->action = MARK_QUESTION_BY_ID;
     token = strtok(NULL, REQUEST_DELIM);
+
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
-    printf("question id: %i\n", questionId);
     request->user_answer = strdup(strtok(NULL, REQUEST_DELIM));
-    printf("user answer: %s\n", request->user_answer);
+
   } else if (strcmp(token, "GET_QUESTION_BY_ID") == 0) {
+
     request->action = GET_QUESTION_BY_ID;
     token = strtok(NULL, REQUEST_DELIM);
+
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
+
   } else if (strcmp(token, "GET_ANSWER_BY_ID") == 0) {
+
     request->action = GET_ANSWER_BY_ID;
     token = strtok(NULL, REQUEST_DELIM);
+
     int questionId = atoi(token);
     request->question = QUESTION_BANK[questionId];
+
   } else if (strcmp(token, "HEALTH_CHECK") == 0) {
     request->action = HEALTH_CHECK;
   }
@@ -91,26 +100,43 @@ void markQuestion(Request *request) {
     printf("%s\n", request->user_answer);
     printf("=====\tEnd of Summary\t=====\n");
   }
+
   char response[BUFSIZ];
   memset(response, 0, sizeof(response));
   // choice and image questions have same marking procedure
   if (request->question->type == CHOICE) {
     if (strcmp(request->question->answer, request->user_answer) == 0) {
+
       sprintf(response, "CORRECT|");
       send(request->client_socket, response, strlen(response), 0);
+
       return;
     } else {
+
       sprintf(response, "INCORRECT|");
       send(request->client_socket, response, strlen(response), 0);
+
       return;
     }
   } else if (request->question->type == IMAGE) {
-    FILE *answerFile;
 
-    // create python file storing user's attempt
-    answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
-    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
-    fclose(answerFile);
+    saveAnswerLocally(request);
+
+    // NOTE: there are no C questions for images yet
+    if (request->question->language == CLANG) {
+      int result = compileC();
+      if (result != -1) {
+        FILE *errorFile = fdopen(result, "r");
+        char error[4096];
+        memset(error, 0, sizeof(error));
+        fgets(error, 4096, errorFile);
+        fclose(errorFile);
+        close(result);
+        sprintf(response, "ERROR|%s", error);
+        send(request->client_socket, response, strlen(response), 0);
+        return;
+      }
+    }
 
     int answerFd = runCode(request);
     if (answerFd == -1) {
@@ -153,20 +179,8 @@ void markQuestion(Request *request) {
     }
     return;
   } else if (request->question->type == CODE) {
-    // save to tmp file so we do not need to deal with piping into interpreter
-    FILE *answerFile;
-
-    // a little messy but can tidy up down the track
-    switch (request->question->language) {
-    case PYTHON:
-      answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
-      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
-      fclose(answerFile);
-      break;
-    case CLANG:
-      answerFile = fopen(CLANG_USER_ANSWER_PATH, "w");
-      fprintf(answerFile, request->user_answer, strlen(request->user_answer));
-      fclose(answerFile);
+    saveAnswerLocally(request);
+    if (request->question->language == CLANG) {
       int result = compileC();
       if (result != -1) {
         FILE *errorFile = fdopen(result, "r");
@@ -179,7 +193,6 @@ void markQuestion(Request *request) {
         send(request->client_socket, response, strlen(response), 0);
         return;
       }
-      break;
     }
 
     int answerFd = runCode(request);
@@ -207,7 +220,10 @@ void markQuestion(Request *request) {
 }
 
 void handleRequest(int client_socket) {
-  printf("handling request ...\n");
+  if (DEBUG) {
+    printf("handling request ...\n");
+  }
+
   Request *request = newRequest(client_socket);
   parseRequest(request);
 
@@ -222,26 +238,24 @@ void handleRequest(int client_socket) {
       send(request->client_socket, id_str, strlen(id_str), 0);
     }
     break;
-  case (MARK_QUESTION_BY_ID):;
+  case (MARK_QUESTION_BY_ID):
     markQuestion(request);
     break;
-  case (GET_QUESTION_BY_ID):;
+  case (GET_QUESTION_BY_ID):
     getQuestion(request);
     break;
-  case (GET_ANSWER_BY_ID):;
+  case (GET_ANSWER_BY_ID):
     getAnswer(request);
     break;
-  case (HEALTH_CHECK):;
-    // debug stuff, remove later
-    char *resp = LANGUAGE;
-    send(request->client_socket, resp, strlen(resp), 0);
+  case (HEALTH_CHECK):
+    send(request->client_socket, LANGUAGE, strlen(LANGUAGE), 0);
     break;
+
   case (UNSPEC):;
     break;
   }
 
-  // clean up resources, possibly add a function to remove tmp file created by
-  // compilation
+  // clean up resources and close connection
   freeRequest(request);
   close(client_socket);
   exit(EXIT_SUCCESS);

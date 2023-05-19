@@ -207,8 +207,6 @@ void markQuestion(Request *request) {
 }
 
 void handleRequest(int client_socket) {
-  // TODO: deal with multiple coding/image questions needing to be marked, need
-  // some way of locking the exe file
   printf("handling request ...\n");
   Request *request = newRequest(client_socket);
   parseRequest(request);

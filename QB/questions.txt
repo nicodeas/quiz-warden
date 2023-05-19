@@ -132,3 +132,9 @@ I ./some-image-of-chris.png
 F ./cool-chris.png
 $ ./cool-chris.png
 -----------------------------------------------------------------
+Q The file './static/img/catdog.png' contains data for two images, separated by b'===='. Write a program which writes the data of the second image to './static/img/user_output.png'
+T IMAGE
+L PYTHON
+I ./static/img/catdog.png
+F ./static/img/dog.png
+-----------------------------------------------------------------

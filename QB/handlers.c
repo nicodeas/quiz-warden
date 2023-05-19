@@ -4,7 +4,6 @@ void parseRequest(Request *request) {
   // will not handle requests that are larger than bufsiz for this
   // project, question/answers should not be that long
 
-  // TODO: might want what happens when a non existent question gets requested
   char requestBuffer[BUFSIZ];
   memset(requestBuffer, 0, sizeof(requestBuffer));
   recv(request->client_socket, requestBuffer, sizeof(requestBuffer), 0);

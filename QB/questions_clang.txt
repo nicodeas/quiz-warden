@@ -1,7 +1,7 @@
 Q Print the 50th fibonacci number.
 T CODE
-L CLANG
 $ 12586269025
+L CLANG
 -----------------------------------------------------------------
 Q What does the sizeof operator return?
 T CHOICE
@@ -10,12 +10,7 @@ B The value of a variable
 C The memory address of a variable
 D The data type of a variable
 $ The size of a variable in bytes
------------------------------------------------------------------
-Q Repair the first 8 bytes of the .png file "corrupt-chris.png" - .png files begin with "137, 80, 78, 71, 13, 10, 26, 10"
-T IMAGE
 L CLANG
-I ./static/img/corrupt-chris.png
-F ./static/img/cool-chris.png
 -----------------------------------------------------------------
 Q Which header file should be included to perform input and output operations in C?
 T CHOICE
@@ -24,11 +19,21 @@ B <math.h>
 C <stdlib.h>
 D <string.h>
 $ <stdio.h>
+L CLANG
+-----------------------------------------------------------------
+Q Which operator is used to access the value at a specific memory address in C?
+T CHOICE
+A *
+B &
+C ->
+D .
+$ *
+L CLANG
 -----------------------------------------------------------------
 Q Write a program to find the factorial of the number 5.
 T CODE
-L CLANG
 $ 120
+L CLANG
 -----------------------------------------------------------------
 Q Which of the following is the correct way to allocate memory dynamically in C?
 T CHOICE
@@ -37,21 +42,16 @@ B calloc(size_t num, size_t size)
 C realloc(void *ptr, size_t size)
 D All of the above
 $ All of the above
------------------------------------------------------------------
-Q Write a C program to check whether a given number 17 is prime or not. Return true or false
-T CODE
 L CLANG
-$ true
 -----------------------------------------------------------------
-Q Write a C program to check whether a given number 17 is prime or not. Return true or false
-T CODE
+Q Which operator is used to access the address of a variable in C?
+T CHOICE
+A *
+B &
+C ->
+D .
+$ &
 L CLANG
-$ true
------------------------------------------------------------------
-Q Write a C program to check whether a given number 17 is prime or not. Return true or false
-T CODE
-L CLANG
-$ true
 -----------------------------------------------------------------
 Q Write a C program to check whether a given number 17 is prime or not. Return true or false
 T CODE

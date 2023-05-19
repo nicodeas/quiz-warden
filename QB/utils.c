@@ -195,13 +195,13 @@ void saveAnswerLocally(Request *request) {
   FILE *answerFile;
   switch (request->question->language) {
   case PYTHON:
-    answerFile = fopen(PYTHON_USER_ANSWER_PATH, "w");
-    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+    answerFile = fopen(PYTHON_USER_ANSWER_PATH, "wb");
+    fwrite(request->user_answer, 1, strlen(request->user_answer), answerFile);
     fclose(answerFile);
     break;
   case CLANG:
-    answerFile = fopen(CLANG_USER_ANSWER_PATH, "w");
-    fprintf(answerFile, request->user_answer, strlen(request->user_answer));
+    answerFile = fopen(CLANG_USER_ANSWER_PATH, "wb");
+    fwrite(request->user_answer, 1, strlen(request->user_answer), answerFile);
     fclose(answerFile);
   }
 }

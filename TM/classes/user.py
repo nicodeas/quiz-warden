@@ -12,6 +12,7 @@ class User(TestManager):
     def __init__(self, username, session_id):
         self.username = username
         self.session_id = session_id
+        # initially, we set dummy values for TestManager as no quizzes are generated
         super().__init__([], -1, True)
 
     # Initialise TestManager instance variables
@@ -25,6 +26,7 @@ class User(TestManager):
     def get_session_id(self):
         return self.session_id
 
+    # Dump all sessions to session.json
     @staticmethod
     def dump_sessions():
         data = {}
@@ -42,6 +44,7 @@ class User(TestManager):
         with open("data/session.json", "w") as f:
             json.dump(data, f, indent=2)
 
+    # When a user logs in, we load their session
     def load_session(self):
         data = {}
         if os.path.exists("data/session.json"):

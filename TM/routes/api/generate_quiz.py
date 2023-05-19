@@ -64,6 +64,9 @@ class GenerateQuiz(BaseRoute, route="api"):
             {"q_id": q, "attempts": 1, "correct": None, "language": l}
             for q, l in questions
         ]
+
+        random.shuffle(question_data)
+
         user.init_tm(question_data, 1, False)
 
         user.dump_sessions()

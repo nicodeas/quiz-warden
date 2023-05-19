@@ -1,4 +1,8 @@
-export const renderQuestion = (data) => {
+import { getAnswer } from "./getAnswer.js";
+import { getState } from "../utils/getState.js";
+
+export const renderQuestion = async (data) => {
+  const state = await getState();
   const { text, language, type, attempts, correct, choices } = data;
 
   const languageElement = document.getElementById("language");
@@ -25,12 +29,18 @@ export const renderQuestion = (data) => {
 
     // mark is 0 if incorrect, otherwise based on attempts
     const mark = correct ? 4 - attempts : 0;
-    document.getElementById("question-mark").innerText = `Marks: ${mark}`
+    document.getElementById("question-mark").innerText = `Mark: ${mark}`;
+    console.log(type, data);
+
+    if (correct != undefined) {
+      await getAnswer(state.currentQuestion, type);
+    }
   }
 
   document.getElementById("quiz-question").innerText = text;
 
   if (type == "CHOICE") {
+    console.log(choices);
     // create multichoice fields
     choices.forEach((choice, idx) => {
       const radio = document.createElement("input");

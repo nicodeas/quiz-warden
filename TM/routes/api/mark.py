@@ -5,7 +5,7 @@ from ..base import BaseRoute
 
 class Mark(BaseRoute, route="api"):
     """
-    GET: mark question by id
+    POST: mark question by id
     """
 
     def executor(req, path, qs, *args, **kwargs):

@@ -72,7 +72,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.send_header(header, value)
 
         self.end_headers()
-        
+
         if isinstance(response, str):
             response = response.encode()
 

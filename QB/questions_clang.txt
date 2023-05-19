@@ -58,3 +58,18 @@ T CODE
 L CLANG
 $ true
 -----------------------------------------------------------------
+Q Write a C program to check whether a given number 17 is prime or not. Return true or false
+T CODE
+L CLANG
+$ true
+-----------------------------------------------------------------
+Q Write a C program to check whether a given number 17 is prime or not. Return true or false
+T CODE
+L CLANG
+$ true
+-----------------------------------------------------------------
+Q Write a C program to check whether a given number 17 is prime or not. Return true or false
+T CODE
+L CLANG
+$ true
+-----------------------------------------------------------------

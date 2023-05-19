@@ -5,4 +5,4 @@ def health_check(self, addr):
     if res is None:
         return False
 
-    return res[0].decode()
+    return res.decode()

@@ -3,14 +3,6 @@ import os
 
 
 def receive_data(s):
-    # flag denoting when stream of image data begins
-    IMAGE_DATA_FLAG = b"$"
-    receiving_image_data = False
-    # store question fields
-    qb_response = b""
-    # store image data
-    image_data = b""
-
     data = io.BytesIO()
     while True:
         res = s.recv(io.DEFAULT_BUFFER_SIZE)
@@ -20,25 +12,13 @@ def receive_data(s):
 
     data = data.getvalue()
 
-    # check for image data flag
-    if not receiving_image_data:
-        image_index = data.find(IMAGE_DATA_FLAG)
-        # reading image data!
-        if image_index != -1:
-            qb_response += data[:image_index]
-            image_data += data[image_index + len(IMAGE_DATA_FLAG) :]
-            receiving_image_data = True
-        else:
-            # no image flag; read as regular response
-            qb_response += data
-    else:
-        image_data += data
-    return qb_response, image_data
+    return data
 
 
 # stores question fields in a dict; writes image_data to file if it exists
-def process_question(qb_response, image_data):
+def process_question(qb_response):
     question_parts = qb_response.decode().split("&")
+    print(question_parts)
     # only receives fields to display question to user; marking handled by QB
     question = {
         "id": int(question_parts[0]),

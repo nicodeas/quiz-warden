@@ -18,7 +18,8 @@
 #define PATH_PYTHON "/usr/bin/python3"
 #define PATH_C "/usr/bin/cc"
 
-#define QUESTION_FILE "questions.txt"
+#define PYTHON_QUESTION_FILE "questions_python.txt"
+#define CLANG_QUESTION_FILE "questions_clang.txt"
 
 #define CLANG_USER_ANSWER_PATH "./code.c"
 #define PYTHON_USER_ANSWER_PATH "./code.py"
@@ -71,6 +72,7 @@ typedef struct {
 
 extern int PORT;
 extern char *LANGUAGE; // the language the server is running in
+extern char *QUESTION_FILE;
 
 extern Question *QUESTION_BANK[QUESTION_BANK_SIZE];
 extern int NUM_QUESTIONS; // write to this when building question bank to keep

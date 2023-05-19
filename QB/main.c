@@ -3,6 +3,7 @@
 int PORT;
 char *LANGUAGE;
 bool DEBUG = false;
+char *QUESTION_FILE;
 
 void usage(char *progname) {
   fprintf(stderr,
@@ -11,7 +12,7 @@ void usage(char *progname) {
           "  -p PORT	The port number to run this server\n\n"
           "Languages (case sensitive):\n"
           "  C\n"
-          "  Python\n",
+          "  PYTHON\n",
           progname);
   exit(EXIT_FAILURE);
 }
@@ -40,26 +41,23 @@ int main(int argc, char *argv[]) {
     usage(argv[0]);
   }
 
-  // check if language is valid
-  if (strcmp(argv[optind], "C") != 0 && strcmp(argv[optind], "Python") != 0) {
+  // config resources
+  if ((strcmp(argv[optind], "C") == 0)) {
+    QUESTION_FILE = CLANG_QUESTION_FILE;
+  } else if (strcmp(argv[optind], "PYTHON") == 0) {
+    QUESTION_FILE = PYTHON_QUESTION_FILE;
+  } else {
     fprintf(stderr, "Invalid language specified\n");
     usage(argv[0]);
   }
 
-  // set language
-  int language_length = strlen(argv[optind]) + 1;
-
-  if ((LANGUAGE = malloc(language_length * sizeof(char))) != NULL) {
-    strncpy(LANGUAGE, argv[optind], language_length);
-  } else {
-    perror("malloc");
-    exit(EXIT_FAILURE);
-  }
+  LANGUAGE = argv[optind];
 
   buildQuestionBank();
+
   if (DEBUG) {
-    printf("Language has been set to %s\n", LANGUAGE);
     printQuestionBank();
+    printf("Language has been set to %s\n", LANGUAGE);
   }
 
   int server_socket = createServer();

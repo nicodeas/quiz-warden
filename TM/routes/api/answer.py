@@ -3,9 +3,9 @@ from classes.user import User, users
 from ..base import BaseRoute
 
 
-class Question(BaseRoute, route="api"):
+class Answer(BaseRoute, route="api"):
     """
-    GET: get question by id
+    GET: get answer by id
     """
 
     def executor(req, path, qs, *args, **kwargs):
@@ -28,7 +28,7 @@ class Question(BaseRoute, route="api"):
         user.dump_sessions()
 
         # Get question information for current question
-        question_info = user.get_question_info(current_question)
+        question_info = user.get_answer(current_question)
 
         # Update user's current question
         return 200, question_info, headers

@@ -65,3 +65,39 @@ D There is no such thing as '==' and 'is' operators in Python
 $ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
 L PYTHON
 -----------------------------------------------------------------
+Q What is the difference between '==' and 'is' operators in Python?
+T CHOICE
+A '==' and 'is' are the same thing in Python
+B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
+D There is no such thing as '==' and 'is' operators in Python
+$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+L PYTHON
+-----------------------------------------------------------------
+Q What is the difference between '==' and 'is' operators in Python?
+T CHOICE
+A '==' and 'is' are the same thing in Python
+B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
+D There is no such thing as '==' and 'is' operators in Python
+$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+L PYTHON
+-----------------------------------------------------------------
+Q What is the difference between '==' and 'is' operators in Python?
+T CHOICE
+A '==' and 'is' are the same thing in Python
+B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
+D There is no such thing as '==' and 'is' operators in Python
+$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+L PYTHON
+-----------------------------------------------------------------
+Q What is the difference between '==' and 'is' operators in Python?
+T CHOICE
+A '==' and 'is' are the same thing in Python
+B '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+C '==' checks if two objects are the same object, while 'is' checks if two objects have the same value
+D There is no such thing as '==' and 'is' operators in Python
+$ '==' checks if two objects have the same value, while 'is' checks if two objects are the same object
+L PYTHON
+-----------------------------------------------------------------

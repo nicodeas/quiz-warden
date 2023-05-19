@@ -1,4 +1,4 @@
-Q Print the first 10 fibonacci numbers delimited by spaces.
+Q Print the first 10 fibonacci numbers delimited by spaces. Please do not print a newline.
 T CODE
 $ 0 1 1 2 3 5 8 13 21 34
 L PYTHON
@@ -21,12 +21,12 @@ D 'append' adds a single element to the end of a list, while 'extend' adds multi
 $ 'append' adds a single element to the end of a list, while 'extend' adds multiple elements to the end of a list
 L PYTHON
 -----------------------------------------------------------------
-Q Print the squares of numbers from 1 to 10 delimited by spaces.
+Q Print the squares of numbers from 1 to 10 delimited by spaces. Please do not print a newline.
 T CODE
 $ 1 4 9 16 25 36 49 64 81 100
 L PYTHON
 -----------------------------------------------------------------
-Q Write a program that calculates the sum of the numbers from 1 to 20.
+Q Write a program that calculates the sum of the numbers from 1 to 20. Please do not print a newline.
 T CODE
 $ 210
 L PYTHON
@@ -69,4 +69,22 @@ T IMAGE
 L PYTHON
 I ./static/img/catdog.png
 F ./static/img/dog.png
+-----------------------------------------------------------------
+Q What is the purpose of the range() function in Python?
+T CHOICE
+A It generates a sequence of numbers.
+B It performs mathematical calculations.
+C It converts a string to uppercase.
+D It reads input from the user.
+$ It generates a sequence of numbers.
+L PYTHON
+-----------------------------------------------------------------
+Q What is the correct way to check if a key exists in a dictionary in Python?
+T CHOICE
+A exists(dictionary, key)
+B dictionary[key]
+C key in dictionary
+D dictionary.exists(key)
+$ key in dictionary
+L PYTHON
 -----------------------------------------------------------------

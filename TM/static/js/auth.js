@@ -46,3 +46,6 @@ const logoutUser = async (e) => {
 
 const submit = document.getElementById("submit")
 if (submit) submit.addEventListener("click", loginUser);
+
+const logout = document.getElementById("logout")
+if (logout) logout.addEventListener("click", logoutUser);

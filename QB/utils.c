@@ -117,8 +117,6 @@ int runCode(Request *request) {
   close(fd[1]);
   signal(SIGALRM, handleAlarm);
   alarm(EXE_TIMEOUT);
-  // TODO: not sure if waitpid is required, we are not waiting for multiple
-  // processes
 
   waitpid(timedPid, &status, 0);
   if (WIFSIGNALED(status)) {

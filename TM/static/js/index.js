@@ -3,7 +3,6 @@ import { getState } from "./utils/getState.js";
 import { host } from "./config.js";
 
 const state = await getState();
-console.log(state);
 const startQuiz = async () => {
   try {
     await fetch(`http://${host}/api/generatequiz`);

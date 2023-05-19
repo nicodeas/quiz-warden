@@ -60,10 +60,6 @@ def process_question(qb_response, image_data):
     return question
 
 def process_image_data(image_data, filename):
-    # TODO: naming convention and directory for images
-    # possibly just name after question?
-    # could images just be stored on TM?
-
     # check file hasn't already been requested
     if not os.path.exists(filename):
         with open(filename, "wb") as f:

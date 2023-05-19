@@ -1,0 +1,1 @@
+export const host = window.location.host; 

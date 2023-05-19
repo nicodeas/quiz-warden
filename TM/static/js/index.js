@@ -1,19 +1,20 @@
 import { renderState } from "./quiz/renderState.js";
 import { getState } from "./utils/getState.js";
+import { host } from "./config.js";
 
 const state = await getState();
 console.log(state);
 const startQuiz = async () => {
   try {
-    await fetch("http://localhost:8000/api/generatequiz");
-    window.location.href = "http://localhost:8000/quiz";
+    await fetch(`http://${host}/api/generatequiz`);
+    window.location.href = `http://${host}/quiz`;
   } catch (err) {
     console.log(err);
   }
 };
 
 const continueQuiz = async () => {
-  window.location.href = `http://localhost:8000/quiz?question=${state.currentQuestion}`;
+  window.location.href = `http://${host}/quiz?question=${state.currentQuestion}`;
 };
 
 renderState(false, state);

@@ -1,5 +1,6 @@
+import { host } from "./config.js";
+
 const loginUser = async () => {
-  
   const username = document.getElementById("username");
   const password = document.getElementById("password");
 
@@ -13,7 +14,7 @@ const loginUser = async () => {
 
   let res;
   try {
-    res = await fetch("http://localhost:8000/api/login", {
+    res = await fetch(`http://${host}/api/login`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -26,7 +27,7 @@ const loginUser = async () => {
   }
 
   if (res.status === 200) {
-    window.location.href = "http://localhost:8000";
+    window.location.href = `http://${host}`;
   } else {
     const loginError = document.getElementById("login-error");
     loginError.innerText =
@@ -36,9 +37,12 @@ const loginUser = async () => {
 
 const logoutUser = async (e) => {
   try {
-    await fetch("http://localhost:8000/api/logout", {});
-    window.location.href = "http://localhost:8000/login";
+    await fetch(`http://${host}/api/logout`, {});
+    window.location.href = `http://${host}/login`;
   } catch (err) {
     console.log(err);
   }
 };
+
+const submit = document.getElementById("submit")
+if (submit) submit.addEventListener("click", loginUser);

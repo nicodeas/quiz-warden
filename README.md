@@ -4,7 +4,7 @@
 
 ## Project Structure
 
-## TM
+## Test Manager
 
 ### Setup
 
@@ -30,7 +30,7 @@ python -m main
 - In the file, update the class name to match the route in PascalCase. For example, the route `/api/quiz` should be named `Quiz`. Change the argument `route` to be the path of the directory.
 - Register the route by importing it into `routes/api/__init__.py`.
 
-## QB
+## Question Bank
 
 See make file for options
 
